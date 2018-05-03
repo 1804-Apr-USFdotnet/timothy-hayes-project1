@@ -89,7 +89,7 @@ namespace LocalGourmet.BLL.Models
 
         // READ
         // Does not return inactive ("deleted") restaurants
-        public static List<Restaurant> GetRestaurants()
+        public static IEnumerable<Restaurant> GetRestaurants()
         {
             RestaurantAccessor restaurantCRUD = new RestaurantAccessor();
             return restaurantCRUD.GetRestaurants().Select(x => DataToLibrary(x)).ToList();

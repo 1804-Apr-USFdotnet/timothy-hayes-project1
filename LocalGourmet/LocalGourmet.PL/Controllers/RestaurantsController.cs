@@ -16,7 +16,7 @@ namespace LocalGourmet.PL.Controllers
         // GET: Restaurants
         public ActionResult Index()
         {
-            return View((BLL.Models.Restaurant.GetRestaurants()).Select(x=>PL.Models.Restaurant.LibraryToWeb(x)));
+            return View(BLL.Models.Restaurant.GetRestaurants());
         }
 
         // GET: Restaurants/Details/5
@@ -24,10 +24,10 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                PL.Models.Restaurant plr = 
-                    PL.Models.Restaurant.LibraryToWeb
+                BLL.Models.Restaurant r =
                       (BLL.Models.Restaurant.GetRestaurantByID(id));
-                return View(plr);
+                if (r == null) { throw new ArgumentNullException("id"); }
+                return View(r);
             }
             catch
             {
@@ -67,7 +67,17 @@ namespace LocalGourmet.PL.Controllers
         // GET: Restaurants/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(BLL.Models.Restaurant.GetRestaurantByID(id));
+            try
+            {
+                BLL.Models.Restaurant r =
+                     BLL.Models.Restaurant.GetRestaurantByID(id);
+                if(r == null) { throw new ArgumentNullException("id"); }
+                return View(r);
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         // POST: Restaurants/Edit/5
@@ -95,22 +105,34 @@ namespace LocalGourmet.PL.Controllers
         // GET: Restaurants/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            try
+            {
+                BLL.Models.Restaurant r =
+                     BLL.Models.Restaurant.GetRestaurantByID(id);
+                if (r == null) { throw new ArgumentNullException("id"); }
+                return View(r);
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         // POST: Restaurants/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, PL.Models.Restaurant restaurant)
+        public async Task<ActionResult> Delete(int id, BLL.Models.Restaurant restaurant)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                BLL.Models.Restaurant r =
+                                   BLL.Models.Restaurant.GetRestaurantByID(id);
+                if (r == null) { throw new ArgumentNullException("id"); }
+                await r.DeleteRestaurantAsync();
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View(restaurant);
             }
         }
     }

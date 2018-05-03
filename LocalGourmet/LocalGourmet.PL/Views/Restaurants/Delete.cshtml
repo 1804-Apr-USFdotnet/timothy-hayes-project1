@@ -1,21 +1,19 @@
 ﻿@model LocalGourmet.BLL.Models.Restaurant
 
-@{
-    ViewBag.Title = Model.Name;
-}
-
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
+    <title>Delete</title>
 </head>
 <body>
+    <h3>Are you sure you want to delete this restaurant?</h3>
     <div>
         <h4>Restaurant</h4>
         <hr />
         <dl class="dl-horizontal">
+    
             <dt>
                 @Html.DisplayNameFor(model => model.Name)
             </dt>
@@ -89,13 +87,17 @@
             </dd>
     
         </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color" style="float:right;">
+                <input type="submit" value="Delete" class="btn btn-default btn-toolbar" />
+                <a href=@($"/Restaurants/Index") class="btn btn-default btn-toolbar">Back to List</a>
+            </div>
+            <br />
+            <br />
+        }
     </div>
-    <div style="float:right;">
-        @*@if (Request.IsAuthenticated)*@
-            <a href=@($"/Restaurants/Edit/{Model.ID}") class="btn btn-default btn-toolbar">Edit</a>
-        <a href=@($"/Restaurants/Index") class="btn btn-default btn-toolbar">Back to List</a>
-    </div>
-    <br />
-    <br />
 </body>
 </html>
