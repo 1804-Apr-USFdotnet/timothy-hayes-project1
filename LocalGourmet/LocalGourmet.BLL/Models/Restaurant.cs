@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using LocalGourmet.DAL;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace LocalGourmet.BLL.Models
 {
@@ -26,22 +27,30 @@ namespace LocalGourmet.BLL.Models
         public int ID { get; set; }
         public bool Active { get; set; }
         [DataMember]
+        [Required]
         public string Name { get; set; } 
         [DataMember]
+        [Required]
         public string Location { get; set; }
         [DataMember]
+        [Required]
         public string Cuisine { get; set; }
         [DataMember]
+        [Required]
         public string Specialty { get; set; }
         [DataMember]
+        [Required]
         public string PhoneNumber { get; set; }
         [DataMember]
+        [Required]
         public string WebAddress { get; set; }
         [DataMember]
         public List<Review> Reviews { get; set; }
         [DataMember]
+        [Required]
         public string Type { get; set; }
         [DataMember]
+        [Required]
         public string Hours { get; set; }
         #endregion
 
@@ -103,16 +112,14 @@ namespace LocalGourmet.BLL.Models
         }
         
         // UPDATE
-        public async Task UpdateRestaurantAsync(string name, string location,
-            string cuisine, string specialty, string phoneNumber, 
-            string webAddress, string type, string hours)
+        public async Task UpdateRestaurantAsync(BLL.Models.Restaurant r)
         {
             RestaurantAccessor restaurantCRUD = new RestaurantAccessor();
             try
             {
-                await restaurantCRUD.UpdateRestaurantAsync(this.ID, name,
-                    location, cuisine, specialty, phoneNumber, webAddress,
-                    type, hours);
+                await restaurantCRUD.UpdateRestaurantAsync(r.ID, r.Name,
+                    r.Location, r.Cuisine, r.Specialty, r.PhoneNumber, r.WebAddress,
+                    r.Type, r.Hours);
             }
             catch
             {
