@@ -14,7 +14,8 @@
 <body>
     <br />
     <div>
-        <a href=@($"/Restaurants/Create") class="btn btn-default btn-toolbar">Add new Restaurant</a>
+        @*@if (Request.IsAuthenticated)*@
+            <a href=@($"/Restaurants/Create") class="btn btn-default btn-toolbar">Add new Restaurant</a>
     </div>
     <br />
     <table class="table">
@@ -62,9 +63,10 @@
             </td>
             <td>
                 <div style="min-width: 200px;">
-                    <a href=@($"/Restaurants/Edit/{item.ID}") class="btn btn-default btn-toolbar">Edit</a>
                     <a href=@($"/Restaurants/Details/{item.ID}") class="btn btn-default btn-toolbar">Details</a>
-                    <a href=@($"/Restaurants/Delete/{item.ID}") class="btn btn-default btn-toolbar">Delete</a>
+                    @*@if(Request.IsAuthenticated)*@
+                        <a href=@($"/Restaurants/Edit/{item.ID}") class="btn btn-default btn-toolbar">Edit</a>
+                        <a href=@($"/Restaurants/Delete/{item.ID}") class="btn btn-default btn-toolbar">Delete</a>
                 </div>
             </td>
         </tr>

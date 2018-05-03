@@ -9,6 +9,9 @@ namespace LocalGourmet.PL.Controllers
 {
     public class RestaurantsController : Controller
     {
+        // ICrud implementing class db = new
+
+
         // GET: Restaurants
         public ActionResult Index()
         {
@@ -39,13 +42,19 @@ namespace LocalGourmet.PL.Controllers
 
         // POST: Restaurants/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(BLL.Models.Restaurant restaurant)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                if(ModelState.IsValid) // server-side validation
+                {
+                    //BLL.Models.Restaurant.Add
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View(ModelState);
+                }
             }
             catch
             {
@@ -61,12 +70,11 @@ namespace LocalGourmet.PL.Controllers
 
         // POST: Restaurants/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, PL.Models.Restaurant restaurant)
         {
             try
             {
                 // TODO: Add update logic here
-
                 return RedirectToAction("Index");
             }
             catch
@@ -83,7 +91,7 @@ namespace LocalGourmet.PL.Controllers
 
         // POST: Restaurants/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, PL.Models.Restaurant restaurant)
         {
             try
             {

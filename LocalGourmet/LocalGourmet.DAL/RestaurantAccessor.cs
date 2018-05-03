@@ -1,4 +1,5 @@
 ﻿using LocalGourmet.DL;
+using LocalGourmet.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +11,29 @@ namespace LocalGourmet.DAL
     // CRUD class for Restaurant
     public class RestaurantAccessor
     {
+        private LocalGourmetDBEntities db;
+
+        public RestaurantAccessor()
+        {
+            db = new LocalGourmetDBEntities();
+
+        }
+
         // CREATE
         public async Task AddRestaurantAsync(DL.Restaurant item)
         {
-            using (var db = new LocalGourmetDBEntities())
+            try
             {
-                db.Restaurants.Add(item);
-                await db.SaveChangesAsync();
+                if(item != null)
+                {
+                        db.Restaurants.Add(item);
+                        await db.SaveChangesAsync();
+                }
+            }
+            catch(Exception)
+            {
+                // call Nlog
+                throw;
             }
         }
 
@@ -24,30 +41,25 @@ namespace LocalGourmet.DAL
         // Does not return inactive ("deleted") restaurants
         public IEnumerable<DL.Restaurant> GetRestaurants()
         {
-            IEnumerable<DL.Restaurant> dataList;
-            using (var db = new LocalGourmetDBEntities())
-            {
-                dataList = db.Restaurants.Where(x => x.Active == true ).ToList();
-            }
-            return dataList;
+            return db.Restaurants.Where(x => x.Active == true ).ToList();
         }
 
         // Does return inactive ("deleted") restaurants
         public DL.Restaurant GetRestaurantByID(int id)
         {
             DL.Restaurant r;
-            using (var db = new LocalGourmetDBEntities())
+            try
             {
-                try
+                r = db.Restaurants.Find(id);
+                if(r == null)
                 {
-                    r = db.Restaurants.Find(id);
-                }
-                catch
-                {
-                    throw;
+                    throw new ArgumentNullException();
                 }
             }
-            if(r == null) { throw new ArgumentOutOfRangeException("id"); }
+            catch
+            {
+                throw;
+            }
             return r;
         }
         
@@ -59,20 +71,17 @@ namespace LocalGourmet.DAL
             DL.Restaurant r;
             try
             {
-                using (var db = new LocalGourmetDBEntities())
-                {
-                    r = db.Restaurants.Find(id);
-                    if (r == null) { throw new ArgumentOutOfRangeException("id"); }
-                    r.Name = name;
-                    r.Location = location;
-                    r.Cuisine = cuisine;
-                    r.Specialty = specialty;
-                    r.PhoneNumber = phoneNumber;
-                    r.WebAddress = webAddress;
-                    r.Type = type;
-                    r.Hours = hours;
-                    await db.SaveChangesAsync();
-                }
+                r = db.Restaurants.Find(id);
+                if (r == null) { throw new ArgumentOutOfRangeException("id"); }
+                r.Name = name;
+                r.Location = location;
+                r.Cuisine = cuisine;
+                r.Specialty = specialty;
+                r.PhoneNumber = phoneNumber;
+                r.WebAddress = webAddress;
+                r.Type = type;
+                r.Hours = hours;
+                await db.SaveChangesAsync();
             }
             catch
             {
@@ -86,7 +95,7 @@ namespace LocalGourmet.DAL
             DL.Restaurant r;
             try
             {
-                using (var db = new LocalGourmetDBEntities())
+                if(id != 0)
                 {
                     r = db.Restaurants.Find(id);
                     if (r == null) { throw new ArgumentOutOfRangeException("id"); }
@@ -96,10 +105,15 @@ namespace LocalGourmet.DAL
             }
             catch
             {
+                // Nlog
                 throw;
             }
         }
 
 
+
+
+
+        
     }
 }
