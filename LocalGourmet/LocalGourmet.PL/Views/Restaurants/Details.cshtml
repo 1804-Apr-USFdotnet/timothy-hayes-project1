@@ -1,0 +1,90 @@
+﻿@model LocalGourmet.PL.Models.Restaurant
+
+@{
+    ViewBag.Title = Model.Name;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Restaurant</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Location)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Location)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Cuisine)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Cuisine)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Specialty)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Specialty)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.WebAddress)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.WebAddress)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Type)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Type)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Hours)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Hours)
+            </dd>
+    
+        </dl>
+    </div>
+    <p style="float:right;">
+        <a href=@($"/Restaurants/Edit/{Model.ID}") class="btn btn-default btn-toolbar">Edit</a>
+        <a href=@($"/Restaurants/Index") class="btn btn-default btn-toolbar">Back to List</a>
+    </p>
+</body>
+</html>

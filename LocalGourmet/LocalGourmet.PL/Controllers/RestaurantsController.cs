@@ -18,7 +18,17 @@ namespace LocalGourmet.PL.Controllers
         // GET: Restaurants/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            try
+            {
+                PL.Models.Restaurant plr = 
+                    PL.Models.Restaurant.LibraryToWeb
+                      (BLL.Models.Restaurant.GetRestaurantByID(id));
+                return View(plr);
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: Restaurants/Create

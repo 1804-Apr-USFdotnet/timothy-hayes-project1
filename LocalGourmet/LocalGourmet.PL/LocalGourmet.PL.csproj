@@ -202,6 +202,8 @@
     <Content Include="Views\Home\Home.cshtml" />
     <Content Include="Views\Restaurants\Index.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Restaurants\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<LocalGourmet.PL.Models.Restaurant>
 
+@{
+    ViewBag.Title = "Restaurants";
+}
+
 <!DOCTYPE html>
 
 <html>
@@ -8,9 +12,11 @@
     <title>Index</title>
 </head>
 <body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+    <br />
+    <div>
+        <a href=@($"/Restaurants/Create") class="btn btn-default btn-toolbar">Add new Restaurant</a>
+    </div>
+    <br />
     <table class="table">
         <tr>
             <th>
@@ -26,16 +32,10 @@
                 @Html.DisplayNameFor(model => model.Specialty)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WebAddress)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Type)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Hours)
+                #_Reviews
             </th>
             <th></th>
         </tr>
@@ -55,21 +55,17 @@
                 @Html.DisplayFor(modelItem => item.Specialty)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WebAddress)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Type)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Hours)
+                @Html.DisplayFor(modelItem => item.Reviews.Count)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+                <div style="min-width: 200px;">
+                    <a href=@($"/Restaurants/Edit/{item.ID}") class="btn btn-default btn-toolbar">Edit</a>
+                    <a href=@($"/Restaurants/Details/{item.ID}") class="btn btn-default btn-toolbar">Details</a>
+                    <a href=@($"/Restaurants/Delete/{item.ID}") class="btn btn-default btn-toolbar">Delete</a>
+                </div>
             </td>
         </tr>
     }
