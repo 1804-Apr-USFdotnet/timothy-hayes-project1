@@ -13,8 +13,8 @@ namespace LocalGourmet.PL.Controllers
         // GET: Reviews
         public ActionResult Index()
         {
-            var reviews = BLL.Models.Review.GetReviews();
-            return View(reviews);
+            var rrViewModel = new PL.ViewModels.ReviewsIndexVM();
+            return View(rrViewModel);
         }
 
         // GET: Reviews/Details/5

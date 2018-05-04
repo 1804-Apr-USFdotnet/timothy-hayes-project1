@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LocalGourmet.BLL.Models.Review>
+﻿@model LocalGourmet.PL.ViewModels.ReviewsIndexVM
 <!DOCTYPE html>
 
 @{
@@ -18,10 +18,13 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ReviewerName)
+                Restaurant Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Comment)
+                Reviewer Name
+            </th>
+            <th>
+                Comment
             </th>
             <th>
                 Rating
@@ -29,9 +32,21 @@
             <th></th>
         </tr>
 
-        @foreach (var item in Model)
+        @foreach (var item in Model.Reviews)
         {
+            string name = "";
+            try
+            {
+                name = Model.Restaurants.First(x => x.ID == item.RestaurantID).Name;
+            }
+            catch
+            {
+                // ignore
+            }
         <tr>
+            <td>
+                @name
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ReviewerName)
             </td>
