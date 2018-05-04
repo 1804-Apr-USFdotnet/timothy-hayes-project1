@@ -26,15 +26,15 @@ namespace LocalGourmet.PL.Controllers
         {
             var restaurants = BLL.Models.Restaurant.GetRestaurants();
 
-            if(sort == "name")
+            if(sort == "byName")
             {
                 restaurants = Restaurant.SortByNameAsc(restaurants);
             }
-            else if(sort == "rating")
+            else if(sort == "byRating")
             {
                 restaurants = Restaurant.SortByAvgRatingDesc(restaurants);
             }
-            else if(sort == "cuisine")
+            else if(sort == "byCuisine")
             {
                 restaurants = Restaurant.SortByCuisineAsc(restaurants);
             }

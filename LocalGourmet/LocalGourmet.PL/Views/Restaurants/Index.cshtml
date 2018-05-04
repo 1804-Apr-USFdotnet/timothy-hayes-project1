@@ -25,9 +25,9 @@
     <div>
         @*@if (Request.IsAuthenticated)*@
         <a href=@($"/Restaurants/Create") class="btn btn-default btn-toolbar">Add new Restaurant</a>
-        <a href="/Restaurants/Index?sort=name" class="btn btn-default btn-toolbar">Sort By Name</a>
-        <a href="/Restaurants/Index?sort=rating" class="btn btn-default btn-toolbar">Sort By Avg. Rating</a>
-        <a href="/Restaurants/Index?sort=cuisine" class="btn btn-default btn-toolbar">Sort By Cuisine</a>
+        <a href="/Restaurants/Index?sort=byName" class="btn btn-default btn-toolbar">Sort By Name</a>
+        <a href="/Restaurants/Index?sort=byRating" class="btn btn-default btn-toolbar">Sort By Avg. Rating</a>
+        <a href="/Restaurants/Index?sort=byCuisine" class="btn btn-default btn-toolbar">Sort By Cuisine</a>
         
         <form id="searchForm" onsubmit="SearchByName()">
             <input type="text" name="sort" placeholder="keywords...">
