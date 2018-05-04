@@ -41,13 +41,19 @@ namespace LocalGourmet.PL.Controllers
 
         // POST: Reviews/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public async Task<ActionResult> Create(Review review)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                if(ModelState.IsValid) // server-side validation
+                {
+                    await review.AddReviewAsync();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View(ModelState);
+                }
             }
             catch
             {
