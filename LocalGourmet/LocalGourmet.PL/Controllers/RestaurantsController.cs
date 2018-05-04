@@ -31,6 +31,10 @@ namespace LocalGourmet.PL.Controllers
             {
                 restaurants = Restaurant.SortByCuisineAsc(restaurants);
             }
+            else if(sort == "topThree")
+            {
+                restaurants = BLL.Models.Restaurant.GetTop3((List<Restaurant>) restaurants);
+            }
             else if(sort != null)
             {
                 string search = sort; // "sort" var will store search info
