@@ -7,22 +7,9 @@
     @*<div class="panel-heading panel-title"><h1>Images</h1></div>*@
     <div class="panel-body">
         <div class="form-group row">
-            <div class="col-lg-2 pad">
-            </div>
             <div class="col-lg-8 pad">
                 <div>
-                    <button class="btn btn-default tablink" onclick="openPage(event, 'img1')" style="width:84px;">1</button>
-                    <button class="btn btn-default tablink" onclick="openPage(event, 'img2')" style="width:84px;">2</button>
-                    <button class="btn btn-default tablink" onclick="openPage(event, 'img3')" style="width:84px;">3</button>
-                    <button class="btn btn-default tablink" onclick="openPage(event, 'img4')" style="width:84px;">4</button>
-                    <button class="btn btn-default tablink" onclick="openPage(event, 'img5')" style="width:84px;">5</button>
-                    <button class="btn btn-default tablink" onclick="openPage(event, 'img6')" style="width:84px;">6</button>
-                    <button class="btn btn-default tablink" onclick="openPage(event, 'img7')" style="width:84px;">7</button>
-                    <button class="btn btn-default tablink" onclick="openPage(event, 'img8')" style="width:84px;">8</button>
-                </div>
-                <br />
-                <div>
-                    <img id="img1" class="Page img" style="height: 600px; width: 700px; display:none;" src="https://www.maxpixel.net/static/photo/1x/Roasted-Food-Duck-Meat-Vietnamese-Gourmet-Dinner-468161.jpg" alt="First slide">
+                    <img id="img1" class="Page img" style="height: 600px; width: 700px; display:block;" src="https://www.maxpixel.net/static/photo/1x/Roasted-Food-Duck-Meat-Vietnamese-Gourmet-Dinner-468161.jpg" alt="First slide">
                     <img id="img2" class="Page img" style="height: 600px; width: 700px; display:none;" src="https://cdn.patchcdn.com/users/86770/2012/03/T800x600/69ad20bebc57ead6927e378c9a78dfd8.jpg" alt="Second slide">
                     <img id="img3" class="Page img" style="height: 600px; width: 700px; display:none;" src="https://cdn.gobankingrates.com/wp-content/uploads/2016/10/1_Cheyne-Kobzoff_shutterstock_295870706-848x477.jpg" alt="Third slide">
                     <img id="img4" class="Page img" style="height: 600px; width: 700px; display:none;" src="https://i.amz.mshcdn.com/usVe3ZNxKuIJFALuZ136W9tbLCU=/950x534/filters:quality(90)/https%3A%2F%2Fblueprint-api-production.s3.amazonaws.com%2Fuploads%2Fcard%2Fimage%2F471028%2F94cfb19f-f5d8-4263-beee-aa21826a7b3f.jpeg" alt="Fourth slide">
@@ -31,9 +18,18 @@
                     <img id="img7" class="Page img" style="height: 600px; width: 700px; display:none;" src="http://1.bp.blogspot.com/-jbExfg5jHvk/UIRL3prt5gI/AAAAAAAABM8/evjUi6gKW_Q/s1600/20121007+food+and+drink+fire+roasted+tomato+soup+and+gourmet+grilled+cheese+with+bacon_DSC3414.jpg" alt="Seventh slide">
                     <img id="img8" class="Page img" style="height: 600px; width: 700px; display:none;" src="https://www.thegreatcourses.com/media/catalog/product/cache/1/image/800x600/0f396e8a55728e79b48334e699243c07/9/2/9292---base_image_4.1424267705.jpg" alt="Eighth slide">
                 </div>
-                <br />
             </div>
-            <div class="col-lg-2 pad">
+            <div class="col-lg-4 pad">
+                <div>
+                    <button class="btn btn-default btn-danger tablink" onclick="openPage(event, 'img1')" style="height:75px; width:350px;">1</button>
+                    <button class="btn btn-default tablink" onclick="openPage(event, 'img2')" style="height:75px; width:350px;">2</button>
+                    <button class="btn btn-default tablink" onclick="openPage(event, 'img3')" style="height:75px; width:350px;">3</button>
+                    <button class="btn btn-default tablink" onclick="openPage(event, 'img4')" style="height:75px; width:350px;">4</button>
+                    <button class="btn btn-default tablink" onclick="openPage(event, 'img5')" style="height:75px; width:350px;">5</button>
+                    <button class="btn btn-default tablink" onclick="openPage(event, 'img6')" style="height:75px; width:350px;">6</button>
+                    <button class="btn btn-default tablink" onclick="openPage(event, 'img7')" style="height:75px; width:350px;">7</button>
+                    <button class="btn btn-default tablink" onclick="openPage(event, 'img8')" style="height:75px; width:350px;">8</button>
+                </div>
             </div>
         </div>
     </div>
@@ -41,25 +37,16 @@
 <script>
     function openPage(evt, pageName) {
         var i, x, tablinks;
-        if (document.getElementById(pageName).style.display == "block") {
-            document.getElementById(pageName).style.display = "none";
-            x = document.getElementsByClassName("Page");
-            tablinks = document.getElementsByClassName("tablink");
-            for (i = 0; i < x.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" btn-danger", "");
-            }
-        } else {
-            x = document.getElementsByClassName("Page");
-            for (i = 0; i < x.length; i++) {
-                x[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tablink");
-            for (i = 0; i < x.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" btn-danger", "");
-            }
-            document.getElementById(pageName).style.display = "block";
-            evt.currentTarget.className += " btn-danger";
+        x = document.getElementsByClassName("Page");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
         }
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < x.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" btn-danger", "");
+        }
+        document.getElementById(pageName).style.display = "block";
+        evt.currentTarget.className += " btn-danger";
     }
 </script>
 
