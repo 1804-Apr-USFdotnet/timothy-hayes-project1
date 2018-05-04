@@ -101,6 +101,7 @@
     <div style="float:right;">
         @*@if (Request.IsAuthenticated)*@
             <a href=@($"/Restaurants/Edit/{Model.ID}") class="btn btn-default btn-toolbar">Edit</a>
+            <a href=@($"/Restaurants/Delete/{Model.ID}") class="btn btn-default btn-toolbar">Delete</a>
         <a href=@($"/Restaurants/Index") class="btn btn-default btn-toolbar">Back to List</a>
     </div>
     <br />

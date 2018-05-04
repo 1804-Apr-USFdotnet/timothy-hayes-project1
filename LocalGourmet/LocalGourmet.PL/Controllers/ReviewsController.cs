@@ -102,22 +102,34 @@ namespace LocalGourmet.PL.Controllers
         // GET: Reviews/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            try
+            {
+                BLL.Models.Review r =
+                     BLL.Models.Review.GetReviewByID(id);
+                if (r == null) { throw new ArgumentNullException("id"); }
+                return View(r);
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         // POST: Reviews/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public async Task<ActionResult> Delete(int id, BLL.Models.Review review)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                BLL.Models.Review r =
+                                   BLL.Models.Review.GetReviewByID(id);
+                if (r == null) { throw new ArgumentNullException("id"); }
+                await r.DeleteReviewAsync();
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View(review);
             }
         }
     }
