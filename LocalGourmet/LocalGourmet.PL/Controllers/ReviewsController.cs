@@ -64,18 +64,34 @@ namespace LocalGourmet.PL.Controllers
         // GET: Reviews/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            try
+            {
+                BLL.Models.Review r =
+                     BLL.Models.Review.GetReviewByID(id);
+                if (r == null) { throw new ArgumentNullException("id"); }
+                return View(r);
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         // POST: Reviews/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit(int id, Review review)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                if(ModelState.IsValid) // server-side validation
+                {
+                    await review.UpdateReviewAsync(review);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View(ModelState);
+                }
             }
             catch
             {

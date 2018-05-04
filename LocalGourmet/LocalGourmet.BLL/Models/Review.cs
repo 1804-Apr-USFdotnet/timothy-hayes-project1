@@ -194,6 +194,34 @@ namespace LocalGourmet.BLL.Models
         }
 
         // UPDATE
+        public async Task UpdateReviewAsync(Review r)
+        {
+            ReviewAccessor reviewCRUD = new ReviewAccessor();
+            try
+            {
+                // Check restaurantID -- Will throw exception if invalid
+                Restaurant rest = Restaurant.GetRestaurantByID(RestaurantID);
+
+                // Conform rating input to rating bounds
+                FoodRating = FoodRating < 0 ? 0 : 
+                    (FoodRating > 5 ? 5 : FoodRating);
+                ServiceRating = ServiceRating < 0 ? 0 : 
+                    (ServiceRating > 5 ? 5 : ServiceRating);
+                PriceRating = PriceRating < 0 ? 0 : 
+                    (PriceRating > 5 ? 5 : PriceRating);
+                AtmosphereRating = AtmosphereRating < 0 ? 0 : 
+                    (AtmosphereRating > 5 ? 5 : AtmosphereRating);
+
+                await reviewCRUD.UpdateReviewAsync(ID, ReviewerName,
+                    Comment, FoodRating, ServiceRating, PriceRating, 
+                    AtmosphereRating, RestaurantID);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public async Task UpdateReviewAsync(string reviewerName, 
             string comment, int foodRating, int serviceRating, int priceRating,
             int atmosphereRating, int restaurantID)
