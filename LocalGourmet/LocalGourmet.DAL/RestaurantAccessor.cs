@@ -100,6 +100,14 @@ namespace LocalGourmet.DAL
                     r = db.Restaurants.Find(id);
                     if (r == null) { throw new ArgumentOutOfRangeException("id"); }
                     db.Restaurants.Remove(r);
+                    var revs = db.Reviews.Where(x => x.RestaurantID == id);
+                    if (revs != null)
+                    {
+                        foreach (var rev in revs)
+                        {
+                            db.Reviews.Remove(rev);
+                        }
+                    }
                     await db.SaveChangesAsync();
                 }
             }
