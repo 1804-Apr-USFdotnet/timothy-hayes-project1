@@ -14,13 +14,6 @@ namespace LocalGourmet.PL.Controllers
     {
         // ICrud implementing class db = new
 
-
-        //// GET: Restaurants
-        //public ActionResult Index()
-        //{
-        //    return View(BLL.Models.Restaurant.GetRestaurants());
-        //}
-
         // GET: Restaurants
         public ActionResult Index(string sort)
         {

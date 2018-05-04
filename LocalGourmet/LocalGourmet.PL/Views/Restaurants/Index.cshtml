@@ -29,9 +29,9 @@
         <a href="/Restaurants/Index?sort=byRating" class="btn btn-default btn-toolbar">Sort By Avg. Rating</a>
         <a href="/Restaurants/Index?sort=byCuisine" class="btn btn-default btn-toolbar">Sort By Cuisine</a>
         
-        <form id="searchForm" onsubmit="SearchByName()">
+        <form id="searchForm" onsubmit="SearchByName()" style="display:inline;">
+            <input type="submit" value="Search" class="btn btn-default btn-toolbar">
             <input type="text" name="sort" placeholder="keywords...">
-            <input type="submit" value="Search">
         </form>
 
         
