@@ -24,24 +24,27 @@ namespace LocalGourmet.PL.Controllers
         // GET: Restaurants
         public ActionResult Index(string sort)
         {
-            RestaurantSortDelegate del = x => x;
-            switch(sort)
+            var restaurants = BLL.Models.Restaurant.GetRestaurants();
+
+            if(sort == "name")
             {
-                case "name":
-                    del = Restaurant.SortByNameAsc;
-                    break;
-                case "rating":
-                    del = Restaurant.SortByAvgRatingDesc;
-                    break;
-                case "cuisine":
-                    del = Restaurant.SortByCuisineAsc;
-                    break;
-                case "search":
-                    del = Restaurant.SearchByName;
-                    break;
+                restaurants = Restaurant.SortByNameAsc(restaurants);
+            }
+            else if(sort == "rating")
+            {
+                restaurants = Restaurant.SortByAvgRatingDesc(restaurants);
+            }
+            else if(sort == "cuisine")
+            {
+                restaurants = Restaurant.SortByCuisineAsc(restaurants);
+            }
+            else if(sort != null)
+            {
+                string search = sort; // "sort" var will store search info
+                restaurants = Restaurant.SearchByName(restaurants, search);
             }
 
-            return View(del(BLL.Models.Restaurant.GetRestaurants()));
+            return View(restaurants);
         }
 
         // GET: Restaurants/Details/5

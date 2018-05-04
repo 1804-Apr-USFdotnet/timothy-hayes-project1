@@ -10,6 +10,15 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <script>
+        function SearchByName() {
+            $.ajax({
+                method: "GET",
+                url: "Restaurants/Index/",
+                data: { sort: document.getElementsByName("sort")[0].value }
+            })
+        }
+    </script>
 </head>
 <body>
     <br />
@@ -19,7 +28,17 @@
         <a href="/Restaurants/Index?sort=name" class="btn btn-default btn-toolbar">Sort By Name</a>
         <a href="/Restaurants/Index?sort=rating" class="btn btn-default btn-toolbar">Sort By Avg. Rating</a>
         <a href="/Restaurants/Index?sort=cuisine" class="btn btn-default btn-toolbar">Sort By Cuisine</a>
-        <a href="/Restaurants/Index?sort=search" class="btn btn-default btn-toolbar">Search By Name</a>
+        
+        <form id="searchForm" onsubmit="SearchByName()">
+            <input type="text" name="sort" placeholder="keywords...">
+            <input type="submit" value="Search">
+        </form>
+
+        
+
+
+        
+
     </div>
     <br />
     <table class="table">
