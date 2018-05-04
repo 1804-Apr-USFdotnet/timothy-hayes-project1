@@ -78,10 +78,10 @@ namespace LocalGourmet.BLL.UnitTest
 
             // Act
             string s1 = "sub";
-            List<Restaurant> a1 = Restaurant.SearchByName(Restaurant.GetAll(), s1);
+            List<Restaurant> a1 = (List<Restaurant>) Restaurant.SearchByName(Restaurant.GetAll(), s1);
 
             string s2 = "CO";
-            List<Restaurant> a2 = Restaurant.SearchByName(Restaurant.GetAll(), s2);
+            List<Restaurant> a2 = (List<Restaurant>) Restaurant.SearchByName(Restaurant.GetAll(), s2);
 
             // Assert
             Assert.AreEqual("Subway", a1[0].Name);
@@ -108,7 +108,7 @@ namespace LocalGourmet.BLL.UnitTest
             string e7 = "Stonewood Grill & Tavern"; // rating = 3.25
 
             // Act
-            List<Restaurant> a = Restaurant.SortByAvgRatingDesc(Restaurant.GetAll());
+            List<Restaurant> a = (List<Restaurant>) Restaurant.SortByAvgRatingDesc(Restaurant.GetAll());
 
             // Assert
             Assert.AreEqual(e2, a[2].Name);
@@ -130,7 +130,7 @@ namespace LocalGourmet.BLL.UnitTest
             string e2 = "Yummy House China Bistro";
 
             // Act
-            List<Restaurant> a = Restaurant.SortByNameAsc(Restaurant.GetAll());
+            List<Restaurant> a = (List<Restaurant>) Restaurant.SortByNameAsc(Restaurant.GetAll());
 
             // Assert
             Assert.AreEqual(e1, a[0].Name);
@@ -151,7 +151,7 @@ namespace LocalGourmet.BLL.UnitTest
             string e2 = "Columbia Restaurant";
 
             // Act
-            List<Restaurant> a = Restaurant.SortByCuisineAsc(Restaurant.GetAll());
+            List<Restaurant> a = (List<Restaurant>) Restaurant.SortByCuisineAsc(Restaurant.GetAll());
 
             // Assert
             Assert.AreEqual(e1, a[8].Name);

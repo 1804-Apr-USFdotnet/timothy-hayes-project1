@@ -135,6 +135,11 @@ namespace LocalGourmet.BLL.Models
                 AtmosphereRating + PriceRating) / 4.0), 2);
         }
 
+        public Restaurant GetRestaurant()
+        {
+            return Restaurant.GetRestaurantByID(RestaurantID);
+        }
+
         public override string ToString()
         {
             return $"[{GetRating()}] {ReviewerName}: {Comment} [Food: " +

@@ -13,13 +13,24 @@ namespace LocalGourmet.PL.Controllers
         // GET: Reviews
         public ActionResult Index()
         {
-            return View();
+            var reviews = BLL.Models.Review.GetReviews();
+            return View(reviews);
         }
 
         // GET: Reviews/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            try
+            {
+                BLL.Models.Review r =
+                      (BLL.Models.Review.GetReviewByID(id));
+                if (r == null) { throw new ArgumentNullException("id"); }
+                return View(r);
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: Reviews/Create

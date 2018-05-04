@@ -1,0 +1,84 @@
+﻿@model LocalGourmet.BLL.Models.Review
+
+<!DOCTYPE html>
+
+@{
+    ViewBag.Title = "Review";
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Review</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Restaurant Name
+            </dt>
+    
+            <dd>
+                @Model.GetRestaurant().Name
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ReviewerName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ReviewerName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Comment)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Comment)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.FoodRating)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.FoodRating)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ServiceRating)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ServiceRating)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.AtmosphereRating)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.AtmosphereRating)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.PriceRating)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.PriceRating)
+            </dd>
+    
+        </dl>
+    </div>
+    <div style="float:right;">
+        @*@if (Request.IsAuthenticated)*@
+            <a href=@($"/Reviews/Edit/{Model.ID}") class="btn btn-default btn-toolbar">Edit</a>
+        <a href=@($"/Reviews/Index") class="btn btn-default btn-toolbar">Back to List</a>
+    </div>
+    <br />
+    <br />
+</body>
+</html>

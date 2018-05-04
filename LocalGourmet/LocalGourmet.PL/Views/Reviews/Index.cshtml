@@ -1,0 +1,56 @@
+﻿@model IEnumerable<LocalGourmet.BLL.Models.Review>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <br />
+    <div>
+        <a href=@($"/Reviews/Create") class="btn btn-default btn-toolbar">Add new Review</a>
+    </div>
+    <br />
+    <table class="table">
+        <tr>
+            @{
+                ViewBag.Title = "Reviews";
+            }
+            <th>
+                @Html.DisplayNameFor(model => model.ReviewerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th>
+                Rating
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
+                @item.GetRating()
+            </td>
+            <td>
+                <div style="min-width: 200px;">
+                    <a href=@($"/Reviews/Details/{item.ID}") class="btn btn-default btn-toolbar">Details</a>
+                    <a href=@($"/Reviews/Edit/{item.ID}") class="btn btn-default btn-toolbar">Edit</a>
+                    <a href=@($"/Reviews/Delete/{item.ID}") class="btn btn-default btn-toolbar">Delete</a>
+                </div>
+            </td>
+        </tr>
+        }
+
+    </table>
+</body>
+</html>
