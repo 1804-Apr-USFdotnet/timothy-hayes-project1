@@ -8,15 +8,40 @@ using LocalGourmet.BLL.Models;
 
 namespace LocalGourmet.PL.Controllers
 {
+    public delegate IEnumerable<Restaurant> RestaurantSortDelegate (IEnumerable<Restaurant> restaurants);
+
     public class RestaurantsController : Controller
     {
         // ICrud implementing class db = new
 
 
+        //// GET: Restaurants
+        //public ActionResult Index()
+        //{
+        //    return View(BLL.Models.Restaurant.GetRestaurants());
+        //}
+
         // GET: Restaurants
-        public ActionResult Index()
+        public ActionResult Index(string sort)
         {
-            return View(BLL.Models.Restaurant.GetRestaurants());
+            RestaurantSortDelegate del = x => x;
+            switch(sort)
+            {
+                case "name":
+                    del = Restaurant.SortByNameAsc;
+                    break;
+                case "rating":
+                    del = Restaurant.SortByAvgRatingDesc;
+                    break;
+                case "cuisine":
+                    del = Restaurant.SortByCuisineAsc;
+                    break;
+                case "search":
+                    del = Restaurant.SearchByName;
+                    break;
+            }
+
+            return View(del(BLL.Models.Restaurant.GetRestaurants()));
         }
 
         // GET: Restaurants/Details/5

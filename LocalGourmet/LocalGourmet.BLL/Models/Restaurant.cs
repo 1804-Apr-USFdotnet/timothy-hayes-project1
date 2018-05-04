@@ -143,23 +143,23 @@ namespace LocalGourmet.BLL.Models
         #endregion
 
         #region Sort & Search
-        public static List<Restaurant> SortByAvgRatingDesc(List<Restaurant> list)
+        public static IEnumerable<Restaurant> SortByAvgRatingDesc(IEnumerable<Restaurant> list)
         {
             return list.OrderByDescending(x => x.GetAvgRating()).ToList();
         }
 
-        public static List<Restaurant> SortByNameAsc(List<Restaurant> list)
+        public static IEnumerable<Restaurant> SortByNameAsc(IEnumerable<Restaurant> list)
         {
             return list.OrderBy(x => x.Name).ToList();
         }
 
-        public static List<Restaurant> SortByCuisineAsc(List<Restaurant> list)
+        public static IEnumerable<Restaurant> SortByCuisineAsc(IEnumerable<Restaurant> list)
         {
             return list.OrderBy(x => x.Cuisine).ToList();
         }
 
         // Helper Search method for use with console UI
-        public static List<Restaurant> SearchByName(List<Restaurant> list)
+        public static IEnumerable<Restaurant> SearchByName(IEnumerable<Restaurant> list)
         {
             Console.WriteLine("Enter (partial) restaurant name:");
             Console.Write("<input> ");
@@ -169,7 +169,7 @@ namespace LocalGourmet.BLL.Models
 
         // Return a list of all restaurants whose names were partially
         // matched by the search string.
-        public static List<Restaurant> SearchByName(List<Restaurant> list, string search)
+        public static IEnumerable<Restaurant> SearchByName(IEnumerable<Restaurant> list, string search)
         {
             List<Restaurant> matches = new List<Restaurant>();
             if (search == "") { return matches; } // return with zero matches
