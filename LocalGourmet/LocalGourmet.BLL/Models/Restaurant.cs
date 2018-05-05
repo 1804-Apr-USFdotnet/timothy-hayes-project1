@@ -64,15 +64,15 @@ namespace LocalGourmet.BLL.Models
 
         #region Getters
         // Deprecated -- only use for serialization testing
-        //public static List<Restaurant> GetAll()
-        //{
-        //    List<Restaurant> restaurants = new List<Restaurant>();
-        //    string json = System.IO.File.ReadAllText(@"C:\revature\" +
-        //        @"hayes-timothy-project0\LocalGourmet\LocalGourmet.BLL\" +
-        //        @"Configs\RestaurantsForUnitTest2.json");
-        //    restaurants = Serializer.Deserialize<List<Restaurant>>(json);
-        //    return restaurants;
-        //}
+        public static List<Restaurant> GetAllFromJSON()
+        {
+            List<Restaurant> restaurants = new List<Restaurant>();
+            string json = System.IO.File.ReadAllText(@"C:\revature\" +
+                @"hayes-timothy-project0\LocalGourmet\LocalGourmet.BLL\" +
+                @"Configs\RestaurantsForUnitTest2.json");
+            restaurants = Serializer.Deserialize<List<Restaurant>>(json);
+            return restaurants;
+        }
 
         public double GetAvgRating()
         {

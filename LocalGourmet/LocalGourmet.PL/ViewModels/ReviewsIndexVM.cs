@@ -13,7 +13,7 @@ namespace LocalGourmet.PL.ViewModels
 
         public ReviewsIndexVM()
         {
-            MyReviews = Review.GetReviews();
+            MyReviews = Review.GetAll();
             MyRestaurants = Restaurant.GetAll();
         }
 

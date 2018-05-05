@@ -39,7 +39,7 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                Review r = Review.GetReviewByID(id);
+                Review r = Review.GetById(id);
                 if (r == null) { throw new ArgumentNullException("id"); }
                 return View(r);
             }
@@ -67,13 +67,13 @@ namespace LocalGourmet.PL.Controllers
 
         // POST: Reviews/Create
         [HttpPost]
-        public async Task<ActionResult> Create(ReviewsCreateVM vm)
+        public ActionResult Create(ReviewsCreateVM vm)
         {
             try
             {
                 if(ModelState.IsValid) // server-side validation
                 {
-                    await vm.Review.AddReviewAsync();
+                    vm.Review.Add();
                     return RedirectToAction("Index");
                 }
                 else
@@ -106,14 +106,14 @@ namespace LocalGourmet.PL.Controllers
 
         // POST: Reviews/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(Review review)
+        public ActionResult Edit(Review review)
         {
             try
             {
                 //ReviewsEditVM vm = new ReviewsEditVM(id, RestaurantID);
                 if(ModelState.IsValid) // server-side validation
                 {
-                    await review.UpdateReviewAsync(review);
+                    review.Update(review);
                     return RedirectToAction("Index");
                 }
                 else
@@ -133,7 +133,7 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                Review r = Review.GetReviewByID(id);
+                Review r = Review.GetById(id);
                 if (r == null) { throw new ArgumentNullException("id"); }
                 return View(r);
             }
@@ -146,13 +146,13 @@ namespace LocalGourmet.PL.Controllers
 
         // POST: Reviews/Delete/5
         [HttpPost]
-        public async Task<ActionResult> Delete(int id, Review review)
+        public ActionResult Delete(int id, Review review)
         {
             try
             {
-                Review r = Review.GetReviewByID(id);
+                Review r = Review.GetById(id);
                 if (r == null) { throw new ArgumentNullException("id"); }
-                await r.DeleteReviewAsync();
+                r.Delete();
                 return RedirectToAction("Index");
             }
             catch (Exception e)

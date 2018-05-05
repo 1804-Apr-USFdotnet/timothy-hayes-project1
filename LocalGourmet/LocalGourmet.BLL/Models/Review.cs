@@ -154,7 +154,7 @@ namespace LocalGourmet.BLL.Models
             return tempCrud.GetAll().Select(x => DataToLibrary(x)).ToList();
         }
 
-        public static Review GetByID(int id)
+        public static Review GetById(int id)
         {
             ReviewAccessor tempCrud = new ReviewAccessor();
             Review r;
