@@ -53,7 +53,7 @@ namespace LocalGourmet.DAL
                 r = db.Restaurants.Find(id);
                 if(r == null)
                 {
-                    throw new ArgumentNullException();
+                if(r == null) { throw new ArgumentOutOfRangeException("id"); }
                 }
             }
             catch

@@ -1,4 +1,5 @@
-﻿using LocalGourmet.DL;
+﻿using LocalGourmet.DAL.Interfaces;
+using LocalGourmet.DL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,79 +8,79 @@ using System.Threading.Tasks;
 
 namespace LocalGourmet.DAL
 {
-    public class ReviewAccessor
+    public class ReviewAccessor : ICrud<DL.Review>
     {
-        // CREATE
-        public async Task AddReviewAsync(DL.Review item)
+        private LocalGourmetDBEntities db;
+
+        #region Constructors
+        public ReviewAccessor()
         {
-            using (var db = new LocalGourmetDBEntities())
-            {
-                db.Reviews.Add(item);
-                await db.SaveChangesAsync();
-            }
+            db = new LocalGourmetDBEntities();
         }
 
-        // READ
-        public IEnumerable<DL.Review> GetReviews()
+        public ReviewAccessor(LocalGourmetDBEntities testDb)
         {
-            IEnumerable<DL.Review> dataList;
-            using (var db = new LocalGourmetDBEntities())
-            {
-                dataList = db.Reviews.ToList();
-            }
-            return dataList;
+            db = testDb;
         }
+        #endregion
 
-        public IEnumerable<DL.Review> GetReviewsByRestaurantID(int restID)
+        #region ICrud
+        public void Add(Review entity)
         {
-            IEnumerable<DL.Review> dataList;
-            using (var db = new LocalGourmetDBEntities())
+            try
             {
-                dataList = db.Reviews.Where(x => x.RestaurantID == restID).ToList();
-            }
-            return dataList;
-        }
-
-        public DL.Review GetReviewByID(int id)
-        {
-            DL.Review r;
-            using (var db = new LocalGourmetDBEntities())
-            {
-                try
+                if(entity != null)
                 {
-                    r = db.Reviews.Find(id);
-                }
-                catch
-                {
-                    throw;
+                        db.Reviews.Add(entity);
+                        db.SaveChanges();
                 }
             }
-            if(r == null) { throw new ArgumentOutOfRangeException("id"); }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<Review> GetAll()
+        {
+            return db.Reviews.ToList();
+        }
+
+        public IEnumerable<Review> GetReviewsByRestaurantID(int restID)
+        {
+            return db.Reviews.Where(x => x.RestaurantID == restID).ToList();
+        }
+
+        public Review GetById(int id)
+        {
+            Review r;
+            try
+            {
+                r = db.Reviews.Find(id);
+                if(r == null) { throw new ArgumentOutOfRangeException("id"); }
+            }
+            catch
+            {
+                throw;
+            }
             return r;
         }
 
-
-        // UPDATE
-        public async Task UpdateReviewAsync(int id, string reviewerName, 
-            string comment, int foodRating, int serviceRating, int priceRating,
-            int atmosphereRating, int restaurantID)
+        public void Update(Review entity)
         {
-            DL.Review r;
+            DL.Review oldR;
             try
             {
-                using (var db = new LocalGourmetDBEntities())
-                {
-                    r = db.Reviews.Find(id);
-                    if (r == null) { throw new ArgumentOutOfRangeException("id"); }
-                    r.ReviewerName = reviewerName;
-                    r.Comment = comment;
-                    r.FoodRating = foodRating;
-                    r.ServiceRating = serviceRating;
-                    r.PriceRating = priceRating;
-                    r.AtmosphereRating = atmosphereRating;
-                    r.RestaurantID = restaurantID;
-                    await db.SaveChangesAsync();
-                }
+                if (entity == null) { throw new ArgumentOutOfRangeException("id"); }
+                oldR = db.Reviews.Find(entity.ID);
+                oldR.ReviewerName = entity.ReviewerName;
+                oldR.Comment = entity.Comment;
+                oldR.FoodRating = entity.FoodRating;
+                oldR.ServiceRating = entity.ServiceRating;
+                oldR.PriceRating = entity.PriceRating;
+                oldR.AtmosphereRating = entity.AtmosphereRating;
+                oldR.RestaurantID = entity.RestaurantID;
+                db.SaveChanges();
             }
             catch
             {
@@ -87,24 +88,21 @@ namespace LocalGourmet.DAL
             }
         }
 
-        // DELETE
-        public async Task DeleteReviewAsync(int id)
+        public void Delete(Review entity)
         {
             DL.Review r;
             try
             {
-                using (var db = new LocalGourmetDBEntities())
-                {
-                    r = db.Reviews.Find(id);
-                    if (r == null) { throw new ArgumentOutOfRangeException("id"); }
-                    db.Reviews.Remove(r);
-                    await db.SaveChangesAsync();
-                }
+                r = db.Reviews.Find(entity.ID);
+                if (r == null) { throw new ArgumentOutOfRangeException("id"); }
+                db.Reviews.Remove(r);
+                db.SaveChanges();
             }
             catch
             {
                 throw;
             }
         }
+        #endregion
     }
 }

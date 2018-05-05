@@ -12,11 +12,17 @@ namespace LocalGourmet.BLL.Models
     [DataContract]
     public class Review : IReview
     {
+        private ReviewAccessor crud;
+
         #region Constructors
-        public Review() { }
+        public Review()
+        {
+            crud = new ReviewAccessor();
+        }
 
         public Review(string name, string comment)
         {
+            crud = new ReviewAccessor();
             ReviewerName = name;
             Comment = comment;
 
@@ -31,6 +37,8 @@ namespace LocalGourmet.BLL.Models
         // rating categories.
         public Review(string name, string comment, int simpleRating)
         {
+            crud = new ReviewAccessor();
+
             // Enforce a rating between 0 and 5 inclusive
             simpleRating = 
                 simpleRating < 0 ? 0 : (simpleRating > 5 ? 5 : simpleRating);
@@ -45,6 +53,7 @@ namespace LocalGourmet.BLL.Models
         public Review(string name, string comment, int foodRat, 
             int serviceRat, int atmosphereRat, int priceRat)
         {
+            crud = new ReviewAccessor();
             ReviewerName = name;
             Comment = comment;
 
@@ -133,51 +142,25 @@ namespace LocalGourmet.BLL.Models
         [Required]
         public string ReviewerName { get; set; } 
 
-        // Calculates and returns the overall review rating based on the
-        // individual review components.
-        public float GetRating()
-        {
-            return (float) Math.Round(((FoodRating + ServiceRating +
-                AtmosphereRating + PriceRating) / 4.0), 2);
-        }
-
-        public Restaurant GetRestaurant()
-        {
-            return Restaurant.GetByID(RestaurantID);
-        }
-
-        public override string ToString()
-        {
-            return $"[{GetRating()}] {ReviewerName}: {Comment} [Food: " +
-                $"{FoodRating}, Service: {ServiceRating}, Atmosphere: " +
-                $"{AtmosphereRating}, Price: {PriceRating}]";
-        }
-
         #region CRUD
-        // CREATE
-        public async Task AddReviewAsync()
+        public void Add()
         {
-            DL.Review review = LibraryToData(this);
-            ReviewAccessor ra = new ReviewAccessor();
-            await ra.AddReviewAsync(review);
+            crud.Add(LibraryToData(this));
         }
 
-        // READ
-        public static List<Review> GetReviews()
+        public static List<Review> GetAll()
         {
-            ReviewAccessor reviewCRUD = new ReviewAccessor();
-            List<DL.Review> dataList = reviewCRUD.GetReviews().ToList();
-            List<Review> result = dataList.Select(x => DataToLibrary(x)).ToList();
-            return result;
+            ReviewAccessor tempCrud = new ReviewAccessor();
+            return tempCrud.GetAll().Select(x => DataToLibrary(x)).ToList();
         }
 
-        public static Review GetReviewByID(int id)
+        public static Review GetByID(int id)
         {
-            ReviewAccessor reviewCRUD = new ReviewAccessor();
+            ReviewAccessor tempCrud = new ReviewAccessor();
             Review r;
             try
             {
-                r = DataToLibrary(reviewCRUD.GetReviewByID(id));
+                r = DataToLibrary(tempCrud.GetById(id));
             }
             catch
             {
@@ -188,10 +171,10 @@ namespace LocalGourmet.BLL.Models
 
         public static List<Review> GetReviewsByRestaurantID(int restID)
         {
-            ReviewAccessor reviewCRUD = new ReviewAccessor();
+            ReviewAccessor tempCrud = new ReviewAccessor();
             try
             {
-                return reviewCRUD.GetReviewsByRestaurantID(restID).Select(x => DataToLibrary(x)).ToList();
+                return tempCrud.GetReviewsByRestaurantID(restID).Select(x => DataToLibrary(x)).ToList();
             }
             catch
             {
@@ -199,14 +182,12 @@ namespace LocalGourmet.BLL.Models
             }
         }
 
-        // UPDATE
-        public async Task UpdateReviewAsync(Review r)
+        public void Update(Review r)
         {
-            ReviewAccessor reviewCRUD = new ReviewAccessor();
             try
             {
-                // Check restaurantID -- Will throw exception if invalid
-                Restaurant rest = Restaurant.GetByID(RestaurantID);
+                Restaurant rest = Restaurant.GetByID(r.RestaurantID);
+                if (rest == null) { throw new ArgumentException(); }
 
                 // Conform rating input to rating bounds
                 FoodRating = FoodRating < 0 ? 0 : 
@@ -218,9 +199,7 @@ namespace LocalGourmet.BLL.Models
                 AtmosphereRating = AtmosphereRating < 0 ? 0 : 
                     (AtmosphereRating > 5 ? 5 : AtmosphereRating);
 
-                await reviewCRUD.UpdateReviewAsync(ID, ReviewerName,
-                    Comment, FoodRating, ServiceRating, PriceRating, 
-                    AtmosphereRating, RestaurantID);
+                crud.Update(LibraryToData(r));
             }
             catch
             {
@@ -228,51 +207,17 @@ namespace LocalGourmet.BLL.Models
             }
         }
 
-        public async Task UpdateReviewAsync(string reviewerName, 
-            string comment, int foodRating, int serviceRating, int priceRating,
-            int atmosphereRating, int restaurantID)
+        public void Delete()
         {
-            ReviewAccessor reviewCRUD = new ReviewAccessor();
             try
             {
-                // Check restaurantID -- Will throw exception if invalid
-                Restaurant rest = Restaurant.GetByID(restaurantID);
-
-                // Conform rating input to rating bounds
-                foodRating = foodRating < 0 ? 0 : 
-                    (foodRating > 5 ? 5 : foodRating);
-                serviceRating = serviceRating < 0 ? 0 : 
-                    (serviceRating > 5 ? 5 : serviceRating);
-                priceRating = priceRating < 0 ? 0 : 
-                    (priceRating > 5 ? 5 : priceRating);
-                atmosphereRating = atmosphereRating < 0 ? 0 : 
-                    (atmosphereRating > 5 ? 5 : atmosphereRating);
-
-                await reviewCRUD.UpdateReviewAsync(this.ID, reviewerName,
-                    comment, foodRating, serviceRating, priceRating, 
-                    atmosphereRating, restaurantID);
+                crud.Delete(LibraryToData(this));
             }
             catch
             {
                 throw;
             }
         }
-
-        // DELETE
-        public async Task DeleteReviewAsync()
-        {
-            ReviewAccessor reviewCRUD = new ReviewAccessor();
-            try
-            {
-                await reviewCRUD.DeleteReviewAsync(this.ID);
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-
         #endregion
 
         #region BLL-DL Mappers
@@ -368,6 +313,26 @@ namespace LocalGourmet.BLL.Models
                 customReviews[i] = customRev;
             }
             return customReviews;
+        }
+
+        // Calculates and returns the overall review rating based on the
+        // individual review components.
+        public float GetRating()
+        {
+            return (float) Math.Round(((FoodRating + ServiceRating +
+                AtmosphereRating + PriceRating) / 4.0), 2);
+        }
+
+        public Restaurant GetRestaurant()
+        {
+            return Restaurant.GetByID(RestaurantID);
+        }
+
+        public override string ToString()
+        {
+            return $"[{GetRating()}] {ReviewerName}: {Comment} [Food: " +
+                $"{FoodRating}, Service: {ServiceRating}, Atmosphere: " +
+                $"{AtmosphereRating}, Price: {PriceRating}]";
         }
     }
 }
