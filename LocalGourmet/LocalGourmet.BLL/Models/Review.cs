@@ -143,7 +143,7 @@ namespace LocalGourmet.BLL.Models
 
         public Restaurant GetRestaurant()
         {
-            return Restaurant.GetRestaurantByID(RestaurantID);
+            return Restaurant.GetByID(RestaurantID);
         }
 
         public override string ToString()
@@ -206,7 +206,7 @@ namespace LocalGourmet.BLL.Models
             try
             {
                 // Check restaurantID -- Will throw exception if invalid
-                Restaurant rest = Restaurant.GetRestaurantByID(RestaurantID);
+                Restaurant rest = Restaurant.GetByID(RestaurantID);
 
                 // Conform rating input to rating bounds
                 FoodRating = FoodRating < 0 ? 0 : 
@@ -236,7 +236,7 @@ namespace LocalGourmet.BLL.Models
             try
             {
                 // Check restaurantID -- Will throw exception if invalid
-                Restaurant rest = Restaurant.GetRestaurantByID(restaurantID);
+                Restaurant rest = Restaurant.GetByID(restaurantID);
 
                 // Conform rating input to rating bounds
                 foodRating = foodRating < 0 ? 0 : 
@@ -362,7 +362,7 @@ namespace LocalGourmet.BLL.Models
                 firstName = names[rnd.Next(4945)];
                 lastName = names[rnd.Next(4945)];
                 customRev.ReviewerName = $"{firstName} {lastName}";
-                List<int> restIds = Restaurant.GetRestaurants().Select(x => x.ID).ToList();
+                List<int> restIds = Restaurant.GetAll().Select(x => x.ID).ToList();
                 int numRests = restIds.Count;
                 customRev.RestaurantID = restIds[rnd.Next(numRests)];
                 customReviews[i] = customRev;

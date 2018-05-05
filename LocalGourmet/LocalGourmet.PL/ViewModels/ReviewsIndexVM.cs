@@ -14,7 +14,7 @@ namespace LocalGourmet.PL.ViewModels
         public ReviewsIndexVM()
         {
             MyReviews = Review.GetReviews();
-            MyRestaurants = Restaurant.GetRestaurants();
+            MyRestaurants = Restaurant.GetAll();
         }
 
         public IEnumerable<Review> Reviews

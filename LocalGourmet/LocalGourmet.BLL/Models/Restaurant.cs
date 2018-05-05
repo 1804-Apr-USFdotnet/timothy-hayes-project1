@@ -30,10 +30,6 @@ namespace LocalGourmet.BLL.Models
         #endregion
 
         #region Properties
-        // ID indexing is handled by the data source.
-        // This ID Property is only for storing the ID when converting
-        // the object between layers. Do not set this when creating an
-        // object -- it will be ignored.
         public int ID { get; set; }
         public bool Active { get; set; }
         [DataMember]
@@ -68,15 +64,15 @@ namespace LocalGourmet.BLL.Models
 
         #region Getters
         // Deprecated -- only use for serialization testing
-        public static List<Restaurant> GetAll()
-        {
-            List<Restaurant> restaurants = new List<Restaurant>();
-            string json = System.IO.File.ReadAllText(@"C:\revature\" +
-                @"hayes-timothy-project0\LocalGourmet\LocalGourmet.BLL\" +
-                @"Configs\RestaurantsForUnitTest2.json");
-            restaurants = Serializer.Deserialize<List<Restaurant>>(json);
-            return restaurants;
-        }
+        //public static List<Restaurant> GetAll()
+        //{
+        //    List<Restaurant> restaurants = new List<Restaurant>();
+        //    string json = System.IO.File.ReadAllText(@"C:\revature\" +
+        //        @"hayes-timothy-project0\LocalGourmet\LocalGourmet.BLL\" +
+        //        @"Configs\RestaurantsForUnitTest2.json");
+        //    restaurants = Serializer.Deserialize<List<Restaurant>>(json);
+        //    return restaurants;
+        //}
 
         public double GetAvgRating()
         {
@@ -91,29 +87,24 @@ namespace LocalGourmet.BLL.Models
         #endregion
 
         #region CRUD
-        // CREATE
-        public async Task AddRestaurantAsync()
+        public void Add()
         {
-            DL.Restaurant restaurant = LibraryToData(this);
-            await crud.AddRestaurantAsync(restaurant);
+            crud.Add(LibraryToData(this));
         }
 
-        // READ
-        // Does not return inactive ("deleted") restaurants
-        public static IEnumerable<Restaurant> GetRestaurants()
+        public static IEnumerable<Restaurant> GetAll()
         {
-            RestaurantAccessor restaurantCRUD = new RestaurantAccessor();
-            return restaurantCRUD.GetRestaurants().Select(x => DataToLibrary(x)).ToList();
+            RestaurantAccessor crudTemp = new RestaurantAccessor();
+            return crudTemp.GetAll().Select(x => DataToLibrary(x)).ToList();
         }
 
-        // Does return inactive ("deleted") restaurants
-        public static Restaurant GetRestaurantByID(int id)
+        public static Restaurant GetByID(int id)
         {
-            RestaurantAccessor restaurantCRUD = new RestaurantAccessor();
+            RestaurantAccessor crudTemp = new RestaurantAccessor();
             Restaurant r;
             try
             {
-                r = DataToLibrary(restaurantCRUD.GetRestaurantByID(id));
+                r = DataToLibrary(crudTemp.GetById(id));
             }
             catch
             {
@@ -122,12 +113,11 @@ namespace LocalGourmet.BLL.Models
             return r;
         }
         
-        // UPDATE
-        public void UpdateAsync(Restaurant r)
+        public void Update(Restaurant r)
         {
             try
             {
-                crud.UpdateAsync(LibraryToData(r));
+                crud.Update(LibraryToData(r));
             }
             catch
             {
@@ -135,12 +125,11 @@ namespace LocalGourmet.BLL.Models
             }
         }
 
-        // DELETE
-        public async Task DeleteRestaurantAsync()
+        public void Delete()
         {
             try
             {
-                await crud.DeleteRestaurantAsync(this.ID);
+                crud.Delete(LibraryToData(this));
             }
             catch
             {

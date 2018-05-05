@@ -8,10 +8,10 @@ namespace LocalGourmet.DAL.Interfaces
 {
     public interface ICrud<T>
     {
-        void AddAsync(T entity);
+        void Add(T entity);
         IEnumerable<T> GetAll();
         T GetById(int id);
-        void UpdateAsync(T entity);
-        void DeleteAsync(T entity);
+        void Update(T entity);
+        void Delete(T entity);
     }
 }

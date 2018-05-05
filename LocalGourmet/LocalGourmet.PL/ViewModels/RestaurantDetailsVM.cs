@@ -16,7 +16,7 @@ namespace LocalGourmet.PL.ViewModels
         {
             this.ID = newID;
             MyReviews = Review.GetReviewsByRestaurantID(this.ID);
-            MyRestaurant = BLL.Models.Restaurant.GetRestaurantByID(this.ID);
+            MyRestaurant = BLL.Models.Restaurant.GetByID(this.ID);
         }
 
         public IEnumerable<Review> Reviews

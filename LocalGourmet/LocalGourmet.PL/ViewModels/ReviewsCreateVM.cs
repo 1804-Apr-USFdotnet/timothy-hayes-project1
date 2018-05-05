@@ -14,7 +14,7 @@ namespace LocalGourmet.PL.ViewModels
         public ReviewsCreateVM()
         {
             MyReview = new Review();
-            MyRestaurants = Restaurant.GetRestaurants();
+            MyRestaurants = Restaurant.GetAll();
         }
 
         public Review Review

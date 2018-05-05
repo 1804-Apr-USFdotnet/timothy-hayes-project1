@@ -14,14 +14,14 @@ namespace LocalGourmet.PL.ViewModels
 
         public ReviewsEditVM()
         {
-            MyRestaurants = BLL.Models.Restaurant.GetRestaurants();
+            MyRestaurants = BLL.Models.Restaurant.GetAll();
         }
 
         public ReviewsEditVM(int newID)
         {
             this.ID = newID;
             MyReview = Review.GetReviewByID(this.ID);
-            MyRestaurants = BLL.Models.Restaurant.GetRestaurants();
+            MyRestaurants = BLL.Models.Restaurant.GetAll();
         }
 
         public ReviewsEditVM(int revID, int restID)
@@ -29,7 +29,7 @@ namespace LocalGourmet.PL.ViewModels
             this.ID = revID;
             MyReview = Review.GetReviewByID(this.ID);
             MyReview.RestaurantID = restID;
-            MyRestaurants = BLL.Models.Restaurant.GetRestaurants();
+            MyRestaurants = BLL.Models.Restaurant.GetAll();
         }
 
         public Review Review

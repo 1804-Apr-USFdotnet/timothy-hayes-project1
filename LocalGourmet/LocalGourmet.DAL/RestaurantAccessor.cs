@@ -3,17 +3,15 @@ using LocalGourmet.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.Entity;
 
 namespace LocalGourmet.DAL
 {
-    // CRUD class for Restaurant
     public class RestaurantAccessor : ICrud<DL.Restaurant>
     {
         private LocalGourmetDBEntities db;
 
+        #region Constructors
         public RestaurantAccessor()
         {
             db = new LocalGourmetDBEntities();
@@ -23,36 +21,33 @@ namespace LocalGourmet.DAL
         {
             db = testDb;
         }
+        #endregion
 
-        // CREATE
-        public async Task AddRestaurantAsync(DL.Restaurant item)
+        #region ICrud
+        public void Add(Restaurant entity)
         {
             try
             {
-                if(item != null)
+                if(entity != null)
                 {
-                        db.Restaurants.Add(item);
-                        await db.SaveChangesAsync();
+                        db.Restaurants.Add(entity);
+                        db.SaveChanges();
                 }
             }
-            catch(Exception)
+            catch
             {
-                // call Nlog
                 throw;
             }
         }
 
-        // READ
-        // Does not return inactive ("deleted") restaurants
-        public IEnumerable<DL.Restaurant> GetRestaurants()
+        public IEnumerable<Restaurant> GetAll()
         {
             return db.Restaurants.Where(x => x.Active == true ).ToList();
         }
 
-        // Does return inactive ("deleted") restaurants
-        public DL.Restaurant GetRestaurantByID(int id)
+        public Restaurant GetById(int id)
         {
-            DL.Restaurant r;
+            Restaurant r;
             try
             {
                 r = db.Restaurants.Find(id);
@@ -67,24 +62,23 @@ namespace LocalGourmet.DAL
             }
             return r;
         }
-        
-        // UPDATE
-        public async Task UpdateRestaurantAsync(Restaurant r)
+
+        public void Update(Restaurant entity)
         {
             DL.Restaurant oldR;
             try
             {
-                if (r == null) { throw new ArgumentOutOfRangeException("id"); }
-                oldR = db.Restaurants.Find(r.ID);
-                oldR.Name = r.Name;
-                oldR.Location = r.Location;
-                oldR.Cuisine = r.Cuisine;
-                oldR.Specialty = r.Specialty;
-                oldR.PhoneNumber = r.PhoneNumber;
-                oldR.WebAddress = r.WebAddress;
-                oldR.Type = r.Type;
-                oldR.Hours = r.Hours;
-                await db.SaveChangesAsync();
+                if (entity == null) { throw new ArgumentOutOfRangeException("id"); }
+                oldR = db.Restaurants.Find(entity.ID);
+                oldR.Name = entity.Name;
+                oldR.Location = entity.Location;
+                oldR.Cuisine = entity.Cuisine;
+                oldR.Specialty = entity.Specialty;
+                oldR.PhoneNumber = entity.PhoneNumber;
+                oldR.WebAddress = entity.WebAddress;
+                oldR.Type = entity.Type;
+                oldR.Hours = entity.Hours;
+                db.SaveChanges();
             }
             catch
             {
@@ -92,59 +86,28 @@ namespace LocalGourmet.DAL
             }
         }
 
-        // DELETE
-        public async Task DeleteRestaurantAsync(int id)
+        public void Delete(Restaurant entity)
         {
             DL.Restaurant r;
             try
             {
-                if(id != 0)
+                r = db.Restaurants.Find(entity.ID);
+                if (r == null) { throw new ArgumentOutOfRangeException("id"); }
+                db.Restaurants.Remove(r);
+                var revs = db.Reviews.Where(x => x.RestaurantID == entity.ID);
+                if (revs != null)
                 {
-                    r = db.Restaurants.Find(id);
-                    if (r == null) { throw new ArgumentOutOfRangeException("id"); }
-                    db.Restaurants.Remove(r);
-                    var revs = db.Reviews.Where(x => x.RestaurantID == id);
-                    if (revs != null)
+                    foreach (var rev in revs)
                     {
-                        foreach (var rev in revs)
-                        {
-                            db.Reviews.Remove(rev);
-                        }
+                        db.Reviews.Remove(rev);
                     }
-                    await db.SaveChangesAsync();
                 }
+                db.SaveChanges();
             }
             catch
             {
-                // Nlog
                 throw;
             }
-        }
-
-
-        #region ICrud
-        public async void AddAsync(Restaurant entity)
-        {
-            await AddRestaurantAsync(entity);
-        }
-
-        public IEnumerable<Restaurant> GetAll()
-        {
-            return GetRestaurants();
-        }
-
-        public Restaurant GetById(int id)
-        {
-            return GetRestaurantByID(id);
-        }
-
-        public async void UpdateAsync(Restaurant entity)
-        {
-            await UpdateRestaurantAsync(entity);
-        }
-
-        public void DeleteAsync(Restaurant entity)
-        {
         }
         #endregion
     }

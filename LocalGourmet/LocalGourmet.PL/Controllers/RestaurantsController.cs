@@ -15,48 +15,42 @@ namespace LocalGourmet.PL.Controllers
     public class RestaurantsController : Controller
     {
         private Logger log;
-        // ICrud implementing class db = new
+        private IEnumerable<Restaurant> restaurants;
 
         public RestaurantsController()
         {
             log = LogManager.GetLogger("file");
-
-            //Review[] revs = Review.GenerateReviews(100);
-            //foreach (var item in revs)
-            //{
-            //    item.AddReviewAsync();
-            //}
+            restaurants = Restaurant.GetAll();
         }
 
         // GET: Restaurants
         public ActionResult Index(string sort)
         {
+            IEnumerable<Restaurant> tempRestaurants = restaurants;
             try
             {
-                var restaurants = Restaurant.GetRestaurants();
-
                 if(sort == "byName")
                 {
-                    restaurants = Restaurant.SortByNameAsc(restaurants);
+                    tempRestaurants = Restaurant.SortByNameAsc(restaurants);
                 }
                 else if(sort == "byRating")
                 {
-                    restaurants = Restaurant.SortByAvgRatingDesc(restaurants);
+                    tempRestaurants = Restaurant.SortByAvgRatingDesc(restaurants);
                 }
                 else if(sort == "byCuisine")
                 {
-                    restaurants = Restaurant.SortByCuisineAsc(restaurants);
+                    tempRestaurants = Restaurant.SortByCuisineAsc(restaurants);
                 }
                 else if(sort == "topThree")
                 {
-                    restaurants = Restaurant.GetTop3((List<Restaurant>) restaurants);
+                    tempRestaurants = Restaurant.GetTop3((List<Restaurant>) restaurants);
                 }
                 else if(sort != null)
                 {
                     string search = sort; // "sort" var will store search info
-                    restaurants = Restaurant.SearchByName(restaurants, search);
+                    tempRestaurants = Restaurant.SearchByName(restaurants, search);
                 }
-                return View(restaurants);
+                return View(tempRestaurants);
             }
             catch(Exception e)
             {
@@ -70,7 +64,7 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                if(Restaurant.GetRestaurantByID(id) == null)
+                if(Restaurant.GetByID(id) == null)
                 { throw new ArgumentNullException(); }
                 RestaurantDetailsVM vm = new RestaurantDetailsVM(id);
                 return View(vm);
@@ -90,14 +84,14 @@ namespace LocalGourmet.PL.Controllers
 
         // POST: Restaurants/Create
         [HttpPost]
-        public async Task<ActionResult> Create(BLL.Models.Restaurant restaurant)
+        public ActionResult Create(BLL.Models.Restaurant restaurant)
         {
             try
             {
                 if(ModelState.IsValid) // server-side validation
                 {
                     restaurant.Active = true;
-                    await restaurant.AddRestaurantAsync();
+                    restaurant.Add();
                     return RedirectToAction("Index");
                 }
                 else
@@ -117,7 +111,7 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                Restaurant r = Restaurant.GetRestaurantByID(id);
+                Restaurant r = Restaurant.GetByID(id);
                 if(r == null) { throw new ArgumentNullException("id"); }
                 return View(r);
             }
@@ -136,7 +130,7 @@ namespace LocalGourmet.PL.Controllers
             {
                 if(ModelState.IsValid) // server-side validation
                 {
-                    restaurant.UpdateAsync(restaurant);
+                    restaurant.Update(restaurant);
                     return RedirectToAction("Index");
                 }
                 else
@@ -156,7 +150,7 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                Restaurant r = Restaurant.GetRestaurantByID(id);
+                Restaurant r = Restaurant.GetByID(id);
                 if (r == null) { throw new ArgumentNullException("id"); }
                 return View(r);
             }
@@ -169,13 +163,13 @@ namespace LocalGourmet.PL.Controllers
 
         // POST: Restaurants/Delete/5
         [HttpPost]
-        public async Task<ActionResult> Delete(int id, Restaurant restaurant)
+        public ActionResult Delete(int id, Restaurant restaurant)
         {
             try
             {
-                Restaurant r = Restaurant.GetRestaurantByID(id);
+                Restaurant r = Restaurant.GetByID(id);
                 if (r == null) { throw new ArgumentNullException("id"); }
-                await r.DeleteRestaurantAsync();
+                r.Delete();
                 return RedirectToAction("Index");
             }
             catch(Exception e)
