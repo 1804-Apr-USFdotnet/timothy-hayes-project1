@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using LocalGourmet.BLL.Models;
 using LocalGourmet.PL.ViewModels;
+using NLog;
 
 namespace LocalGourmet.PL.Controllers
 {
@@ -13,9 +14,13 @@ namespace LocalGourmet.PL.Controllers
 
     public class RestaurantsController : Controller
     {
+        private Logger log;
         // ICrud implementing class db = new
+
         public RestaurantsController()
         {
+            log = LogManager.GetLogger("file");
+
             //Review[] revs = Review.GenerateReviews(100);
             //foreach (var item in revs)
             //{
@@ -26,31 +31,38 @@ namespace LocalGourmet.PL.Controllers
         // GET: Restaurants
         public ActionResult Index(string sort)
         {
-            var restaurants = BLL.Models.Restaurant.GetRestaurants();
+            try
+            {
+                var restaurants = BLL.Models.Restaurant.GetRestaurants();
 
-            if(sort == "byName")
-            {
-                restaurants = Restaurant.SortByNameAsc(restaurants);
+                if(sort == "byName")
+                {
+                    restaurants = Restaurant.SortByNameAsc(restaurants);
+                }
+                else if(sort == "byRating")
+                {
+                    restaurants = Restaurant.SortByAvgRatingDesc(restaurants);
+                }
+                else if(sort == "byCuisine")
+                {
+                    restaurants = Restaurant.SortByCuisineAsc(restaurants);
+                }
+                else if(sort == "topThree")
+                {
+                    restaurants = BLL.Models.Restaurant.GetTop3((List<Restaurant>) restaurants);
+                }
+                else if(sort != null)
+                {
+                    string search = sort; // "sort" var will store search info
+                    restaurants = Restaurant.SearchByName(restaurants, search);
+                }
+                return View(restaurants);
             }
-            else if(sort == "byRating")
+            catch(Exception e)
             {
-                restaurants = Restaurant.SortByAvgRatingDesc(restaurants);
+                log.Error($"[Restaurants Controller] [Index] Exception thrown: {e.Message}");
+                return RedirectToAction("Index");
             }
-            else if(sort == "byCuisine")
-            {
-                restaurants = Restaurant.SortByCuisineAsc(restaurants);
-            }
-            else if(sort == "topThree")
-            {
-                restaurants = BLL.Models.Restaurant.GetTop3((List<Restaurant>) restaurants);
-            }
-            else if(sort != null)
-            {
-                string search = sort; // "sort" var will store search info
-                restaurants = Restaurant.SearchByName(restaurants, search);
-            }
-
-            return View(restaurants);
         }
 
         // GET: Restaurants/Details/5
@@ -63,8 +75,9 @@ namespace LocalGourmet.PL.Controllers
                 RestaurantDetailsVM vm = new RestaurantDetailsVM(id);
                 return View(vm);
             }
-            catch
+            catch(Exception e)
             {
+                log.Error($"[Restaurants Controller] [Details] Exception thrown: {e.Message}");
                 return RedirectToAction("Index");
             }
         }
@@ -92,8 +105,9 @@ namespace LocalGourmet.PL.Controllers
                     return View(ModelState);
                 }
             }
-            catch
+            catch(Exception e)
             {
+                log.Error($"[Restaurants Controller] [Create] Exception thrown: {e.Message}");
                 return View();
             }
         }
@@ -108,9 +122,10 @@ namespace LocalGourmet.PL.Controllers
                 if(r == null) { throw new ArgumentNullException("id"); }
                 return View(r);
             }
-            catch
+            catch(Exception e)
             {
-                throw;
+                log.Error($"[Restaurants Controller] [Edit] Exception thrown: {e.Message}");
+                return RedirectToAction("Index");
             }
         }
 
@@ -130,9 +145,10 @@ namespace LocalGourmet.PL.Controllers
                     return View(ModelState);
                 }
             }
-            catch
+            catch(Exception e)
             {
-                return View();
+                log.Error($"[Restaurants Controller] [Edit] Exception thrown: {e.Message}");
+                return RedirectToAction("Index");
             }
         }
 
@@ -146,9 +162,10 @@ namespace LocalGourmet.PL.Controllers
                 if (r == null) { throw new ArgumentNullException("id"); }
                 return View(r);
             }
-            catch
+            catch(Exception e)
             {
-                throw;
+                log.Error($"[Restaurants Controller] [Delete] Exception thrown: {e.Message}");
+                return RedirectToAction("Index");
             }
         }
 
@@ -164,8 +181,9 @@ namespace LocalGourmet.PL.Controllers
                 await r.DeleteRestaurantAsync();
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception e)
             {
+                log.Error($"[Restaurants Controller] [Delete] Exception thrown: {e.Message}");
                 return View(restaurant);
             }
         }
