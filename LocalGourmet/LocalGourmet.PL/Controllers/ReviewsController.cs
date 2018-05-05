@@ -68,10 +68,9 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                BLL.Models.Review r =
-                     BLL.Models.Review.GetReviewByID(id);
-                if (r == null) { throw new ArgumentNullException("id"); }
-                return View(r);
+                ReviewsEditVM vm = new ReviewsEditVM(id);
+                if (vm.Review == null) { throw new ArgumentNullException("id"); }
+                return View(vm);
             }
             catch
             {
@@ -81,10 +80,11 @@ namespace LocalGourmet.PL.Controllers
 
         // POST: Reviews/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(int id, Review review)
+        public async Task<ActionResult> Edit(Review review)
         {
             try
             {
+                //ReviewsEditVM vm = new ReviewsEditVM(id, RestaurantID);
                 if(ModelState.IsValid) // server-side validation
                 {
                     await review.UpdateReviewAsync(review);

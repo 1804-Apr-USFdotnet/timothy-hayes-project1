@@ -158,6 +158,7 @@
     <Compile Include="Models\Restaurant.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ReviewsEditVM.cs" />
     <Compile Include="ViewModels\RestaurantDetailsVM.cs" />
     <Compile Include="ViewModels\ReviewsCreateVM.cs" />
     <Compile Include="ViewModels\ReviewsIndexVM.cs" />
