@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using LocalGourmet.BLL.Models;
+using LocalGourmet.BLL.Repositories;
+using LocalGourmet.BLL.Services;
 using LocalGourmet.PL.ViewModels;
 using NLog;
 
@@ -16,11 +18,13 @@ namespace LocalGourmet.PL.Controllers
     {
         private Logger log;
         private IEnumerable<Restaurant> restaurants;
+        private RestaurantRepository restaurantRepository;
 
         public RestaurantsController()
         {
             log = LogManager.GetLogger("file");
-            restaurants = Restaurant.GetAll();
+            restaurantRepository = new RestaurantRepository();
+            restaurants = restaurantRepository.GetAll();
         }
 
         // GET: Restaurants
@@ -31,24 +35,24 @@ namespace LocalGourmet.PL.Controllers
             {
                 if(sort == "byName")
                 {
-                    tempRestaurants = Restaurant.SortByNameAsc(restaurants);
+                    tempRestaurants = RestaurantService.SortByNameAsc(restaurants);
                 }
                 else if(sort == "byRating")
                 {
-                    tempRestaurants = Restaurant.SortByAvgRatingDesc(restaurants);
+                    tempRestaurants = RestaurantService.SortByAvgRatingDesc(restaurants);
                 }
                 else if(sort == "byCuisine")
                 {
-                    tempRestaurants = Restaurant.SortByCuisineAsc(restaurants);
+                    tempRestaurants = RestaurantService.SortByCuisineAsc(restaurants);
                 }
                 else if(sort == "topThree")
                 {
-                    tempRestaurants = Restaurant.GetTop3((List<Restaurant>) restaurants);
+                    tempRestaurants = RestaurantService.GetTop3((List<Restaurant>) restaurants);
                 }
                 else if(sort != null)
                 {
                     string search = sort; // "sort" var will store search info
-                    tempRestaurants = Restaurant.SearchByName(restaurants, search);
+                    tempRestaurants = RestaurantService.SearchByName(restaurants, search);
                 }
                 return View(tempRestaurants);
             }
@@ -64,7 +68,7 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                if(Restaurant.GetByID(id) == null)
+                if(restaurantRepository.GetByID(id) == null)
                 { throw new ArgumentNullException(); }
                 RestaurantDetailsVM vm = new RestaurantDetailsVM(id);
                 return View(vm);
@@ -91,7 +95,7 @@ namespace LocalGourmet.PL.Controllers
                 if(ModelState.IsValid) // server-side validation
                 {
                     restaurant.Active = true;
-                    restaurant.Add();
+                    restaurantRepository.Add(restaurant);
                     return RedirectToAction("Index");
                 }
                 else
@@ -111,7 +115,7 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                Restaurant r = Restaurant.GetByID(id);
+                Restaurant r = restaurantRepository.GetByID(id);
                 if(r == null) { throw new ArgumentNullException("id"); }
                 return View(r);
             }
@@ -130,7 +134,7 @@ namespace LocalGourmet.PL.Controllers
             {
                 if(ModelState.IsValid) // server-side validation
                 {
-                    restaurant.Update(restaurant);
+                    restaurantRepository.Update(restaurant);
                     return RedirectToAction("Index");
                 }
                 else
@@ -150,7 +154,7 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                Restaurant r = Restaurant.GetByID(id);
+                Restaurant r = restaurantRepository.GetByID(id);
                 if (r == null) { throw new ArgumentNullException("id"); }
                 return View(r);
             }
@@ -167,9 +171,9 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                Restaurant r = Restaurant.GetByID(id);
+                Restaurant r = restaurantRepository.GetByID(id);
                 if (r == null) { throw new ArgumentNullException("id"); }
-                r.Delete();
+                restaurantRepository.Delete(r);
                 return RedirectToAction("Index");
             }
             catch(Exception e)

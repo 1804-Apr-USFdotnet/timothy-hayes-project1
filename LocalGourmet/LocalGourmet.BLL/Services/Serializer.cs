@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.IO;
 
-namespace LocalGourmet.BLL.Models
+namespace LocalGourmet.BLL.Services
 {
     // Static class for Serialization and Deserialization
     public static class Serializer

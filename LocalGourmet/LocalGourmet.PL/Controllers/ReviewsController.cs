@@ -7,16 +7,19 @@ using System.Threading.Tasks;
 using LocalGourmet.BLL.Models;
 using LocalGourmet.PL.ViewModels;
 using NLog;
+using LocalGourmet.BLL.Repositories;
 
 namespace LocalGourmet.PL.Controllers
 {
     public class ReviewsController : Controller
     {
         private Logger log;
+        private ReviewRepository reviewRepository;
 
         public ReviewsController()
         {
             log = LogManager.GetLogger("file");
+            reviewRepository = new ReviewRepository();
         }
 
         // GET: Reviews
@@ -39,7 +42,7 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                Review r = Review.GetById(id);
+                Review r = reviewRepository.GetById(id);
                 if (r == null) { throw new ArgumentNullException("id"); }
                 return View(r);
             }
@@ -73,7 +76,7 @@ namespace LocalGourmet.PL.Controllers
             {
                 if(ModelState.IsValid) // server-side validation
                 {
-                    vm.Review.Add();
+                    reviewRepository.Add(vm.Review);
                     return RedirectToAction("Index");
                 }
                 else
@@ -113,7 +116,7 @@ namespace LocalGourmet.PL.Controllers
                 //ReviewsEditVM vm = new ReviewsEditVM(id, RestaurantID);
                 if(ModelState.IsValid) // server-side validation
                 {
-                    review.Update(review);
+                    reviewRepository.Update(review);
                     return RedirectToAction("Index");
                 }
                 else
@@ -133,7 +136,7 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                Review r = Review.GetById(id);
+                Review r = reviewRepository.GetById(id);
                 if (r == null) { throw new ArgumentNullException("id"); }
                 return View(r);
             }
@@ -150,9 +153,9 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                Review r = Review.GetById(id);
+                Review r = reviewRepository.GetById(id);
                 if (r == null) { throw new ArgumentNullException("id"); }
-                r.Delete();
+                reviewRepository.Delete(r);
                 return RedirectToAction("Index");
             }
             catch (Exception e)

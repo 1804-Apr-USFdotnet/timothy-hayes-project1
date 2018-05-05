@@ -1,28 +1,21 @@
-﻿using LocalGourmet.DAL.Repositories;
-using LocalGourmet.BLL.Interfaces;
+﻿using LocalGourmet.BLL.Interfaces;
 using System;
-using System.Threading.Tasks;
 using System.Runtime.Serialization;
-using System.Collections.Generic;
-using System.Linq;
 using System.ComponentModel.DataAnnotations;
+using LocalGourmet.BLL.Repositories;
 
 namespace LocalGourmet.BLL.Models
 {
     [DataContract]
     public class Review : IReview
     {
-        private ReviewAccessor crud;
-
         #region Constructors
         public Review()
         {
-            crud = new ReviewAccessor();
         }
 
         public Review(string name, string comment)
         {
-            crud = new ReviewAccessor();
             ReviewerName = name;
             Comment = comment;
 
@@ -37,8 +30,6 @@ namespace LocalGourmet.BLL.Models
         // rating categories.
         public Review(string name, string comment, int simpleRating)
         {
-            crud = new ReviewAccessor();
-
             // Enforce a rating between 0 and 5 inclusive
             simpleRating = 
                 simpleRating < 0 ? 0 : (simpleRating > 5 ? 5 : simpleRating);
@@ -53,7 +44,6 @@ namespace LocalGourmet.BLL.Models
         public Review(string name, string comment, int foodRat, 
             int serviceRat, int atmosphereRat, int priceRat)
         {
-            crud = new ReviewAccessor();
             ReviewerName = name;
             Comment = comment;
 
@@ -142,178 +132,6 @@ namespace LocalGourmet.BLL.Models
         [Required]
         public string ReviewerName { get; set; } 
 
-        #region CRUD
-        public void Add()
-        {
-            crud.Add(LibraryToData(this));
-        }
-
-        public static List<Review> GetAll()
-        {
-            ReviewAccessor tempCrud = new ReviewAccessor();
-            return tempCrud.GetAll().Select(x => DataToLibrary(x)).ToList();
-        }
-
-        public static Review GetById(int id)
-        {
-            ReviewAccessor tempCrud = new ReviewAccessor();
-            Review r;
-            try
-            {
-                r = DataToLibrary(tempCrud.GetById(id));
-            }
-            catch
-            {
-                throw;
-            }
-            return r;
-        }
-
-        public static List<Review> GetReviewsByRestaurantID(int restID)
-        {
-            ReviewAccessor tempCrud = new ReviewAccessor();
-            try
-            {
-                return tempCrud.GetReviewsByRestaurantID(restID).Select(x => DataToLibrary(x)).ToList();
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public void Update(Review r)
-        {
-            try
-            {
-                Restaurant rest = Restaurant.GetByID(r.RestaurantID);
-                if (rest == null) { throw new ArgumentException(); }
-
-                // Conform rating input to rating bounds
-                FoodRating = FoodRating < 0 ? 0 : 
-                    (FoodRating > 5 ? 5 : FoodRating);
-                ServiceRating = ServiceRating < 0 ? 0 : 
-                    (ServiceRating > 5 ? 5 : ServiceRating);
-                PriceRating = PriceRating < 0 ? 0 : 
-                    (PriceRating > 5 ? 5 : PriceRating);
-                AtmosphereRating = AtmosphereRating < 0 ? 0 : 
-                    (AtmosphereRating > 5 ? 5 : AtmosphereRating);
-
-                crud.Update(LibraryToData(r));
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public void Delete()
-        {
-            try
-            {
-                crud.Delete(LibraryToData(this));
-            }
-            catch
-            {
-                throw;
-            }
-        }
-        #endregion
-
-        #region BLL-DL Mappers
-        public static BLL.Models.Review DataToLibrary(DL.Review dataModel)
-        {
-            int revID = dataModel.ID;
-
-            var libModel = new BLL.Models.Review()
-            {
-                ID = dataModel.ID,
-                RestaurantID = dataModel.RestaurantID,
-                ReviewerName = dataModel.ReviewerName,
-                Comment = dataModel.Comment,
-                FoodRating = dataModel.FoodRating,
-                ServiceRating = dataModel.ServiceRating,
-                AtmosphereRating = dataModel.AtmosphereRating,
-                PriceRating = dataModel.PriceRating
-            };
-            return libModel;
-        }
-
-        public static DL.Review LibraryToData(BLL.Models.Review libModel)
-        {
-            var dataModel = new DL.Review();
-            {
-                dataModel.ID = libModel.ID;
-                dataModel.RestaurantID = libModel.RestaurantID;
-                dataModel.ReviewerName = libModel.ReviewerName;
-                dataModel.Comment = libModel.Comment;
-                dataModel.FoodRating = libModel.FoodRating;
-                dataModel.ServiceRating = libModel.ServiceRating;
-                dataModel.AtmosphereRating = libModel.AtmosphereRating;
-                dataModel.PriceRating = libModel.PriceRating;
-            };
-            return dataModel;
-        }
-        #endregion
-
-        // Returns a custom list of reviews, with RestaurantIDs from 1-10
-        public static Review[] GenerateReviews(int howMany)
-        {
-            string[] names = new string[4945];
-            string nameString = System.IO.File.ReadAllText(@"C:\revature\hayes-timothy-project0\LocalGourmet\LocalGourmet.BLL\Configs\Names.txt");
-            System.IO.StringReader r = new System.IO.StringReader(nameString);
-            for(int i = 0; i < 4945; i++)
-            {
-                names[i] = r.ReadLine();
-            }
-
-            Review r1 = new Review("", "I'm never coming here again!", 0, 1, 1, 1);
-            Review r2 = new Review("", "I'd rather eat bread and water.", 1, 2, 1, 0);
-            Review r3 = new Review("", "Bleh!", 1, 2, 1, 2);
-            Review r4 = new Review("", "I hope no one saw me eat here.", 2, 3, 1, 2);
-            Review r5 = new Review("", "Better than starving...", 2, 3, 2, 3);
-            Review r6 = new Review("", "At least it was cheap.", 3, 2, 4, 3);
-            Review r7 = new Review("", "I'd come here again.", 3, 4, 3, 4);
-            Review r8 = new Review("", "I had great expectations...", 2, 3, 4, 4);
-            Review r9 = new Review("", "Wow!", 4, 4, 5, 4);
-            Review r10 = new Review("", "Best restaurant ever!", 5, 5, 5, 5);
-
-            Review[] revs = new Review[10];
-            revs[0] = r1;
-            revs[1] = r2;
-            revs[2] = r3;
-            revs[3] = r4;
-            revs[4] = r5;
-            revs[5] = r6;
-            revs[6] = r7;
-            revs[7] = r8;
-            revs[8] = r9;
-            revs[9] = r10;
-
-            int revIndex;
-            string firstName, lastName;
-            Random rnd = new Random();
-            Review[] customReviews = new Review[howMany];
-            for(int i = 0; i < howMany; i++)
-            {
-                revIndex = rnd.Next(10);
-                Review customRev = new Review();
-                Review q = revs[revIndex];
-                customRev.Comment = q.Comment;
-                customRev.FoodRating = q.FoodRating;
-                customRev.ServiceRating = q.ServiceRating;
-                customRev.AtmosphereRating = q.AtmosphereRating;
-                customRev.PriceRating = q.PriceRating;
-                firstName = names[rnd.Next(4945)];
-                lastName = names[rnd.Next(4945)];
-                customRev.ReviewerName = $"{firstName} {lastName}";
-                List<int> restIds = Restaurant.GetAll().Select(x => x.ID).ToList();
-                int numRests = restIds.Count;
-                customRev.RestaurantID = restIds[rnd.Next(numRests)];
-                customReviews[i] = customRev;
-            }
-            return customReviews;
-        }
 
         // Calculates and returns the overall review rating based on the
         // individual review components.
@@ -325,7 +143,8 @@ namespace LocalGourmet.BLL.Models
 
         public Restaurant GetRestaurant()
         {
-            return Restaurant.GetByID(RestaurantID);
+            RestaurantRepository restaurantRepository = new RestaurantRepository();
+            return restaurantRepository.GetByID(RestaurantID);
         }
 
         public override string ToString()

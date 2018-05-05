@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using LocalGourmet.BLL.Models;
+using LocalGourmet.BLL.Repositories;
 
 namespace LocalGourmet.PL.ViewModels
 {
@@ -11,25 +12,29 @@ namespace LocalGourmet.PL.ViewModels
         private int ID;
         private Review MyReview;
         private IEnumerable<Restaurant> MyRestaurants;
+        private ReviewRepository reviewRepository;
+        private RestaurantRepository restaurantRepository;
 
         public ReviewsEditVM()
         {
-            MyRestaurants = BLL.Models.Restaurant.GetAll();
+            restaurantRepository = new RestaurantRepository();
+            reviewRepository = new ReviewRepository();
+            MyRestaurants = restaurantRepository.GetAll();
         }
 
         public ReviewsEditVM(int newID)
         {
             this.ID = newID;
-            MyReview = Review.GetById(this.ID);
-            MyRestaurants = BLL.Models.Restaurant.GetAll();
+            MyReview = reviewRepository.GetById(this.ID);
+            MyRestaurants = restaurantRepository.GetAll();
         }
 
         public ReviewsEditVM(int revID, int restID)
         {
             this.ID = revID;
-            MyReview = Review.GetById(this.ID);
+            MyReview = reviewRepository.GetById(this.ID);
             MyReview.RestaurantID = restID;
-            MyRestaurants = BLL.Models.Restaurant.GetAll();
+            MyRestaurants = restaurantRepository.GetAll();
         }
 
         public Review Review

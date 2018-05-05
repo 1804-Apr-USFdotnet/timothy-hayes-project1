@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using LocalGourmet.BLL.Models;
+using LocalGourmet.BLL.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LocalGourmet.BLL.UnitTest
@@ -58,7 +59,7 @@ namespace LocalGourmet.BLL.UnitTest
             expected.Add(restaurants[1]);
             expected.Add(restaurants[2]);
             expected.Add(restaurants[7]);
-            List<Restaurant> actual = Restaurant.GetTop3(Restaurant.GetAllFromJSON());
+            List<Restaurant> actual = RestaurantService.GetTop3(RestaurantService.GetAllFromJSON());
 
             // Assert
             Assert.AreEqual(expected[0].ToString(), actual[0].ToString());
@@ -78,10 +79,10 @@ namespace LocalGourmet.BLL.UnitTest
 
             // Act
             string s1 = "sub";
-            List<Restaurant> a1 = (List<Restaurant>) Restaurant.SearchByName(Restaurant.GetAllFromJSON(), s1);
+            List<Restaurant> a1 = (List<Restaurant>) RestaurantService.SearchByName(RestaurantService.GetAllFromJSON(), s1);
 
             string s2 = "CO";
-            List<Restaurant> a2 = (List<Restaurant>) Restaurant.SearchByName(Restaurant.GetAllFromJSON(), s2);
+            List<Restaurant> a2 = (List<Restaurant>) RestaurantService.SearchByName(RestaurantService.GetAllFromJSON(), s2);
 
             // Assert
             Assert.AreEqual("Subway", a1[0].Name);
@@ -108,7 +109,7 @@ namespace LocalGourmet.BLL.UnitTest
             string e7 = "Stonewood Grill & Tavern"; // rating = 3.25
 
             // Act
-            List<Restaurant> a = (List<Restaurant>) Restaurant.SortByAvgRatingDesc(Restaurant.GetAllFromJSON());
+            List<Restaurant> a = (List<Restaurant>) RestaurantService.SortByAvgRatingDesc(RestaurantService.GetAllFromJSON());
 
             // Assert
             Assert.AreEqual(e2, a[2].Name);
@@ -130,7 +131,7 @@ namespace LocalGourmet.BLL.UnitTest
             string e2 = "Yummy House China Bistro";
 
             // Act
-            List<Restaurant> a = (List<Restaurant>) Restaurant.SortByNameAsc(Restaurant.GetAllFromJSON());
+            List<Restaurant> a = (List<Restaurant>) RestaurantService.SortByNameAsc(RestaurantService.GetAllFromJSON());
 
             // Assert
             Assert.AreEqual(e1, a[0].Name);
@@ -151,7 +152,7 @@ namespace LocalGourmet.BLL.UnitTest
             string e2 = "Columbia Restaurant";
 
             // Act
-            List<Restaurant> a = (List<Restaurant>) Restaurant.SortByCuisineAsc(Restaurant.GetAllFromJSON());
+            List<Restaurant> a = (List<Restaurant>) RestaurantService.SortByCuisineAsc(RestaurantService.GetAllFromJSON());
 
             // Assert
             Assert.AreEqual(e1, a[8].Name);
