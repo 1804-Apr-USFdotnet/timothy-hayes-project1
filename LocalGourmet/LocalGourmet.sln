@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalGourmet.DAL", "LocalGo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalGourmet.PL", "LocalGourmet.PL\LocalGourmet.PL.csproj", "{B8EE89A2-30BC-4352-A1B9-14D2C29EE6F9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalGourmet.PL.UnitTest", "LocalGourmet.PL.UnitTest\LocalGourmet.PL.UnitTest.csproj", "{16B6D8FF-A3B8-4085-B89E-A3C34610A81D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{B8EE89A2-30BC-4352-A1B9-14D2C29EE6F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8EE89A2-30BC-4352-A1B9-14D2C29EE6F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8EE89A2-30BC-4352-A1B9-14D2C29EE6F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16B6D8FF-A3B8-4085-B89E-A3C34610A81D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16B6D8FF-A3B8-4085-B89E-A3C34610A81D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16B6D8FF-A3B8-4085-B89E-A3C34610A81D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16B6D8FF-A3B8-4085-B89E-A3C34610A81D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
