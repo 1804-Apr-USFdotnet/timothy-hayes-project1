@@ -1,1 +1,10 @@
 ﻿2018-05-05 11:40:05.5896|ERROR|file|[Restaurants Controller] [Details] Exception thrown: Value cannot be null.
+2018-05-05 11:54:56.9131|ERROR|file|[Reviews Controller] [Details] Exception thrown: Specified argument was out of the range of valid values.
+Parameter name: id
+2018-05-05 11:56:48.4575|ERROR|file|[Reviews Controller] [Edit] Exception thrown: Specified argument was out of the range of valid values.
+Parameter name: id
+2018-05-05 11:56:53.6212|ERROR|file|[Reviews Controller] [Delete] Exception thrown: Specified argument was out of the range of valid values.
+Parameter name: id
+2018-05-05 11:57:28.0519|ERROR|file|[Restaurants Controller] [Delete] Exception thrown: Value cannot be null.
+2018-05-05 11:57:34.7062|ERROR|file|[Restaurants Controller] [Edit] Exception thrown: Value cannot be null.
+2018-05-05 11:57:40.7914|ERROR|file|[Restaurants Controller] [Details] Exception thrown: Value cannot be null.

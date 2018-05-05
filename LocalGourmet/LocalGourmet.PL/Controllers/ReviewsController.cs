@@ -6,16 +6,32 @@ using System.Web.Mvc;
 using System.Threading.Tasks;
 using LocalGourmet.BLL.Models;
 using LocalGourmet.PL.ViewModels;
+using NLog;
 
 namespace LocalGourmet.PL.Controllers
 {
     public class ReviewsController : Controller
     {
+        private Logger log;
+
+        public ReviewsController()
+        {
+            log = LogManager.GetLogger("file");
+        }
+
         // GET: Reviews
         public ActionResult Index()
         {
-            var rrViewModel = new PL.ViewModels.ReviewsIndexVM();
-            return View(rrViewModel);
+            try
+            {
+                var rrViewModel = new PL.ViewModels.ReviewsIndexVM();
+                return View(rrViewModel);
+            }
+            catch(Exception e)
+            {
+                log.Error($"[Reviews Controller] [Index] Exception thrown: {e.Message}");
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: Reviews/Details/5
@@ -28,8 +44,9 @@ namespace LocalGourmet.PL.Controllers
                 if (r == null) { throw new ArgumentNullException("id"); }
                 return View(r);
             }
-            catch
+            catch(Exception e)
             {
+                log.Error($"[Reviews Controller] [Details] Exception thrown: {e.Message}");
                 return RedirectToAction("Index");
             }
         }
@@ -37,8 +54,16 @@ namespace LocalGourmet.PL.Controllers
         // GET: Reviews/Create
         public ActionResult Create()
         {
-            ReviewsCreateVM vm = new ReviewsCreateVM();
-            return View(vm);
+            try
+            {
+                ReviewsCreateVM vm = new ReviewsCreateVM();
+                return View(vm);
+            }
+            catch (Exception e)
+            {
+                log.Error($"[Reviews Controller] [Create] Exception thrown: {e.Message}");
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: Reviews/Create
@@ -57,8 +82,9 @@ namespace LocalGourmet.PL.Controllers
                     return View(ModelState);
                 }
             }
-            catch
+            catch (Exception e)
             {
+                log.Error($"[Reviews Controller] [Create] Exception thrown: {e.Message}");
                 return View();
             }
         }
@@ -72,9 +98,10 @@ namespace LocalGourmet.PL.Controllers
                 if (vm.Review == null) { throw new ArgumentNullException("id"); }
                 return View(vm);
             }
-            catch
+            catch (Exception e)
             {
-                throw;
+                log.Error($"[Reviews Controller] [Edit] Exception thrown: {e.Message}");
+                return RedirectToAction("Index");
             }
         }
 
@@ -95,9 +122,10 @@ namespace LocalGourmet.PL.Controllers
                     return View(ModelState);
                 }
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                log.Error($"[Reviews Controller] [Edit] Exception thrown: {e.Message}");
+                return RedirectToAction("Index");
             }
         }
 
@@ -111,9 +139,10 @@ namespace LocalGourmet.PL.Controllers
                 if (r == null) { throw new ArgumentNullException("id"); }
                 return View(r);
             }
-            catch
+            catch (Exception e)
             {
-                throw;
+                log.Error($"[Reviews Controller] [Delete] Exception thrown: {e.Message}");
+                return RedirectToAction("Index");
             }
         }
 
@@ -129,8 +158,9 @@ namespace LocalGourmet.PL.Controllers
                 await r.DeleteReviewAsync();
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception e)
             {
+                log.Error($"[Reviews Controller] [Delete] Exception thrown: {e.Message}");
                 return View(review);
             }
         }
