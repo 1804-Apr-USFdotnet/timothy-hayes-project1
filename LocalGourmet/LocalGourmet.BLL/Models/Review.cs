@@ -356,9 +356,10 @@ namespace LocalGourmet.BLL.Models
                 firstName = names[rnd.Next(4945)];
                 lastName = names[rnd.Next(4945)];
                 customRev.ReviewerName = $"{firstName} {lastName}";
-                customRev.RestaurantID = rnd.Next(1, 11);
+                List<int> restIds = Restaurant.GetRestaurants().Select(x => x.ID).ToList();
+                int numRests = restIds.Count;
+                customRev.RestaurantID = restIds[rnd.Next(numRests)];
                 customReviews[i] = customRev;
-                Console.WriteLine($"Added review {i + 1} out of {howMany}");
             }
             return customReviews;
         }

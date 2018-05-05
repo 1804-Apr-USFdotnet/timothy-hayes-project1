@@ -14,6 +14,14 @@ namespace LocalGourmet.PL.Controllers
     public class RestaurantsController : Controller
     {
         // ICrud implementing class db = new
+        public RestaurantsController()
+        {
+            //Review[] revs = Review.GenerateReviews(100);
+            //foreach (var item in revs)
+            //{
+            //    item.AddReviewAsync();
+            //}
+        }
 
         // GET: Restaurants
         public ActionResult Index(string sort)
