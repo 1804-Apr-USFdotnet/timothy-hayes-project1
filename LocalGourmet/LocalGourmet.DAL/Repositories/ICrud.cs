@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LocalGourmet.DAL.Interfaces
+namespace LocalGourmet.DAL.Repositories
 {
     public interface ICrud<T>
     {

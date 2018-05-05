@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
-using LocalGourmet.DAL;
+using LocalGourmet.DAL.Repositories;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using LocalGourmet.DL;

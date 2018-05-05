@@ -82,5 +82,8 @@
     <Content Include="Configs\Names.txt" />
     <Content Include="Logs\ClientInputLog.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

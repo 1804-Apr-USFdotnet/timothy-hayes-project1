@@ -1,4 +1,4 @@
-﻿using LocalGourmet.DAL;
+﻿using LocalGourmet.DAL.Repositories;
 using LocalGourmet.BLL.Interfaces;
 using System;
 using System.Threading.Tasks;

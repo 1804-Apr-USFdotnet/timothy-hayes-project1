@@ -1,11 +1,10 @@
 ﻿using LocalGourmet.DL;
-using LocalGourmet.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
 
-namespace LocalGourmet.DAL
+namespace LocalGourmet.DAL.Repositories
 {
     public class RestaurantAccessor : ICrud<DL.Restaurant>
     {

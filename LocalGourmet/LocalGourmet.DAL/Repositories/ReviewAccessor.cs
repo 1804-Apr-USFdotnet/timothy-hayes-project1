@@ -1,12 +1,11 @@
-﻿using LocalGourmet.DAL.Interfaces;
-using LocalGourmet.DL;
+﻿using LocalGourmet.DL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LocalGourmet.DAL
+namespace LocalGourmet.DAL.Repositories
 {
     public class ReviewAccessor : ICrud<DL.Review>
     {
