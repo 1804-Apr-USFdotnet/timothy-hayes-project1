@@ -33,7 +33,7 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                var restaurants = BLL.Models.Restaurant.GetRestaurants();
+                var restaurants = Restaurant.GetRestaurants();
 
                 if(sort == "byName")
                 {
@@ -49,7 +49,7 @@ namespace LocalGourmet.PL.Controllers
                 }
                 else if(sort == "topThree")
                 {
-                    restaurants = BLL.Models.Restaurant.GetTop3((List<Restaurant>) restaurants);
+                    restaurants = Restaurant.GetTop3((List<Restaurant>) restaurants);
                 }
                 else if(sort != null)
                 {
@@ -117,8 +117,7 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                BLL.Models.Restaurant r =
-                     BLL.Models.Restaurant.GetRestaurantByID(id);
+                Restaurant r = Restaurant.GetRestaurantByID(id);
                 if(r == null) { throw new ArgumentNullException("id"); }
                 return View(r);
             }
@@ -131,7 +130,7 @@ namespace LocalGourmet.PL.Controllers
 
         // POST: Restaurants/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(int id, BLL.Models.Restaurant restaurant)
+        public async Task<ActionResult> Edit(Restaurant restaurant)
         {
             try
             {
@@ -157,8 +156,7 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                BLL.Models.Restaurant r =
-                     BLL.Models.Restaurant.GetRestaurantByID(id);
+                Restaurant r = Restaurant.GetRestaurantByID(id);
                 if (r == null) { throw new ArgumentNullException("id"); }
                 return View(r);
             }
@@ -171,12 +169,11 @@ namespace LocalGourmet.PL.Controllers
 
         // POST: Restaurants/Delete/5
         [HttpPost]
-        public async Task<ActionResult> Delete(int id, BLL.Models.Restaurant restaurant)
+        public async Task<ActionResult> Delete(int id, Restaurant restaurant)
         {
             try
             {
-                BLL.Models.Restaurant r =
-                                   BLL.Models.Restaurant.GetRestaurantByID(id);
+                Restaurant r = Restaurant.GetRestaurantByID(id);
                 if (r == null) { throw new ArgumentNullException("id"); }
                 await r.DeleteRestaurantAsync();
                 return RedirectToAction("Index");

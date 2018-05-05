@@ -24,7 +24,7 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                var rrViewModel = new PL.ViewModels.ReviewsIndexVM();
+                var rrViewModel = new ReviewsIndexVM();
                 return View(rrViewModel);
             }
             catch(Exception e)
@@ -39,8 +39,7 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                BLL.Models.Review r =
-                      (BLL.Models.Review.GetReviewByID(id));
+                Review r = Review.GetReviewByID(id);
                 if (r == null) { throw new ArgumentNullException("id"); }
                 return View(r);
             }
@@ -134,8 +133,7 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                BLL.Models.Review r =
-                     BLL.Models.Review.GetReviewByID(id);
+                Review r = Review.GetReviewByID(id);
                 if (r == null) { throw new ArgumentNullException("id"); }
                 return View(r);
             }
@@ -148,12 +146,11 @@ namespace LocalGourmet.PL.Controllers
 
         // POST: Reviews/Delete/5
         [HttpPost]
-        public async Task<ActionResult> Delete(int id, BLL.Models.Review review)
+        public async Task<ActionResult> Delete(int id, Review review)
         {
             try
             {
-                BLL.Models.Review r =
-                                   BLL.Models.Review.GetReviewByID(id);
+                Review r = Review.GetReviewByID(id);
                 if (r == null) { throw new ArgumentNullException("id"); }
                 await r.DeleteReviewAsync();
                 return RedirectToAction("Index");
