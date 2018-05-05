@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Threading.Tasks;
 using LocalGourmet.BLL.Models;
+using LocalGourmet.PL.ViewModels;
 
 namespace LocalGourmet.PL.Controllers
 {
@@ -36,18 +37,19 @@ namespace LocalGourmet.PL.Controllers
         // GET: Reviews/Create
         public ActionResult Create()
         {
-            return View();
+            ReviewsCreateVM vm = new ReviewsCreateVM();
+            return View(vm);
         }
 
         // POST: Reviews/Create
         [HttpPost]
-        public async Task<ActionResult> Create(Review review)
+        public async Task<ActionResult> Create(ReviewsCreateVM vm)
         {
             try
             {
                 if(ModelState.IsValid) // server-side validation
                 {
-                    await review.AddReviewAsync();
+                    await vm.Review.AddReviewAsync();
                     return RedirectToAction("Index");
                 }
                 else

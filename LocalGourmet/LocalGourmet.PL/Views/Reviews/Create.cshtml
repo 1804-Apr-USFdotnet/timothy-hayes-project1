@@ -1,4 +1,4 @@
-﻿@model LocalGourmet.BLL.Models.Review
+﻿@model LocalGourmet.PL.ViewModels.ReviewsCreateVM
 
 @{
     ViewBag.Title = "Add Review";
@@ -25,58 +25,60 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
             <div class="form-group">
-                @Html.LabelFor(model => model.RestaurantID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <label class="control-label col-md-2">Restaurant</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.RestaurantID, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.RestaurantID, "", new { @class = "text-danger" })
+                    @Html.DropDownListFor(model => model.Review.RestaurantID, new SelectList(
+                       Model.Restaurants,
+                       "ID",
+                       "Name"))
                 </div>
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.ReviewerName, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Review.ReviewerName, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.ReviewerName, new { htmlAttributes = new { @class = "form-control", @required="required" } })
-                    @Html.ValidationMessageFor(model => model.ReviewerName, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Review.ReviewerName, new { htmlAttributes = new { @class = "form-control", @required="required" } })
+                    @Html.ValidationMessageFor(model => model.Review.ReviewerName, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Review.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Review.Comment, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Review.Comment, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.FoodRating, htmlAttributes: new { @min = "0", @max = "5", @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Review.FoodRating, htmlAttributes: new { @min = "0", @max = "5", @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.FoodRating, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.FoodRating, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Review.FoodRating, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Review.FoodRating, "", new { @class = "text-danger" })
                 </div>
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.ServiceRating, htmlAttributes: new { @min = "0", @max = "5", @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Review.ServiceRating, htmlAttributes: new { @min = "0", @max = "5", @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.ServiceRating, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ServiceRating, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Review.ServiceRating, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Review.ServiceRating, "", new { @class = "text-danger" })
                 </div>
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.AtmosphereRating, htmlAttributes: new { @min = "0", @max = "5", @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Review.AtmosphereRating, htmlAttributes: new { @min = "0", @max = "5", @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.AtmosphereRating, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.AtmosphereRating, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Review.AtmosphereRating, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Review.AtmosphereRating, "", new { @class = "text-danger" })
                 </div>
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.PriceRating, htmlAttributes: new { @min = "0", @max = "5", @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Review.PriceRating, htmlAttributes: new { @min = "0", @max = "5", @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.PriceRating, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.PriceRating, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Review.PriceRating, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Review.PriceRating, "", new { @class = "text-danger" })
                 </div>
             </div>
     
