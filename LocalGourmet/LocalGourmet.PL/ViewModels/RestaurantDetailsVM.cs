@@ -9,17 +9,21 @@ namespace LocalGourmet.PL.ViewModels
     public class RestaurantDetailsVM
     {
         private int ID;
+        private IEnumerable<Review> MyReviews;
+        private Restaurant MyRestaurant;
 
         public RestaurantDetailsVM(int newID)
         {
-            ID = newID;
+            this.ID = newID;
+            MyReviews = Review.GetReviewsByRestaurantID(this.ID);
+            MyRestaurant = BLL.Models.Restaurant.GetRestaurantByID(this.ID);
         }
 
         public IEnumerable<Review> Reviews
         {
             get
             {
-                return Review.GetReviewsByRestaurantID(this.ID);
+                return MyReviews;
             }
         }
 
@@ -27,7 +31,7 @@ namespace LocalGourmet.PL.ViewModels
         {
             get
             {
-                return BLL.Models.Restaurant.GetRestaurantByID(this.ID);
+                return MyRestaurant;
             }
         }
     }

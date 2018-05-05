@@ -8,11 +8,20 @@ namespace LocalGourmet.PL.ViewModels
 {
     public class ReviewsIndexVM
     {
+        private IEnumerable<Review> MyReviews;
+        private IEnumerable<Restaurant> MyRestaurants;
+
+        public ReviewsIndexVM()
+        {
+            MyReviews = Review.GetReviews();
+            MyRestaurants = Restaurant.GetRestaurants();
+        }
+
         public IEnumerable<Review> Reviews
         {
             get
             {
-                return Review.GetReviews();
+                return MyReviews;
             }
         }
 
@@ -20,7 +29,7 @@ namespace LocalGourmet.PL.ViewModels
         {
             get
             {
-                return Restaurant.GetRestaurants();
+                return MyRestaurants; 
             }
         }
     }
