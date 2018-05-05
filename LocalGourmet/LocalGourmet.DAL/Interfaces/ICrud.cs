@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace LocalGourmet.DAL.Interfaces
 {
-    public interface ICrudAsync<T>
+    public interface ICrud<T>
     {
-        void AddAsync(T Entity);
+        void AddAsync(T entity);
         IEnumerable<T> GetAll();
         T GetById(int id);
-        void UpdateAsync(T Entity);
-        void DeleteAsync(int id);
+        void UpdateAsync(T entity);
+        void DeleteAsync(T entity);
     }
 }

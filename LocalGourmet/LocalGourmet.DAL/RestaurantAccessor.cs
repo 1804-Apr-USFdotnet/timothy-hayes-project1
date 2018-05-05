@@ -5,18 +5,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace LocalGourmet.DAL
 {
     // CRUD class for Restaurant
-    public class RestaurantAccessor
+    public class RestaurantAccessor : ICrud<DL.Restaurant>
     {
         private LocalGourmetDBEntities db;
 
         public RestaurantAccessor()
         {
             db = new LocalGourmetDBEntities();
+        }
 
+        public RestaurantAccessor(LocalGourmetDBEntities testDb)
+        {
+            db = testDb;
         }
 
         // CREATE
@@ -64,23 +69,21 @@ namespace LocalGourmet.DAL
         }
         
         // UPDATE
-        public async Task UpdateRestaurantAsync(int id, string name, 
-            string location, string cuisine, string specialty, 
-            string phoneNumber, string webAddress, string type, string hours)
+        public async Task UpdateRestaurantAsync(Restaurant r)
         {
-            DL.Restaurant r;
+            DL.Restaurant oldR;
             try
             {
-                r = db.Restaurants.Find(id);
                 if (r == null) { throw new ArgumentOutOfRangeException("id"); }
-                r.Name = name;
-                r.Location = location;
-                r.Cuisine = cuisine;
-                r.Specialty = specialty;
-                r.PhoneNumber = phoneNumber;
-                r.WebAddress = webAddress;
-                r.Type = type;
-                r.Hours = hours;
+                oldR = db.Restaurants.Find(r.ID);
+                oldR.Name = r.Name;
+                oldR.Location = r.Location;
+                oldR.Cuisine = r.Cuisine;
+                oldR.Specialty = r.Specialty;
+                oldR.PhoneNumber = r.PhoneNumber;
+                oldR.WebAddress = r.WebAddress;
+                oldR.Type = r.Type;
+                oldR.Hours = r.Hours;
                 await db.SaveChangesAsync();
             }
             catch
@@ -119,9 +122,30 @@ namespace LocalGourmet.DAL
         }
 
 
+        #region ICrud
+        public async void AddAsync(Restaurant entity)
+        {
+            await AddRestaurantAsync(entity);
+        }
 
+        public IEnumerable<Restaurant> GetAll()
+        {
+            return GetRestaurants();
+        }
 
+        public Restaurant GetById(int id)
+        {
+            return GetRestaurantByID(id);
+        }
 
-        
+        public async void UpdateAsync(Restaurant entity)
+        {
+            await UpdateRestaurantAsync(entity);
+        }
+
+        public void DeleteAsync(Restaurant entity)
+        {
+        }
+        #endregion
     }
 }

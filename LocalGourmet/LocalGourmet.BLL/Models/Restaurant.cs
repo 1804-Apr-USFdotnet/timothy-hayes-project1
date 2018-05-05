@@ -6,16 +6,26 @@ using System.Runtime.Serialization;
 using LocalGourmet.DAL;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using LocalGourmet.DL;
 
 namespace LocalGourmet.BLL.Models
 {
     [DataContract]
     public class Restaurant : IRestaurant
     {
+        private RestaurantAccessor crud;
+
         #region Constructors
         public Restaurant() {
             Reviews = new List<Review>();
             Active = true;
+            crud = new RestaurantAccessor();
+        }
+
+        public Restaurant(LocalGourmetDBEntities db) {
+            Reviews = new List<Review>();
+            Active = true;
+            crud = new RestaurantAccessor(db);
         }
         #endregion
 
@@ -85,8 +95,7 @@ namespace LocalGourmet.BLL.Models
         public async Task AddRestaurantAsync()
         {
             DL.Restaurant restaurant = LibraryToData(this);
-            RestaurantAccessor ra = new RestaurantAccessor();
-            await ra.AddRestaurantAsync(restaurant);
+            await crud.AddRestaurantAsync(restaurant);
         }
 
         // READ
@@ -114,14 +123,11 @@ namespace LocalGourmet.BLL.Models
         }
         
         // UPDATE
-        public async Task UpdateRestaurantAsync(BLL.Models.Restaurant r)
+        public void UpdateAsync(Restaurant r)
         {
-            RestaurantAccessor restaurantCRUD = new RestaurantAccessor();
             try
             {
-                await restaurantCRUD.UpdateRestaurantAsync(r.ID, r.Name,
-                    r.Location, r.Cuisine, r.Specialty, r.PhoneNumber, r.WebAddress,
-                    r.Type, r.Hours);
+                crud.UpdateAsync(LibraryToData(r));
             }
             catch
             {
@@ -132,10 +138,9 @@ namespace LocalGourmet.BLL.Models
         // DELETE
         public async Task DeleteRestaurantAsync()
         {
-            RestaurantAccessor restaurantCRUD = new RestaurantAccessor();
             try
             {
-                await restaurantCRUD.DeleteRestaurantAsync(this.ID);
+                await crud.DeleteRestaurantAsync(this.ID);
             }
             catch
             {

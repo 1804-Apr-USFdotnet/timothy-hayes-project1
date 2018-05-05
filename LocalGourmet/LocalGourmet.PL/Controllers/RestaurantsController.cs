@@ -130,13 +130,13 @@ namespace LocalGourmet.PL.Controllers
 
         // POST: Restaurants/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(Restaurant restaurant)
+        public ActionResult Edit(Restaurant restaurant)
         {
             try
             {
                 if(ModelState.IsValid) // server-side validation
                 {
-                    await restaurant.UpdateRestaurantAsync(restaurant);
+                    restaurant.UpdateAsync(restaurant);
                     return RedirectToAction("Index");
                 }
                 else
