@@ -40,9 +40,11 @@ namespace LocalGourmet.BLL.Models
         public string Specialty { get; set; }
         [DataMember]
         [Required]
+        [RegularExpression(@"^([0-9]{3}-[0-9]{3}-[0-9]{4})$", ErrorMessage = "Invalid Phone Number. Format is: 111-222-3333")]
         public string PhoneNumber { get; set; }
         [DataMember]
         [Required]
+        [Url]
         public string WebAddress { get; set; }
         [DataMember]
         public List<Review> Reviews { get; set; }

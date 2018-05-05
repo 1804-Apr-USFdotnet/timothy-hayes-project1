@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace LocalGourmet.BLL.Models
 {
@@ -68,6 +69,7 @@ namespace LocalGourmet.BLL.Models
         // Individual rating components
         [DataMember]
         private int foodRating;
+        [Range(0 ,5 , ErrorMessage ="Rating must be between 0 and 5 inclusive.")]
         public int FoodRating
         {
             get { return foodRating; }
@@ -80,6 +82,7 @@ namespace LocalGourmet.BLL.Models
 
         [DataMember]
         private int serviceRating;
+        [Range(0 ,5 , ErrorMessage ="Rating must be between 0 and 5 inclusive.")]
         public int ServiceRating 
         {
             get { return serviceRating; }
@@ -92,6 +95,7 @@ namespace LocalGourmet.BLL.Models
 
         [DataMember]
         private int atmosphereRating;
+        [Range(0 ,5 , ErrorMessage ="Rating must be between 0 and 5 inclusive.")]
         public int AtmosphereRating 
         {
             get { return atmosphereRating;  }
@@ -105,6 +109,7 @@ namespace LocalGourmet.BLL.Models
         // Was it a good deal, or too expensive?
         [DataMember]
         private int priceRating;
+        [Range(0 ,5 , ErrorMessage ="Rating must be between 0 and 5 inclusive.")]
         public int PriceRating 
         {
             get { return priceRating; }
@@ -125,6 +130,7 @@ namespace LocalGourmet.BLL.Models
         [DataMember]
         public string Comment { get; set; } 
         [DataMember]
+        [Required]
         public string ReviewerName { get; set; } 
 
         // Calculates and returns the overall review rating based on the

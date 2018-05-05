@@ -49,40 +49,63 @@
                     @Html.ValidationMessageFor(model => model.Review.Comment, "", new { @class = "text-danger" })
                 </div>
             </div>
+ 
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Review_FoodRating">Food Rating</label>
+                <div class="col-md-10">
+                    <input class="form-control text-box single-line" data-val="true" 
+                           data-val-number="The field FoodRating must be a number." 
+                           data-val-range="Rating must be between 0 and 5 inclusive." 
+                           data-val-range-max="5" data-val-range-min="0" 
+                           data-val-required="The Food Rating field is required." id="Review_FoodRating" 
+                           name="Review.FoodRating" type="number">
+                    <span class="field-validation-valid text-danger" data-valmsg-for="Review.FoodRating" 
+                          data-valmsg-replace="true"></span>
+                </div>
+            </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Review.FoodRating, htmlAttributes: new { @min = "0", @max = "5", @class = "control-label col-md-2" })
+                <label class="control-label col-md-2" for="Review_ServiceRating">Service Rating</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Review.FoodRating, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Review.FoodRating, "", new { @class = "text-danger" })
+                    <input class="form-control text-box single-line" data-val="true" 
+                           data-val-number="The field ServiceRating must be a number." 
+                           data-val-range="Rating must be between 0 and 5 inclusive." 
+                           data-val-range-max="5" data-val-range-min="0" 
+                           data-val-required="The Service Rating field is required." id="Review_ServiceRating" 
+                           name="Review.ServiceRating" type="number">
+                    <span class="field-validation-valid text-danger" data-valmsg-for="Review.ServiceRating" 
+                          data-valmsg-replace="true"></span>
                 </div>
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.Review.ServiceRating, htmlAttributes: new { @min = "0", @max = "5", @class = "control-label col-md-2" })
+                <label class="control-label col-md-2" for="Review_AtmosphereRating">Atmosphere Rating</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Review.ServiceRating, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Review.ServiceRating, "", new { @class = "text-danger" })
+                    <input class="form-control text-box single-line" data-val="true" 
+                           data-val-number="The field AtmosphereRating must be a number." 
+                           data-val-range="Rating must be between 0 and 5 inclusive." 
+                           data-val-range-max="5" data-val-range-min="0" 
+                           data-val-required="The Atmosphere Rating field is required." id="Review_AtmosphereRating" 
+                           name="Review.AtmosphereRating" type="number">
+                    <span class="field-validation-valid text-danger" data-valmsg-for="Review.AtmosphereRating" 
+                          data-valmsg-replace="true"></span>
                 </div>
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.Review.AtmosphereRating, htmlAttributes: new { @min = "0", @max = "5", @class = "control-label col-md-2" })
+                <label class="control-label col-md-2" for="Review_PriceRating">Price Rating</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Review.AtmosphereRating, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Review.AtmosphereRating, "", new { @class = "text-danger" })
+                    <input class="form-control text-box single-line" data-val="true" 
+                           data-val-number="The field PriceRating must be a number." 
+                           data-val-range="Rating must be between 0 and 5 inclusive." 
+                           data-val-range-max="5" data-val-range-min="0" 
+                           data-val-required="The Price Rating field is required." id="Review_PriceRating" 
+                           name="Review.PriceRating" type="number">
+                    <span class="field-validation-valid text-danger" data-valmsg-for="Review.PriceRating" 
+                          data-valmsg-replace="true"></span>
                 </div>
             </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.Review.PriceRating, htmlAttributes: new { @min = "0", @max = "5", @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Review.PriceRating, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Review.PriceRating, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-    
+
             <div class="form-group" style="float:right; margin-right: 5px;">
                 <input type="submit" value="Create" class="btn btn-default btn-toolbar" />
                 <a href=@($"/Reviews/Index") class="btn btn-default btn-toolbar">Back to List</a>
