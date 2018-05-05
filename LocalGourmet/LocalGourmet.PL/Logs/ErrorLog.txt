@@ -8,3 +8,5 @@ Parameter name: id
 2018-05-05 11:57:28.0519|ERROR|file|[Restaurants Controller] [Delete] Exception thrown: Value cannot be null.
 2018-05-05 11:57:34.7062|ERROR|file|[Restaurants Controller] [Edit] Exception thrown: Value cannot be null.
 2018-05-05 11:57:40.7914|ERROR|file|[Restaurants Controller] [Details] Exception thrown: Value cannot be null.
+2018-05-05 13:20:09.2152|ERROR|file|[Restaurants Controller] [Index] Exception thrown: No connection string named 'LocalGourmetDBEntities' could be found in the application config file.
+2018-05-05 13:20:37.1245|ERROR|file|[Restaurants Controller] [Index] Exception thrown: No connection string named 'LocalGourmetDBEntities' could be found in the application config file.
