@@ -1,7 +1,7 @@
-﻿@model LocalGourmet.BLL.Models.Restaurant
+﻿@model LocalGourmet.PL.ViewModels.RestaurantDetailsVM
 
 @{
-    ViewBag.Title = Model.Name;
+    ViewBag.Title = Model.Restaurant.Name;
 }
 
 <!DOCTYPE html>
@@ -17,67 +17,67 @@
         <hr />
         <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.Restaurant.Name)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Name)
+                @Html.DisplayFor(model => model.Restaurant.Name)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Location)
+                @Html.DisplayNameFor(model => model.Restaurant.Location)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Location)
+                @Html.DisplayFor(model => model.Restaurant.Location)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Cuisine)
+                @Html.DisplayNameFor(model => model.Restaurant.Cuisine)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Cuisine)
+                @Html.DisplayFor(model => model.Restaurant.Cuisine)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Specialty)
+                @Html.DisplayNameFor(model => model.Restaurant.Specialty)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Specialty)
+                @Html.DisplayFor(model => model.Restaurant.Specialty)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
+                @Html.DisplayNameFor(model => model.Restaurant.PhoneNumber)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.PhoneNumber)
+                @Html.DisplayFor(model => model.Restaurant.PhoneNumber)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.WebAddress)
+                @Html.DisplayNameFor(model => model.Restaurant.WebAddress)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.WebAddress)
+                @Html.DisplayFor(model => model.Restaurant.WebAddress)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Type)
+                @Html.DisplayNameFor(model => model.Restaurant.Type)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Type)
+                @Html.DisplayFor(model => model.Restaurant.Type)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Hours)
+                @Html.DisplayNameFor(model => model.Restaurant.Hours)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Hours)
+                @Html.DisplayFor(model => model.Restaurant.Hours)
             </dd>
 
             <dt>
@@ -85,7 +85,7 @@
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Reviews.Count)
+                @Model.Restaurant.Reviews.Count
             </dd>
 
             <dt>
@@ -93,15 +93,55 @@
             </dt>
 
             <dd>
-                @Model.GetAvgRating()
+                @Model.Restaurant.GetAvgRating()
             </dd>
 
         </dl>
     </div>
+    
+    @*Table of reviews for the restaurant*@
+    <table class="table">
+        <tr>
+            <th>
+                Reviewer Name
+            </th>
+            <th>
+                Comment
+            </th>
+            <th>
+                Rating
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Reviews)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
+                @item.GetRating()
+            </td>
+            <td>
+                <div style="min-width: 200px;">
+                    <a href=@($"/Reviews/Details/{item.ID}") class="btn btn-default btn-toolbar">Details</a>
+                    <a href=@($"/Reviews/Edit/{item.ID}") class="btn btn-default btn-toolbar">Edit</a>
+                    <a href=@($"/Reviews/Delete/{item.ID}") class="btn btn-default btn-toolbar">Delete</a>
+                </div>
+            </td>
+        </tr>
+        }
+
+    </table>
+
     <div style="float:right;">
         @*@if (Request.IsAuthenticated)*@
-            <a href=@($"/Restaurants/Edit/{Model.ID}") class="btn btn-default btn-toolbar">Edit</a>
-            <a href=@($"/Restaurants/Delete/{Model.ID}") class="btn btn-default btn-toolbar">Delete</a>
+            <a href=@($"/Restaurants/Edit/{Model.Restaurant.ID}") class="btn btn-default btn-toolbar">Edit</a>
+            <a href=@($"/Restaurants/Delete/{Model.Restaurant.ID}") class="btn btn-default btn-toolbar">Delete</a>
         <a href=@($"/Restaurants/Index") class="btn btn-default btn-toolbar">Back to List</a>
     </div>
     <br />

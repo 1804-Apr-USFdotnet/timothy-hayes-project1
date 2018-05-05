@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using LocalGourmet.BLL.Models;
+using LocalGourmet.PL.ViewModels;
 
 namespace LocalGourmet.PL.Controllers
 {
@@ -49,10 +50,10 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                BLL.Models.Restaurant r =
-                      (BLL.Models.Restaurant.GetRestaurantByID(id));
-                if (r == null) { throw new ArgumentNullException("id"); }
-                return View(r);
+                if(Restaurant.GetRestaurantByID(id) == null)
+                { throw new ArgumentNullException(); }
+                RestaurantDetailsVM vm = new RestaurantDetailsVM(id);
+                return View(vm);
             }
             catch
             {
