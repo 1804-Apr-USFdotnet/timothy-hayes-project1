@@ -23,7 +23,6 @@ namespace LocalGourmet.PL.Controllers
         }
 
         // GET: Reviews
-        [OutputCache(Duration = 600)]
         public ActionResult Index()
         {
             try
@@ -158,7 +157,8 @@ namespace LocalGourmet.PL.Controllers
 
         // POST: Reviews/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, Review review)
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
         {
             try
             {
@@ -170,7 +170,7 @@ namespace LocalGourmet.PL.Controllers
             catch (Exception e)
             {
                 log.Error($"[Reviews Controller] [Delete] Exception thrown: {e.Message}");
-                return View(review);
+                return RedirectToAction("Index");
             }
         }
     }

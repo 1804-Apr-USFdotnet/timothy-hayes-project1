@@ -16,3 +16,11 @@ Parameter name: id
 2018-05-07 07:42:54.9722|ERROR|file|[Reviews Controller] [Edit] Exception thrown: Object reference not set to an instance of an object.
 2018-05-07 07:44:16.4042|ERROR|file|[Reviews Controller] [Edit] Exception thrown: Object reference not set to an instance of an object.
 2018-05-07 07:44:47.5040|ERROR|file|[Reviews Controller] [Edit/id] Exception thrown: Object reference not set to an instance of an object.
+2018-05-07 16:25:44.9407|ERROR|file|[Reviews Controller] [Delete] Exception thrown: Specified argument was out of the range of valid values.
+Parameter name: id
+2018-05-07 16:25:49.1207|ERROR|file|[Reviews Controller] [Delete] Exception thrown: Specified argument was out of the range of valid values.
+Parameter name: id
+2018-05-07 16:25:59.0682|ERROR|file|[Reviews Controller] [Delete] Exception thrown: Specified argument was out of the range of valid values.
+Parameter name: id
+2018-05-07 16:26:55.6302|ERROR|file|[Reviews Controller] [Delete] Exception thrown: Specified argument was out of the range of valid values.
+Parameter name: id
