@@ -27,7 +27,7 @@ namespace LocalGourmet.PL.Controllers
         public ActionResult Index(string sort)
         {
             IEnumerable<Restaurant> restaurants = restaurantRepository.GetAll();
-            IEnumerable<Restaurant> tempRestaurants = restaurants;
+            IEnumerable<Restaurant> tempRestaurants = restaurants.Reverse(); // Most recently created first
             try
             {
                 if(sort == "byName")

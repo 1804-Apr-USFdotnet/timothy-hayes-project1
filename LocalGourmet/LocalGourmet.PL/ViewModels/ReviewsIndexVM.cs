@@ -18,7 +18,7 @@ namespace LocalGourmet.PL.ViewModels
         {
             reviewRepository = new ReviewRepository();
             restaurantRepository = new RestaurantRepository();
-            MyReviews = reviewRepository.GetAll();
+            MyReviews = reviewRepository.GetAll().Reverse(); // Most recently created first
             MyRestaurants = restaurantRepository.GetAll();
         }
 
