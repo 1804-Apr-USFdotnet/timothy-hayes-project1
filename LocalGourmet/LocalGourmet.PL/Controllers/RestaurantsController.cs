@@ -12,8 +12,6 @@ using NLog;
 
 namespace LocalGourmet.PL.Controllers
 {
-    public delegate IEnumerable<Restaurant> RestaurantSortDelegate (IEnumerable<Restaurant> restaurants);
-
     public class RestaurantsController : Controller
     {
         private Logger log;
@@ -26,7 +24,6 @@ namespace LocalGourmet.PL.Controllers
         }
 
         // GET: Restaurants 
-        [OutputCache(Duration = 600, VaryByParam = "sort")]
         public ActionResult Index(string sort)
         {
             IEnumerable<Restaurant> restaurants = restaurantRepository.GetAll();
@@ -64,7 +61,6 @@ namespace LocalGourmet.PL.Controllers
         }
 
         // GET: Restaurants/Details/5
-        [OutputCache(Duration = 600, VaryByParam = "id")]
         public ActionResult Details(int id)
         {
             try
@@ -159,16 +155,17 @@ namespace LocalGourmet.PL.Controllers
                 if (r == null) { throw new ArgumentNullException("id"); }
                 return View(r);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 log.Error($"[Restaurants Controller] [Delete] Exception thrown: {e.Message}");
                 return RedirectToAction("Index");
             }
         }
 
-        // POST: Restaurants/Delete/5
+        // DELETE: Restaurants/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, Restaurant restaurant)
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
         {
             try
             {
@@ -180,7 +177,7 @@ namespace LocalGourmet.PL.Controllers
             catch(Exception e)
             {
                 log.Error($"[Restaurants Controller] [Delete] Exception thrown: {e.Message}");
-                return View(restaurant);
+                return RedirectToAction("Index");
             }
         }
     }
