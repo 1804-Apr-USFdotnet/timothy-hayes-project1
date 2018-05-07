@@ -13,7 +13,7 @@ namespace LocalGourmet.DL
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class LocalGourmetDBEntities : DbContext
+    public partial class LocalGourmetDBEntities : DbContext, IDbContext
     {
         public LocalGourmetDBEntities()
             : base("name=LocalGourmetDBEntities")
