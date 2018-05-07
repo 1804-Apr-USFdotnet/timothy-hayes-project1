@@ -13,9 +13,8 @@
 </head>
 <body>
     <h3>Are you sure you want to delete this review?</h3>
+    <hr />
     <div>
-        <h4>Review</h4>
-        <hr />
         <dl class="dl-horizontal">
             <dt>
                 Restaurant Name
@@ -26,7 +25,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.ReviewerName)
+                Reviewer Name
             </dt>
     
             <dd>
@@ -42,7 +41,7 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.FoodRating)
+                Food Rating
             </dt>
     
             <dd>
@@ -50,7 +49,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.ServiceRating)
+                Service Rating
             </dt>
     
             <dd>
@@ -58,7 +57,7 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.AtmosphereRating)
+                Atmosphere Rating
             </dt>
     
             <dd>
@@ -66,11 +65,19 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.PriceRating)
+                Price Rating
             </dt>
     
             <dd>
                 @Html.DisplayFor(model => model.PriceRating)
+            </dd>
+
+            <dt>
+                Overall Rating
+            </dt>
+    
+            <dd>
+                @Model.GetRating()
             </dd>
     
         </dl>

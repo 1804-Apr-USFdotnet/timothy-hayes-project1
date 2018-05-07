@@ -21,9 +21,9 @@
     </script>
 </head>
 <body>
-    <br />
+    <h1>Restaurants</h1>
+    <hr />
     <div>
-        @*@if (Request.IsAuthenticated)*@
         <a href=@($"/Restaurants/Create") class="btn btn-default btn-toolbar">Add new Restaurant</a>
         <a href="/Restaurants/Index?sort=byName" class="btn btn-default btn-toolbar">Sort By Name</a>
         <a href="/Restaurants/Index?sort=byRating" class="btn btn-default btn-toolbar">Sort By Avg. Rating</a>
@@ -53,12 +53,13 @@
             <th>
                 @Html.DisplayNameFor(model => model.Type)
             </th>
-            <th>
-                #_Reviews
+            <th style="width:100px;">
+                Number of Reviews
             </th>
             <th>
-                Avg. Rating
+                Average Rating
             </th>
+            <th></th>
             <th></th>
         </tr>
     
@@ -85,14 +86,17 @@
             <td>
                 @item.GetAvgRating()
             </td>
+            <td> 
+                <span>
+                    <a style="margin-bottom: 3px; width:100px;" href=@($"/Reviews/Create/{item.ID}") class="btn btn-default btn-toolbar">Add Review</a>
+                    <a style="margin-bottom: 3px; width:100px;" href=@($"/Restaurants/Details/{item.ID}") class="btn btn-default btn-toolbar">Details</a>
+                </span>
+            </td>
             <td>
-                <div style="width: 300px;">
-                    <a href=@($"/Reviews/Create/{item.ID}") class="btn btn-default btn-toolbar">Add Review</a>
-                    <a href=@($"/Restaurants/Details/{item.ID}") class="btn btn-default btn-toolbar">Details</a>
-                    @*@if(Request.IsAuthenticated)*@
-                        <a href=@($"/Restaurants/Edit/{item.ID}") class="btn btn-default btn-toolbar">Edit</a>
-                        <a href=@($"/Restaurants/Delete/{item.ID}") class="btn btn-default btn-toolbar">Delete</a>
-                </div>
+                <span>
+                    <a style="margin-bottom: 3px; width:100px;"  href=@($"/Restaurants/Edit/{item.ID}") class="btn btn-default btn-toolbar">Edit</a>
+                    <a style="margin-bottom: 3px; width:100px;" href=@($"/Restaurants/Delete/{item.ID}") class="btn btn-default btn-toolbar">Delete</a>
+                </span>
             </td>
         </tr>
     }

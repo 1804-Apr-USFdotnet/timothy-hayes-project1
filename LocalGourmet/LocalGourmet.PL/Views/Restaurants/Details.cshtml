@@ -13,16 +13,11 @@
 </head>
 <body>
     <div>
-        <h4>Restaurant</h4>
+        <h1>
+                @Html.DisplayFor(model => model.Restaurant.Name)
+        </h1>
         <hr />
         <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Restaurant.Name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Restaurant.Name)
-            </dd>
 
             <dt>
                 @Html.DisplayNameFor(model => model.Restaurant.Location)
@@ -49,7 +44,7 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Restaurant.PhoneNumber)
+                Phone Number
             </dt>
 
             <dd>
@@ -57,7 +52,7 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Restaurant.WebAddress)
+                Web Address
             </dt>
 
             <dd>
@@ -81,7 +76,7 @@
             </dd>
 
             <dt>
-                #_Reviews
+                Number of Reviews
             </dt>
 
             <dd>
@@ -89,7 +84,7 @@
             </dd>
 
             <dt>
-                Avg. Rating
+                Average Rating
             </dt>
 
             <dd>
@@ -98,6 +93,14 @@
 
         </dl>
     </div>
+
+    <div style="float:right;">
+        <a href=@($"/Restaurants/Edit/{Model.Restaurant.ID}") class="btn btn-default btn-toolbar">Edit</a>
+        <a href=@($"/Restaurants/Delete/{Model.Restaurant.ID}") class="btn btn-default btn-toolbar">Delete</a>
+        <a href=@($"/Restaurants/Index") class="btn btn-default btn-toolbar">Back to List</a>
+    </div>
+    <br />
+    <br />
     
     @*Table of reviews for the restaurant*@
     <table class="table">
@@ -109,7 +112,7 @@
                 Comment
             </th>
             <th>
-                Rating
+                Overall Rating
             </th>
             <th></th>
         </tr>
@@ -135,13 +138,13 @@
             </td>
         </tr>
         }
-
     </table>
 
+    <br />
+    <hr />
     <div style="float:right;">
-        @*@if (Request.IsAuthenticated)*@
-            <a href=@($"/Restaurants/Edit/{Model.Restaurant.ID}") class="btn btn-default btn-toolbar">Edit</a>
-            <a href=@($"/Restaurants/Delete/{Model.Restaurant.ID}") class="btn btn-default btn-toolbar">Delete</a>
+        <a href=@($"/Restaurants/Edit/{Model.Restaurant.ID}") class="btn btn-default btn-toolbar">Edit</a>
+        <a href=@($"/Restaurants/Delete/{Model.Restaurant.ID}") class="btn btn-default btn-toolbar">Delete</a>
         <a href=@($"/Restaurants/Index") class="btn btn-default btn-toolbar">Back to List</a>
     </div>
     <br />
