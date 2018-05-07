@@ -23,6 +23,7 @@ namespace LocalGourmet.PL.Controllers
         }
 
         // GET: Reviews
+        [OutputCache(Duration = 600)]
         public ActionResult Index()
         {
             try
@@ -52,21 +53,6 @@ namespace LocalGourmet.PL.Controllers
                 return RedirectToAction("Index");
             }
         }
-
-        //// GET: Reviews/Create
-        //public ActionResult Create()
-        //{
-        //    try
-        //    {
-        //        ReviewsCreateVM vm = new ReviewsCreateVM();
-        //        return View(vm);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        log.Error($"[Reviews Controller] [Create] Exception thrown: {e.Message}");
-        //        return RedirectToAction("Index");
-        //    }
-        //}
 
         // GET: Reviews/Create
         public ActionResult Create(int? ID)

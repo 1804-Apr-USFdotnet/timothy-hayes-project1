@@ -27,7 +27,8 @@ namespace LocalGourmet.PL.Controllers
             restaurants = restaurantRepository.GetAll();
         }
 
-        // GET: Restaurants
+        // GET: Restaurants 
+        [OutputCache(Duration = 600, VaryByParam = "sort")]
         public ActionResult Index(string sort)
         {
             IEnumerable<Restaurant> tempRestaurants = restaurants;
@@ -64,6 +65,7 @@ namespace LocalGourmet.PL.Controllers
         }
 
         // GET: Restaurants/Details/5
+        [OutputCache(Duration = 600, VaryByParam = "id")]
         public ActionResult Details(int id)
         {
             try
