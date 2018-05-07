@@ -47,7 +47,7 @@ textarea {
 }
 
 .img {
-    border: 3px solid red;
+    border: 3px solid black;
 }
 
 .btn:hover {
@@ -57,4 +57,9 @@ textarea {
 
 input:focus {
     background-color: blanchedalmond;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: medium;
 }
