@@ -17,20 +17,19 @@ namespace LocalGourmet.PL.Controllers
     public class RestaurantsController : Controller
     {
         private Logger log;
-        private IEnumerable<Restaurant> restaurants;
         private RestaurantRepository restaurantRepository;
 
         public RestaurantsController()
         {
             log = LogManager.GetLogger("file");
             restaurantRepository = new RestaurantRepository();
-            restaurants = restaurantRepository.GetAll();
         }
 
         // GET: Restaurants 
         [OutputCache(Duration = 600, VaryByParam = "sort")]
         public ActionResult Index(string sort)
         {
+            IEnumerable<Restaurant> restaurants = restaurantRepository.GetAll();
             IEnumerable<Restaurant> tempRestaurants = restaurants;
             try
             {
@@ -48,7 +47,7 @@ namespace LocalGourmet.PL.Controllers
                 }
                 else if(sort == "topThree")
                 {
-                    tempRestaurants = RestaurantService.GetTop3((List<Restaurant>) restaurants);
+                    tempRestaurants = RestaurantService.GetTop3(restaurants);
                 }
                 else if(sort != null)
                 {

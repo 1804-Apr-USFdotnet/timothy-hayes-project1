@@ -67,9 +67,9 @@ namespace LocalGourmet.BLL.Services
     #endregion 
 
         #region Sort & Search
-        public static List<Restaurant> GetTop3(List<Restaurant> restaurants)
+        public static IEnumerable<Restaurant> GetTop3(IEnumerable<Restaurant> restaurants)
         {
-            return restaurants.OrderByDescending(x => x.GetAvgRating()).Take(3).ToList();
+            return restaurants.OrderByDescending(x => x.GetAvgRating()).Take(3);
         }
 
         // Deprecated -- only use for serialization testing
