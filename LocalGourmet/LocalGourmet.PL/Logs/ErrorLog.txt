@@ -24,3 +24,7 @@ Parameter name: id
 Parameter name: id
 2018-05-07 16:26:55.6302|ERROR|file|[Reviews Controller] [Delete] Exception thrown: Specified argument was out of the range of valid values.
 Parameter name: id
+2018-05-07 16:57:04.2797|ERROR|file|[Reviews Controller] [Create] Exception thrown: An error occurred while updating the entries. See the inner exception for details.
+2018-05-07 18:48:30.5310|ERROR|file|[Reviews Controller] [Create] Exception thrown: An error occurred while updating the entries. See the inner exception for details.
+2018-05-07 18:52:41.2465|ERROR|file|[Reviews Controller] [Create] Exception thrown: An error occurred while updating the entries. See the inner exception for details.
+2018-05-07 19:00:49.0992|ERROR|file|[Reviews Controller] [Create] Exception thrown: An error occurred while updating the entries. See the inner exception for details.

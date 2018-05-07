@@ -44,9 +44,10 @@ namespace LocalGourmet.PL.UnitTest
         {
             //Arrange
             ReviewsController controller = new ReviewsController();
+            ReviewsCreateVM vm = new ReviewsCreateVM();
 
             //Act
-            var result = controller.Create() as ViewResult;
+            var result = controller.Create(vm) as ViewResult;
 
             //Assert
             Assert.IsNotNull(result);

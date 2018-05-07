@@ -59,12 +59,17 @@ namespace LocalGourmet.BLL.UnitTest
             expected.Add(restaurants[1]);
             expected.Add(restaurants[2]);
             expected.Add(restaurants[7]);
-            List<Restaurant> actual = RestaurantService.GetTop3(RestaurantService.GetAllFromJSON());
+            IEnumerable<Restaurant> actual = RestaurantService.GetTop3(RestaurantService.GetAllFromJSON());
+            IEnumerator<Restaurant> actualEnum = actual.GetEnumerator();
 
             // Assert
-            Assert.AreEqual(expected[0].ToString(), actual[0].ToString());
-            Assert.AreEqual(expected[1].ToString(), actual[1].ToString());
-            Assert.AreEqual(expected[2].ToString(), actual[2].ToString());
+            actualEnum.MoveNext();
+            Assert.AreEqual(expected[0].ToString(), actualEnum.Current.ToString());
+            actualEnum.MoveNext();
+            Assert.AreEqual(expected[1].ToString(), actualEnum.Current.ToString());
+            actualEnum.MoveNext();
+            Assert.AreEqual(expected[2].ToString(), actualEnum.Current.ToString());
+            actualEnum.Dispose();
         }
 
         [TestMethod]

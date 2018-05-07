@@ -73,13 +73,13 @@ namespace LocalGourmet.BLL.Services
         }
 
         // Deprecated -- only use for serialization testing
-        public static List<Restaurant> GetAllFromJSON()
+        public static IEnumerable<Restaurant> GetAllFromJSON()
         {
-            List<Restaurant> restaurants = new List<Restaurant>();
+            IEnumerable<Restaurant> restaurants = new List<Restaurant>();
             string json = System.IO.File.ReadAllText(@"C:\revature\" +
                 @"hayes-timothy-project0\LocalGourmet\LocalGourmet.BLL\" +
                 @"Configs\RestaurantsForUnitTest2.json");
-            restaurants = Serializer.Deserialize<List<Restaurant>>(json);
+            restaurants = Serializer.Deserialize<IEnumerable<Restaurant>>(json);
             return restaurants;
         }
 
