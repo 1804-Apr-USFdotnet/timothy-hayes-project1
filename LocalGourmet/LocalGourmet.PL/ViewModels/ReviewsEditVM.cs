@@ -9,31 +9,16 @@ namespace LocalGourmet.PL.ViewModels
 {
     public class ReviewsEditVM
     {
-        private int ID;
         private Review MyReview;
         private IEnumerable<Restaurant> MyRestaurants;
         private ReviewRepository reviewRepository;
         private RestaurantRepository restaurantRepository;
 
-        public ReviewsEditVM()
+        public ReviewsEditVM(int reviewID)
         {
             restaurantRepository = new RestaurantRepository();
             reviewRepository = new ReviewRepository();
-            MyRestaurants = restaurantRepository.GetAll();
-        }
-
-        public ReviewsEditVM(int newID)
-        {
-            this.ID = newID;
-            MyReview = reviewRepository.GetById(this.ID);
-            MyRestaurants = restaurantRepository.GetAll();
-        }
-
-        public ReviewsEditVM(int revID, int restID)
-        {
-            this.ID = revID;
-            MyReview = reviewRepository.GetById(this.ID);
-            MyReview.RestaurantID = restID;
+            MyReview = reviewRepository.GetById(reviewID);
             MyRestaurants = restaurantRepository.GetAll();
         }
 

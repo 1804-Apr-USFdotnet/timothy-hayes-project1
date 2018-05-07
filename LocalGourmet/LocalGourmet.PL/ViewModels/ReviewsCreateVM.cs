@@ -1,4 +1,5 @@
 ﻿using LocalGourmet.BLL.Models;
+using LocalGourmet.BLL.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,13 @@ namespace LocalGourmet.PL.ViewModels
     {
         private Review MyReview;
         private IEnumerable<Restaurant> MyRestaurants;
+        private RestaurantRepository restaurantRepository;
 
         public ReviewsCreateVM()
         {
+            restaurantRepository = new RestaurantRepository();
             MyReview = new Review();
-            MyRestaurants = Restaurant.GetAll();
+            MyRestaurants = restaurantRepository.GetAll();
         }
 
         public Review Review

@@ -11,3 +11,8 @@ Parameter name: id
 2018-05-05 13:20:09.2152|ERROR|file|[Restaurants Controller] [Index] Exception thrown: No connection string named 'LocalGourmetDBEntities' could be found in the application config file.
 2018-05-05 13:20:37.1245|ERROR|file|[Restaurants Controller] [Index] Exception thrown: No connection string named 'LocalGourmetDBEntities' could be found in the application config file.
 2018-05-05 16:28:06.4429|ERROR|file|[Restaurants Controller] [Edit] Exception thrown: An asynchronous operation cannot be started at this time. Asynchronous operations may only be started within an asynchronous handler or module or during certain events in the Page lifecycle. If this exception occurred while executing a Page, ensure that the Page is marked <%@ Page Async="true" %>. This exception may also indicate an attempt to call an "async void" method, which is generally unsupported within ASP.NET request processing. Instead, the asynchronous method should return a Task, and the caller should await it.
+2018-05-07 07:40:49.0097|ERROR|file|[Reviews Controller] [Edit] Exception thrown: Object reference not set to an instance of an object.
+2018-05-07 07:42:51.6468|ERROR|file|[Reviews Controller] [Edit] Exception thrown: Object reference not set to an instance of an object.
+2018-05-07 07:42:54.9722|ERROR|file|[Reviews Controller] [Edit] Exception thrown: Object reference not set to an instance of an object.
+2018-05-07 07:44:16.4042|ERROR|file|[Reviews Controller] [Edit] Exception thrown: Object reference not set to an instance of an object.
+2018-05-07 07:44:47.5040|ERROR|file|[Reviews Controller] [Edit/id] Exception thrown: Object reference not set to an instance of an object.

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using LocalGourmet.BLL.Services;
 using LocalGourmet.BLL.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

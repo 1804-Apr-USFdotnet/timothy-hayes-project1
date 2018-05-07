@@ -102,7 +102,7 @@ namespace LocalGourmet.PL.Controllers
             }
             catch (Exception e)
             {
-                log.Error($"[Reviews Controller] [Edit] Exception thrown: {e.Message}");
+                log.Error($"[Reviews Controller] [Edit/id] Exception thrown: {e.Message}");
                 return RedirectToAction("Index");
             }
         }
@@ -126,7 +126,7 @@ namespace LocalGourmet.PL.Controllers
             }
             catch (Exception e)
             {
-                log.Error($"[Reviews Controller] [Edit] Exception thrown: {e.Message}");
+                log.Error($"[Reviews Controller] [Edit/review] Exception thrown: {e.Message}");
                 return RedirectToAction("Index");
             }
         }

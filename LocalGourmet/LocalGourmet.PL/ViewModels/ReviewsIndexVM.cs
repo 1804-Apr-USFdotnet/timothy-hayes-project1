@@ -17,6 +17,7 @@ namespace LocalGourmet.PL.ViewModels
         public ReviewsIndexVM()
         {
             reviewRepository = new ReviewRepository();
+            restaurantRepository = new RestaurantRepository();
             MyReviews = reviewRepository.GetAll();
             MyRestaurants = restaurantRepository.GetAll();
         }
