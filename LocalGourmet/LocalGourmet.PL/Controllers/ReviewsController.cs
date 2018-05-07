@@ -53,12 +53,35 @@ namespace LocalGourmet.PL.Controllers
             }
         }
 
+        //// GET: Reviews/Create
+        //public ActionResult Create()
+        //{
+        //    try
+        //    {
+        //        ReviewsCreateVM vm = new ReviewsCreateVM();
+        //        return View(vm);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        log.Error($"[Reviews Controller] [Create] Exception thrown: {e.Message}");
+        //        return RedirectToAction("Index");
+        //    }
+        //}
+
         // GET: Reviews/Create
-        public ActionResult Create()
+        public ActionResult Create(int? ID)
         {
             try
             {
-                ReviewsCreateVM vm = new ReviewsCreateVM();
+                ReviewsCreateVM vm;
+                if (ID == null)
+                {
+                    vm = new ReviewsCreateVM();
+                }
+                else
+                {
+                    vm = new ReviewsCreateVM((int) ID);
+                }
                 return View(vm);
             }
             catch (Exception e)

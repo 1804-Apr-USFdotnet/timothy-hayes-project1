@@ -49,3 +49,12 @@ textarea {
 .img {
     border: 3px solid red;
 }
+
+.btn:hover {
+    border: solid 1px red;
+    background-color: pink;
+}
+
+input:focus {
+    background-color: blanchedalmond;
+}

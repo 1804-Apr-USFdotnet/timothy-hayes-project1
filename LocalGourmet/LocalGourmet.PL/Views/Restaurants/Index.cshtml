@@ -86,7 +86,8 @@
                 @item.GetAvgRating()
             </td>
             <td>
-                <div style="min-width: 200px;">
+                <div style="width: 300px;">
+                    <a href=@($"/Reviews/Create/{item.ID}") class="btn btn-default btn-toolbar">Add Review</a>
                     <a href=@($"/Restaurants/Details/{item.ID}") class="btn btn-default btn-toolbar">Details</a>
                     @*@if(Request.IsAuthenticated)*@
                         <a href=@($"/Restaurants/Edit/{item.ID}") class="btn btn-default btn-toolbar">Edit</a>

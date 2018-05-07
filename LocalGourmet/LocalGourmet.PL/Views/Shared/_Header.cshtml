@@ -1,4 +1,4 @@
-﻿<header class="navbar navbar-inverse navbar-fixed-top navbar-collapse">
+﻿<header class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -10,11 +10,10 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Home", "Home", "Home")</li>
-                <li>@Html.ActionLink("About", "About", "Home")</li>
-                <li>@Html.ActionLink("Contact Us", "Contact", "Home")</li>
                 <li>@Html.ActionLink("Restaurants", "Index", "Restaurants")</li>
                 <li>@Html.ActionLink("Reviews", "Index", "Reviews")</li>
+                <li>@Html.ActionLink("About", "About", "Home")</li>
+                <li>@Html.ActionLink("Contact Us", "Contact", "Home")</li>
             </ul>
         </div>
     </div>

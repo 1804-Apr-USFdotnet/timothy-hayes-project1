@@ -20,6 +20,16 @@ namespace LocalGourmet.PL.ViewModels
             MyRestaurants = restaurantRepository.GetAll();
         }
 
+        public ReviewsCreateVM(int restaurantID)
+        {
+            restaurantRepository = new RestaurantRepository();
+            MyReview = new Review()
+            {
+                RestaurantID = restaurantID
+            };
+            MyRestaurants = restaurantRepository.GetAll();
+        }
+
         public Review Review
         {
             get
