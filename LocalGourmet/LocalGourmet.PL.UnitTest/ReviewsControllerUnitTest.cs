@@ -98,42 +98,51 @@ namespace LocalGourmet.PL.UnitTest
             FakeReviewRepository fakeReviewRepository = new FakeReviewRepository();
             ReviewsController controller = new ReviewsController(fakeRestaurantRepository, fakeReviewRepository);
             ReviewsCreateVM vm = new ReviewsCreateVM(fakeRestaurantRepository);
+            string e2RestName = "McD";
 
             //Act
-            var result = controller.Create(vm) as ViewResult;
+            var result = controller.Create(vm) as ActionResult;
+            var result2 = controller.Create(1) as ViewResult;
+            var data2 = result2.Model as ReviewsCreateVM;
 
             //Assert
             Assert.IsNotNull(result);
+            Assert.IsNotNull(result2);
+            Assert.AreEqual(e2RestName, data2.Restaurants.First(x=>x.ID == data2.Review.RestaurantID).Name);
         }
 
         [TestMethod]
         public void TestReviewsEdit()
         {
             //Arrange
-            ReviewsController controller = new ReviewsController();
+            FakeRestaurantRepository fakeRestaurantRepository = new FakeRestaurantRepository();
+            FakeReviewRepository fakeReviewRepository = new FakeReviewRepository();
+            ReviewsController controller = new ReviewsController(fakeRestaurantRepository, fakeReviewRepository);
 
             //Act
-            var result = controller.Edit(5100) as ViewResult;
+            var result = controller.Edit(3) as ViewResult;
             var data = result.Model as ReviewsEditVM;
 
             //Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual("Danit Isahella", data.Review.ReviewerName);
+            Assert.AreEqual("C", data.Review.ReviewerName);
         }
 
         [TestMethod]
         public void TestReviewsDelete()
         {
             //Arrange
-            ReviewsController controller = new ReviewsController();
+            FakeRestaurantRepository fakeRestaurantRepository = new FakeRestaurantRepository();
+            FakeReviewRepository fakeReviewRepository = new FakeReviewRepository();
+            ReviewsController controller = new ReviewsController(fakeRestaurantRepository, fakeReviewRepository);
 
             //Act
-            var result = controller.Delete(5100) as ViewResult;
+            var result = controller.Delete(2) as ViewResult;
             var data = result.Model as Review;
 
             //Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual("Danit Isahella", data.ReviewerName);
+            Assert.AreEqual("B", data.ReviewerName);
         }
     }
 }
