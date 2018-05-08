@@ -171,7 +171,15 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\colum1.jpg" />
+    <Content Include="Content\colum2.jpg" />
+    <Content Include="Content\colum3.jpg" />
+    <Content Include="Content\colum4.jpg" />
     <Content Include="Content\lg.png" />
+    <Content Include="Content\mdf1.jpg" />
+    <Content Include="Content\mdf2.jpg" />
+    <Content Include="Content\mdf3.jpg" />
+    <Content Include="Content\sub1.jpg" />
     <Content Include="Content\WaterlooBanquetWilliamSalter.JPG" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
