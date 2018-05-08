@@ -16,17 +16,22 @@ namespace LocalGourmet.PL.Controllers
     {
         private Logger log;
         private RestaurantRepository restaurantRepository;
+        private ReviewRepository reviewRepository;
+        private RestaurantDetailsVM vm;
 
         public RestaurantsController()
         {
             log = LogManager.GetLogger("file");
             restaurantRepository = new RestaurantRepository();
+            reviewRepository = new ReviewRepository();
         }
 
-        public RestaurantsController(RestaurantRepository newRestaurantRepository)
+        public RestaurantsController(RestaurantRepository newRestaurantRepository,
+            ReviewRepository newReviewRepository)
         {
             log = LogManager.GetLogger("file");
             restaurantRepository = newRestaurantRepository;
+            reviewRepository = newReviewRepository;
         }
 
         // GET: Restaurants 
@@ -73,7 +78,7 @@ namespace LocalGourmet.PL.Controllers
             {
                 if(restaurantRepository.GetByID(id) == null)
                 { throw new ArgumentNullException(); }
-                RestaurantDetailsVM vm = new RestaurantDetailsVM(id);
+                vm = new RestaurantDetailsVM(restaurantRepository, reviewRepository, id);
                 return View(vm);
             }
             catch(Exception e)

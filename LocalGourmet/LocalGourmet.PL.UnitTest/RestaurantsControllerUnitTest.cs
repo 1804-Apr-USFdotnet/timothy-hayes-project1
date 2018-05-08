@@ -54,6 +54,20 @@ namespace LocalGourmet.PL.UnitTest
         }
     }
 
+    public class FakeReviewRepository : ReviewRepository
+    {
+        private List<Review> reviews;
+        public FakeReviewRepository()
+        {
+            reviews = new List<Review>()
+            {
+                new Review { ID=1, ReviewerName="A", AtmosphereRating=5, PriceRating=5, FoodRating=5, ServiceRating=5},
+                new Review { ID=2, ReviewerName="B", AtmosphereRating=1, PriceRating=1, FoodRating=1, ServiceRating=1},
+                new Review { ID=3, ReviewerName="C", AtmosphereRating=3, PriceRating=3, FoodRating=4, ServiceRating=4}
+            };
+        }
+    }
+    
     [TestClass]
     public class RestaurantsControllerUnitTest
     {
@@ -62,15 +76,16 @@ namespace LocalGourmet.PL.UnitTest
         {
             //Arrange
             FakeRestaurantRepository fakeRestaurantRepository = new FakeRestaurantRepository();
-            RestaurantsController controller = new RestaurantsController(fakeRestaurantRepository);
+            FakeReviewRepository fakeReviewRepository = new FakeReviewRepository();
+            RestaurantsController controller = new RestaurantsController(fakeRestaurantRepository, fakeReviewRepository);
             string e1 = "Acme";
             string e2 = "Citrus";
 
             //Act
             var result1 = controller.Index("byName") as ViewResult;
-            var data1 = result1.Model as Restaurant[];
+            var data1 = result1.Model as List<Restaurant>;
             var result2 = controller.Index("byCuisine") as ViewResult;
-            var data2 = result2.Model as Restaurant[];
+            var data2 = result2.Model as List<Restaurant>;
 
             //Assert
             Assert.IsNotNull(result1);
@@ -83,28 +98,32 @@ namespace LocalGourmet.PL.UnitTest
         public void TestRestaurantsDetails()
         {
             //Arrange
-            RestaurantsController controller = new RestaurantsController();
+            FakeRestaurantRepository fakeRestaurantRepository = new FakeRestaurantRepository();
+            FakeReviewRepository fakeReviewRepository = new FakeReviewRepository();
+            RestaurantsController controller = new RestaurantsController(fakeRestaurantRepository, fakeReviewRepository);
+            string e1 = "Meat";
+            string e2 = "Meat";
 
             //Act
             var result1 = controller.Details(1) as ViewResult;
             var data1 = result1.Model as RestaurantDetailsVM;
-
-            var result2 = controller.Details(9) as ViewResult;
+            var result2 = controller.Details(2) as ViewResult;
             var data2 = result2.Model as RestaurantDetailsVM;
 
             //Assert
             Assert.IsNotNull(result1);
-            Assert.AreEqual("Subway", data1.Restaurant.Name);
-
+            Assert.AreEqual(e1, data1.Restaurant.Cuisine);
             Assert.IsNotNull(result2);
-            Assert.AreEqual("Hattricks", data2.Restaurant.Name);
+            Assert.AreEqual(e2, data2.Restaurant.Cuisine);
         }
 
         [TestMethod]
         public void TestRestaurantsCreate()
         {
             //Arrange
-            RestaurantsController controller = new RestaurantsController();
+            FakeRestaurantRepository fakeRestaurantRepository = new FakeRestaurantRepository();
+            FakeReviewRepository fakeReviewRepository = new FakeReviewRepository();
+            RestaurantsController controller = new RestaurantsController(fakeRestaurantRepository, fakeReviewRepository);
 
             //Act
             var result = controller.Create() as ViewResult;
@@ -117,7 +136,9 @@ namespace LocalGourmet.PL.UnitTest
         public void TestRestaurantsEdit()
         {
             //Arrange
-            RestaurantsController controller = new RestaurantsController();
+            FakeRestaurantRepository fakeRestaurantRepository = new FakeRestaurantRepository();
+            FakeReviewRepository fakeReviewRepository = new FakeReviewRepository();
+            RestaurantsController controller = new RestaurantsController(fakeRestaurantRepository, fakeReviewRepository);
 
             //Act
             var result = controller.Edit(1) as ViewResult;
@@ -125,14 +146,16 @@ namespace LocalGourmet.PL.UnitTest
 
             //Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(data.Name, "Subway");
+            Assert.AreEqual(data.Name, "McD");
         }
 
         [TestMethod]
         public void TestRestaurantsDelete()
         {
             //Arrange
-            RestaurantsController controller = new RestaurantsController();
+            FakeRestaurantRepository fakeRestaurantRepository = new FakeRestaurantRepository();
+            FakeReviewRepository fakeReviewRepository = new FakeReviewRepository();
+            RestaurantsController controller = new RestaurantsController(fakeRestaurantRepository, fakeReviewRepository);
 
             //Act
             var result = controller.Delete(1) as ViewResult;
@@ -140,7 +163,7 @@ namespace LocalGourmet.PL.UnitTest
 
             //Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(data.Name, "Subway");
+            Assert.AreEqual(data.Name, "McD");
         }
     }
 }
