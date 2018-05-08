@@ -15,7 +15,9 @@ namespace LocalGourmet.PL.UnitTest
         public void TestReviewsIndex()
         {
             //Arrange
-            ReviewsController controller = new ReviewsController();
+            FakeRestaurantRepository fakeRestaurantRepository = new FakeRestaurantRepository();
+            FakeReviewRepository fakeReviewRepository = new FakeReviewRepository();
+            ReviewsController controller = new ReviewsController(fakeRestaurantRepository, fakeReviewRepository);
 
             //Act
             var result = controller.Index() as ViewResult;

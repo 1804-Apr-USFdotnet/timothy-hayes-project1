@@ -14,12 +14,22 @@ namespace LocalGourmet.PL.Controllers
     public class ReviewsController : Controller
     {
         private Logger log;
+        private RestaurantRepository restaurantRepository;
         private ReviewRepository reviewRepository;
 
         public ReviewsController()
         {
             log = LogManager.GetLogger("file");
             reviewRepository = new ReviewRepository();
+            restaurantRepository = new RestaurantRepository();
+        }
+
+        public ReviewsController(RestaurantRepository newRestaurantRepository,
+            ReviewRepository newReviewRepository)
+        {
+            log = LogManager.GetLogger("file");
+            restaurantRepository = newRestaurantRepository;
+            reviewRepository = newReviewRepository;
         }
 
         // GET: Reviews
@@ -27,7 +37,7 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                var rrViewModel = new ReviewsIndexVM();
+                var rrViewModel = new ReviewsIndexVM(reviewRepository, restaurantRepository);
                 return View(rrViewModel);
             }
             catch(Exception e)
@@ -61,11 +71,11 @@ namespace LocalGourmet.PL.Controllers
                 ReviewsCreateVM vm;
                 if (ID == null)
                 {
-                    vm = new ReviewsCreateVM();
+                    vm = new ReviewsCreateVM(restaurantRepository);
                 }
                 else
                 {
-                    vm = new ReviewsCreateVM((int) ID);
+                    vm = new ReviewsCreateVM((int) ID, restaurantRepository);
                 }
                 return View(vm);
             }
@@ -104,7 +114,7 @@ namespace LocalGourmet.PL.Controllers
         {
             try
             {
-                ReviewsEditVM vm = new ReviewsEditVM(id);
+                ReviewsEditVM vm = new ReviewsEditVM(id, reviewRepository, restaurantRepository);
                 if (vm.Review == null) { throw new ArgumentNullException("id"); }
                 return View(vm);
             }

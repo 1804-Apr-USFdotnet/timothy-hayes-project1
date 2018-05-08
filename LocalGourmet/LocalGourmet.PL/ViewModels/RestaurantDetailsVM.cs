@@ -15,15 +15,6 @@ namespace LocalGourmet.PL.ViewModels
         private ReviewRepository reviewRepository;
         private RestaurantRepository restaurantRepository;
 
-        public RestaurantDetailsVM(int newID)
-        {
-            this.ID = newID;
-            reviewRepository = new ReviewRepository();
-            restaurantRepository = new RestaurantRepository();
-            MyReviews = reviewRepository.GetReviewsByRestaurantID(this.ID);
-            MyRestaurant = restaurantRepository.GetByID(this.ID);
-        }
-
         public RestaurantDetailsVM(RestaurantRepository newRestaurantRepository, 
             ReviewRepository newReviewRepository, int newID)
         {
@@ -33,7 +24,6 @@ namespace LocalGourmet.PL.ViewModels
             MyReviews = reviewRepository.GetReviewsByRestaurantID(this.ID);
             MyRestaurant = restaurantRepository.GetByID(this.ID);
         }
-
 
         public IEnumerable<Review> Reviews
         {

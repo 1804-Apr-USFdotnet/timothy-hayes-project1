@@ -13,16 +13,16 @@ namespace LocalGourmet.PL.ViewModels
         private IEnumerable<Restaurant> MyRestaurants;
         private RestaurantRepository restaurantRepository;
 
-        public ReviewsCreateVM()
+        public ReviewsCreateVM(RestaurantRepository newRestaurantRepository)
         {
-            restaurantRepository = new RestaurantRepository();
+            restaurantRepository = newRestaurantRepository;
             MyReview = new Review();
             MyRestaurants = restaurantRepository.GetAll();
         }
 
-        public ReviewsCreateVM(int restaurantID)
+        public ReviewsCreateVM(int restaurantID, RestaurantRepository newRestaurantRepository)
         {
-            restaurantRepository = new RestaurantRepository();
+            restaurantRepository = newRestaurantRepository;
             MyReview = new Review()
             {
                 RestaurantID = restaurantID

@@ -17,7 +17,6 @@ namespace LocalGourmet.PL.Controllers
         private Logger log;
         private RestaurantRepository restaurantRepository;
         private ReviewRepository reviewRepository;
-        private RestaurantDetailsVM vm;
 
         public RestaurantsController()
         {
@@ -78,7 +77,7 @@ namespace LocalGourmet.PL.Controllers
             {
                 if(restaurantRepository.GetByID(id) == null)
                 { throw new ArgumentNullException(); }
-                vm = new RestaurantDetailsVM(restaurantRepository, reviewRepository, id);
+                RestaurantDetailsVM vm = new RestaurantDetailsVM(restaurantRepository, reviewRepository, id);
                 return View(vm);
             }
             catch(Exception e)

@@ -14,10 +14,10 @@ namespace LocalGourmet.PL.ViewModels
         private ReviewRepository reviewRepository;
         private RestaurantRepository restaurantRepository;
 
-        public ReviewsIndexVM()
+        public ReviewsIndexVM(ReviewRepository newReviewRepository, RestaurantRepository newRestaurantRepository)
         {
-            reviewRepository = new ReviewRepository();
-            restaurantRepository = new RestaurantRepository();
+            reviewRepository = newReviewRepository;
+            restaurantRepository = newRestaurantRepository;
             MyReviews = reviewRepository.GetAll().Reverse(); // Most recently created first
             MyRestaurants = restaurantRepository.GetAll();
         }
