@@ -23,6 +23,12 @@ namespace LocalGourmet.PL.Controllers
             restaurantRepository = new RestaurantRepository();
         }
 
+        public RestaurantsController(RestaurantRepository newRestaurantRepository)
+        {
+            log = LogManager.GetLogger("file");
+            restaurantRepository = newRestaurantRepository;
+        }
+
         // GET: Restaurants 
         public ActionResult Index(string sort)
         {

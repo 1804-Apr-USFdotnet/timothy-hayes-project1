@@ -5,9 +5,55 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using LocalGourmet.BLL.Models;
 using LocalGourmet.PL.Controllers;
 using LocalGourmet.PL.ViewModels;
+using LocalGourmet.BLL.Repositories;
+using System.Linq;
 
 namespace LocalGourmet.PL.UnitTest
 {
+    public class FakeRestaurantRepository : RestaurantRepository
+    {
+        private List<Restaurant> restaurants;
+
+        public FakeRestaurantRepository()
+        {
+            restaurants = new List<Restaurant>
+            {
+                new Restaurant() { ID = 1, Name = "McD", Cuisine = "Meat" },
+                new Restaurant() { ID = 2, Name = "BK", Cuisine = "Meat" },
+                new Restaurant() { ID = 3, Name = "DQ", Cuisine = "Fries" },
+                new Restaurant() { ID = 4, Name = "Acme", Cuisine = "Slop" },
+                new Restaurant() { ID = 5, Name = "Citrus", Cuisine = "Apples" }
+            };
+
+        }
+
+        public override void Add(Restaurant r)
+        {
+            restaurants.Add(r);
+        }
+
+        public override IEnumerable<Restaurant> GetAll()
+        {
+            return restaurants;
+        }
+
+        public override Restaurant GetByID(int id)
+        {
+            return restaurants.First(x => x.ID == id);
+        }
+
+        public override void Delete(Restaurant r)
+        {
+            restaurants.Remove(r);
+        }
+
+        public override void Update(Restaurant r)
+        {
+            restaurants.RemoveAt(restaurants.IndexOf(r));
+            restaurants.Add(r);
+        }
+    }
+
     [TestClass]
     public class RestaurantsControllerUnitTest
     {
@@ -15,21 +61,22 @@ namespace LocalGourmet.PL.UnitTest
         public void TestRestaurantsIndex()
         {
             //Arrange
-            RestaurantsController controller = new RestaurantsController();
+            FakeRestaurantRepository fakeRestaurantRepository = new FakeRestaurantRepository();
+            RestaurantsController controller = new RestaurantsController(fakeRestaurantRepository);
+            string e1 = "Acme";
+            string e2 = "Citrus";
 
             //Act
             var result1 = controller.Index("byName") as ViewResult;
-            var data1 = result1.Model as List<Restaurant>;
-
-            var result2 = controller.Index("byRating") as ViewResult;
-            var data2 = result2.Model as List<Restaurant>;
+            var data1 = result1.Model as Restaurant[];
+            var result2 = controller.Index("byCuisine") as ViewResult;
+            var data2 = result2.Model as Restaurant[];
 
             //Assert
             Assert.IsNotNull(result1);
-            Assert.AreEqual("Columbia Restaurant", data1[0].Name);
-
+            Assert.AreEqual(e1, data1[0].Name);
             Assert.IsNotNull(result2);
-            Assert.AreEqual("Yummy House China Bistro", data2[0].Name);
+            Assert.AreEqual(e2, data2[0].Name);
         }
 
         [TestMethod]

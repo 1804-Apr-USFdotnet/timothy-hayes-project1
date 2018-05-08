@@ -22,17 +22,17 @@ namespace LocalGourmet.BLL.Repositories
         }
 
         #region CRUD
-        public void Add(BLL.Models.Restaurant r)
+        public virtual void Add(BLL.Models.Restaurant r)
         {
             crud.Add(RestaurantService.LibraryToData(r));
         }
 
-        public IEnumerable<BLL.Models.Restaurant> GetAll()
+        public virtual IEnumerable<BLL.Models.Restaurant> GetAll()
         {
             return crud.GetAll().Select(x => RestaurantService.DataToLibrary(x)).ToList();
         }
 
-        public BLL.Models.Restaurant GetByID(int id)
+        public virtual BLL.Models.Restaurant GetByID(int id)
         {
             BLL.Models.Restaurant r;
             try
@@ -46,7 +46,7 @@ namespace LocalGourmet.BLL.Repositories
             return r;
         }
         
-        public void Update(BLL.Models.Restaurant r)
+        public virtual void Update(BLL.Models.Restaurant r)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace LocalGourmet.BLL.Repositories
             }
         }
 
-        public void Delete(BLL.Models.Restaurant r)
+        public virtual void Delete(BLL.Models.Restaurant r)
         {
             try
             {

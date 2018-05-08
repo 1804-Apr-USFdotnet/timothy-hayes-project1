@@ -68,6 +68,24 @@ namespace LocalGourmet.BLL.Services
             return customReviews;
         }
 
+        public static IEnumerable<Review> SortByReviewerNameAsc(IEnumerable<Review> list)
+        {
+            return list;
+        }
+
+        public static IEnumerable<Review> SortByOverallRatingDesc(IEnumerable<Review> list)
+        {
+            return list;
+        }
+
+        public static IEnumerable<Review> SortByRestaurantNameAsc(IEnumerable<Review> list)
+        {
+
+            return list;
+        }
+
+
+
         #region BLL-DL Mappers
         public static BLL.Models.Review DataToLibrary(DL.Review dataModel)
         {
