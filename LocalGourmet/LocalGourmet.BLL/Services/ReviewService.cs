@@ -70,18 +70,17 @@ namespace LocalGourmet.BLL.Services
 
         public static IEnumerable<Review> SortByReviewerNameAsc(IEnumerable<Review> list)
         {
-            return list;
+            return list.OrderBy(x => x.ReviewerName);
         }
 
         public static IEnumerable<Review> SortByOverallRatingDesc(IEnumerable<Review> list)
         {
-            return list;
+            return list.OrderByDescending(x => x.GetRating());
         }
 
         public static IEnumerable<Review> SortByCommentAsc(IEnumerable<Review> list)
         {
-
-            return list;
+            return list.OrderBy(x => x.Comment);
         }
 
 

@@ -152,8 +152,8 @@ namespace LocalGourmet.BLL.UnitTest
             int expectedRevIDLast = 1;
 
             // Act 
-            int actualFirstID = reviews.First().ID;
-            int actualLastID = reviews.Last().ID;
+            int actualFirstID = list.First().ID;
+            int actualLastID = list.Last().ID;
 
             // Assert
             Assert.AreEqual(expectedRevIDFirst, actualFirstID);
@@ -176,8 +176,8 @@ namespace LocalGourmet.BLL.UnitTest
             int expectedRevIDLast = 3;
 
             // Act 
-            int actualFirstID = reviews.First().ID;
-            int actualLastID = reviews.Last().ID;
+            int actualFirstID = list.First().ID;
+            int actualLastID = list.Last().ID;
 
             // Assert
             Assert.AreEqual(expectedRevIDFirst, actualFirstID);
