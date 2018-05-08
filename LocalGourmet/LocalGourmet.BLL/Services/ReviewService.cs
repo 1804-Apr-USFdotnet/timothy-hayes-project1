@@ -78,7 +78,7 @@ namespace LocalGourmet.BLL.Services
             return list;
         }
 
-        public static IEnumerable<Review> SortByRestaurantNameAsc(IEnumerable<Review> list)
+        public static IEnumerable<Review> SortByCommentAsc(IEnumerable<Review> list)
         {
 
             return list;

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using LocalGourmet.BLL.Models;
+using LocalGourmet.BLL.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace LocalGourmet.BLL.UnitTest
 {
@@ -107,6 +109,79 @@ namespace LocalGourmet.BLL.UnitTest
             Assert.AreEqual(e2, a2);
             Assert.AreEqual(e3, a3);
             Assert.AreEqual(e4, a4);
+        }
+
+        [TestMethod]
+        public void TestSortByReviewerNameAsc()
+        {
+            // Arrange
+            IEnumerable<Review> reviews = new List<Review>()
+            {
+                new Review { ID=1, ReviewerName= "Cade" },
+                new Review { ID=2, ReviewerName= "Billy" },
+                new Review { ID=3, ReviewerName= "Adam" }
+            };
+
+            IEnumerable<Review> list = ReviewService.SortByReviewerNameAsc(reviews);
+            int expectedIDFirst = 3;
+            int expectedIDLast = 1;
+
+            // Act 
+            int actualFirst = list.First().ID;
+            int actualLast = list.Last().ID;
+
+            // Assert
+            Assert.AreEqual(expectedIDFirst, actualFirst);
+            Assert.AreEqual(expectedIDLast, actualLast);
+        }
+
+        [TestMethod]
+        public void TestSortByCommentAsc()
+        {
+            // Arrange
+            IEnumerable<Review> reviews = new List<Review>()
+            {
+                new Review { ID=2, RestaurantID=3, Comment="Great!"},
+                new Review { ID=3, RestaurantID=2, Comment="Bleh!"},
+                new Review { ID=1, RestaurantID=5, Comment="Meh!" }
+            };
+
+
+            IEnumerable<Review> list = ReviewService.SortByCommentAsc(reviews);
+            int expectedRevIDFirst = 3;
+            int expectedRevIDLast = 1;
+
+            // Act 
+            int actualFirstID = reviews.First().ID;
+            int actualLastID = reviews.Last().ID;
+
+            // Assert
+            Assert.AreEqual(expectedRevIDFirst, actualFirstID);
+            Assert.AreEqual(expectedRevIDLast, actualLastID);
+        }
+
+        [TestMethod]
+        public void TestSortByOverallRatingDesc()
+        {
+            // Arrange
+            IEnumerable<Review> reviews = new List<Review>()
+            {
+                new Review { ID=2, AtmosphereRating=3, FoodRating=3, ServiceRating=3, PriceRating=3},
+                new Review { ID=1, AtmosphereRating=1, FoodRating=5, ServiceRating=5, PriceRating=5},
+                new Review { ID=3, AtmosphereRating=2, FoodRating=2, ServiceRating=2, PriceRating=1}
+            };
+
+            IEnumerable<Review> list = ReviewService.SortByOverallRatingDesc(reviews);
+            int expectedRevIDFirst = 1;
+            int expectedRevIDLast = 3;
+
+            // Act 
+            int actualFirstID = reviews.First().ID;
+            int actualLastID = reviews.Last().ID;
+
+            // Assert
+            Assert.AreEqual(expectedRevIDFirst, actualFirstID);
+            Assert.AreEqual(expectedRevIDLast, actualLastID);
         }
     }
 }
