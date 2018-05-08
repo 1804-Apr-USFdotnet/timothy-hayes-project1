@@ -54,19 +54,6 @@ namespace LocalGourmet.PL.UnitTest
         }
     }
 
-    public class FakeReviewRepository : ReviewRepository
-    {
-        private List<Review> reviews;
-        public FakeReviewRepository()
-        {
-            reviews = new List<Review>()
-            {
-                new Review { ID=1, ReviewerName="A", AtmosphereRating=5, PriceRating=5, FoodRating=5, ServiceRating=5},
-                new Review { ID=2, ReviewerName="B", AtmosphereRating=1, PriceRating=1, FoodRating=1, ServiceRating=1},
-                new Review { ID=3, ReviewerName="C", AtmosphereRating=3, PriceRating=3, FoodRating=4, ServiceRating=4}
-            };
-        }
-    }
     
     [TestClass]
     public class RestaurantsControllerUnitTest

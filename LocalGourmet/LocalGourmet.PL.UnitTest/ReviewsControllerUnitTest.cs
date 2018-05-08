@@ -5,9 +5,56 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using LocalGourmet.BLL.Models;
 using LocalGourmet.PL.Controllers;
 using LocalGourmet.PL.ViewModels;
+using LocalGourmet.BLL.Repositories;
+using System.Linq;
 
 namespace LocalGourmet.PL.UnitTest
 {
+    public class FakeReviewRepository : ReviewRepository
+    {
+        private List<Review> reviews;
+        public FakeReviewRepository()
+        {
+            reviews = new List<Review>()
+            {
+                new Review { ID=1, ReviewerName="A", AtmosphereRating=5, PriceRating=5, FoodRating=5, ServiceRating=5},
+                new Review { ID=2, ReviewerName="B", AtmosphereRating=1, PriceRating=1, FoodRating=1, ServiceRating=1},
+                new Review { ID=3, ReviewerName="C", AtmosphereRating=3, PriceRating=3, FoodRating=4, ServiceRating=4}
+            };
+        }
+
+        public override IEnumerable<Review> GetAll()
+        {
+            return reviews;
+        }
+
+        public override void Add(Review r)
+        {
+            reviews.Add(r);
+        }
+
+        public override void Delete(Review r)
+        {
+            reviews.Remove(r);
+        }
+
+        public override Review GetById(int id)
+        {
+            return reviews.First(x => x.ID == id);
+        }
+
+        public override void Update(Review r)
+        {
+            reviews.RemoveAt(reviews.IndexOf(r));
+            reviews.Add(r);
+        }
+
+        public override List<Review> GetReviewsByRestaurantID(int restID)
+        {
+            return reviews.Where(x => x.RestaurantID == restID).ToList();
+        }
+    }
+
     [TestClass]
     public class ReviewsControllerUnitTest
     {
@@ -30,23 +77,27 @@ namespace LocalGourmet.PL.UnitTest
         public void TestReviewsDetails()
         {
             //Arrange
-            ReviewsController controller = new ReviewsController();
+            FakeRestaurantRepository fakeRestaurantRepository = new FakeRestaurantRepository();
+            FakeReviewRepository fakeReviewRepository = new FakeReviewRepository();
+            ReviewsController controller = new ReviewsController(fakeRestaurantRepository, fakeReviewRepository);
 
             //Act
-            var result = controller.Details(5100) as ViewResult;
+            var result = controller.Details(1) as ViewResult;
             var data = result.Model as Review;
 
             //Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual("Danit Isahella", data.ReviewerName);
+            Assert.AreEqual("A", data.ReviewerName);
         }
 
         [TestMethod]
         public void TestReviewsCreate()
         {
             //Arrange
-            ReviewsController controller = new ReviewsController();
-            ReviewsCreateVM vm = new ReviewsCreateVM();
+            FakeRestaurantRepository fakeRestaurantRepository = new FakeRestaurantRepository();
+            FakeReviewRepository fakeReviewRepository = new FakeReviewRepository();
+            ReviewsController controller = new ReviewsController(fakeRestaurantRepository, fakeReviewRepository);
+            ReviewsCreateVM vm = new ReviewsCreateVM(fakeRestaurantRepository);
 
             //Act
             var result = controller.Create(vm) as ViewResult;
