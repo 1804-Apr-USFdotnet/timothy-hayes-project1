@@ -8,6 +8,7 @@ using LocalGourmet.BLL.Models;
 using LocalGourmet.PL.ViewModels;
 using NLog;
 using LocalGourmet.BLL.Repositories;
+using LocalGourmet.BLL.Services;
 
 namespace LocalGourmet.PL.Controllers
 {
@@ -33,11 +34,22 @@ namespace LocalGourmet.PL.Controllers
         }
 
         // GET: Reviews
-        public ActionResult Index()
+        public ActionResult Index(string sort)
         {
             try
             {
                 var rrViewModel = new ReviewsIndexVM(reviewRepository, restaurantRepository);
+                if(sort=="byRevName")
+                {
+                    rrViewModel.Reviews = ReviewService.SortByReviewerNameAsc(rrViewModel.Reviews);
+                } else if(sort=="byRating")
+                {
+                    rrViewModel.Reviews = ReviewService.SortByOverallRatingDesc(rrViewModel.Reviews);
+                } else if (sort=="byComment")
+                {
+                    rrViewModel.Reviews = ReviewService.SortByCommentAsc(rrViewModel.Reviews);
+                }
+
                 return View(rrViewModel);
             }
             catch(Exception e)

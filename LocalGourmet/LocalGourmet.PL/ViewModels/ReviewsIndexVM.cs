@@ -28,6 +28,10 @@ namespace LocalGourmet.PL.ViewModels
             {
                 return MyReviews;
             }
+            set
+            {
+                MyReviews = value;
+            }
         }
 
         public IEnumerable<Restaurant> Restaurants
