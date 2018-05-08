@@ -54,7 +54,7 @@
             </div>
     
             <div class="form-group">
-                <label class="control-label col-md-2">Food Rating</label>
+                <label class="control-label col-md-2">Food Rating (0-5)</label>
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Review.FoodRating, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Review.FoodRating, "", new { @class = "text-danger" })
@@ -62,7 +62,7 @@
             </div>
     
             <div class="form-group">
-                <label class="control-label col-md-2">Service Rating</label>
+                <label class="control-label col-md-2">Service Rating (0-5)</label>
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Review.ServiceRating, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Review.ServiceRating, "", new { @class = "text-danger" })
@@ -70,7 +70,7 @@
             </div>
     
             <div class="form-group">
-                <label class="control-label col-md-2">Atmosphere Rating</label>
+                <label class="control-label col-md-2">Atmosphere Rating (0-5)</label>
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Review.AtmosphereRating, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Review.AtmosphereRating, "", new { @class = "text-danger" })
@@ -78,7 +78,7 @@
             </div>
     
             <div class="form-group">
-                <label class="control-label col-md-2">Price Rating</label>
+                <label class="control-label col-md-2">Price Rating (0-5)</label>
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Review.PriceRating, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Review.PriceRating, "", new { @class = "text-danger" })
