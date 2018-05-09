@@ -67,7 +67,7 @@ namespace LocalGourmet.PL.UnitTest
             ReviewsController controller = new ReviewsController(fakeRestaurantRepository, fakeReviewRepository);
 
             //Act
-            var result = controller.Index() as ViewResult;
+            var result = controller.Index("byRevName") as ViewResult;
 
             //Assert
             Assert.IsNotNull(result);
