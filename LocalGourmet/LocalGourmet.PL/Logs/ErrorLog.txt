@@ -35,3 +35,5 @@ Parameter name: id
 Parameter name: id
 2018-05-08 01:58:49.1403|ERROR|file|[Reviews Controller] [Details] Exception thrown: Specified argument was out of the range of valid values.
 Parameter name: id
+2018-05-08 12:01:14.0987|ERROR|file|[Restaurants Controller] [Details] Exception thrown: Specified argument was out of the range of valid values.
+Parameter name: id
