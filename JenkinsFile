@@ -10,7 +10,7 @@
             }
         }
         catch (exc) {
-            slackSend color: 'danger', message: 'build failed!'
+            slackError('build')
             throw exc
         }
     }
@@ -19,7 +19,7 @@
             bat "VSTest.Console LocalGourmet.PL.UnitTest\\bin\\Debug\\LocalGourmet.PL.UnitTest.dll"
         }
         catch (exc) {
-            slackSend color: 'danger', message: 'test failed!'
+            slackError('test')
             throw exc
         }
     }
@@ -28,7 +28,7 @@
 
         }
         catch (exc) {
-            slackSend color: 'danger', message: 'analyze failed!'
+            slackError('analyze')
             throw exc
         }
     }
@@ -37,7 +37,7 @@
                 bat 'msbuild /t:package'
         }
         catch (exc) {
-            slackSend color: 'danger', message: 'package failed!'
+            slackError('package')
             throw exc
         }
     }
@@ -48,8 +48,12 @@
             }
         }
         catch (exc) {
-            slackSend color: 'danger', message: 'deploy failed!'
+            slackError('deploy')
             throw exc
         }
     }
+}
+
+def slackError(stageName) {
+    slackSend color: 'danger', message: "${stageName} stage failed. [<${JOB_URL}|${env.JOB_NAME}> <${env.BUILD_URL}console|${env.BUILD_DISPLAY_NAME}>] [${currentBuild.durationString[0..-14]}]"
 }
