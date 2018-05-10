@@ -3,10 +3,16 @@ node('master') {
         git 'https://github.com/1804-Apr-USFdotnet/timothy-hayes-project1.git'
     }
     stage('build') {
-        dir('LocalGourmet') {
-            bat 'nuget restore'
-            bat 'msbuild'
+        try {
+            dir('LocalGourmet') {
+                bat 'nuget restore'
+                bat 'msbuild'
+            }
         }
+        catch (exc) {
+            slackSend 'build failed!'
+        }
+
     }
     stage('test') {
         bat "VSTest.Console LocalGourmet.PL.UnitTest\\bin\\Debug\\LocalGourmet.PL.UnitTest.dll"
