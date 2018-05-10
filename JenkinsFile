@@ -46,7 +46,7 @@
     stage('deploy') {
         try {
             dir('LocalGourmet/LocalGourmet.PL/obj/Debug/Package') {
-                bat "LocalGourmet.PL.deploy.cmd /t /m:https://ec2-52-87-164-36.compute-1.amazonaws.com:8172/msdeploy.axd /u:Administrator /p:${env.Deploy_Password} /a:basic '-AllowUntrusted=True'"
+                bat "\"C:\\Program Files\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -source:package='C:\\Program Files (x86)\\Jenkins\\workspace\\Project-1\\LocalGourmet\\LocalGourmet.PL\\obj\\Debug\\Package\\LocalGourmet.PL.zip' -dest:auto,computerName=\"https://ec2-52-87-164-36.compute-1.amazonaws.com:8172/msdeploy.axd\",userName=\"Administrator\",password=\"${env.Deploy_Password}\",authtype=\"basic\",includeAcls=\"False\" -verb:sync -disableLink:AppPoolExtension -disableLink:ContentExtension -disableLink:CertificateExtension -setParamFile:\"C:\\Program Files (x86)\\Jenkins\\workspace\\Project-1\\LocalGourmet\\LocalGourmet.PL\\obj\\Debug\\Package\\LocalGourmet.PL.SetParameters.xml\" -AllowUntrusted=True"
             }
         }
         catch (exc) {
