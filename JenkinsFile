@@ -45,7 +45,7 @@
     stage('deploy') {
         try {
             dir('LocalGourmet/LocalGourmet.PL/obj/Debug/Package') {
-                bat "LocalGourmet.PL.deploy.cmd /t /m:https://ec2-52-87-164-36.compute-1.amazonaws.com:8172/msdeploy.axd /u:Administrator /p:{env.Deploy_Password} /a:basic '-AllowUntrusted=True'"
+                bat "LocalGourmet.PL.deploy.cmd /t /m:https://ec2-52-87-164-36.compute-1.amazonaws.com:8172/msdeploy.axd /u:Administrator /p:${env.Deploy_Password} /a:basic '-AllowUntrusted=True'"
             }
         }
         catch (exc) {
