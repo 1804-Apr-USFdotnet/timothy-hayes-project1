@@ -1,13 +1,6 @@
-node('master') {
+ node('master') {
     stage('import') {
-        try {
-            git 'https://github.com/1804-Apr-USFdotnet/timothy-hayes-project1.git'
-        }
-        catch (exc) {
-            slackSend 'build failed!'
-            throw exc
-        }
-
+        git 'https://github.com/1804-Apr-USFdotnet/timothy-hayes-project1.git'
     }
     stage('build') {
         try {
@@ -22,17 +15,42 @@ node('master') {
         }
     }
     stage('test') {
-        bat "VSTest.Console LocalGourmet.PL.UnitTest\\bin\\Debug\\LocalGourmet.PL.UnitTest.dll"
+        try {
+            bat "VSTest.Console LocalGourmet.PL.UnitTest\\bin\\Debug\\LocalGourmet.PL.UnitTest.dll"
+        }
+        catch (exc) {
+            slackSend color: 'danger', message: 'test failed!'
+            throw exc
+        }
     }
     stage('analyze') {
+        try {
 
+        }
+        catch (exc) {
+            slackSend 'analyze failed!'
+            throw exc
+        }
     }
     stage('package') {
-        bat 'msbuild LocalGourmet.PL /t:package'
+        try {
+                bat 'msbuild /t:package'
+            }
+        }
+        catch (exc) {
+            slackSend 'package failed!'
+            throw exc
+        }
     }
     stage('deploy') {
-        dir('LocalGourmet/LocalGourmet.PL/obj/Debug/Package') {
-            bat "LocalGourmet.PL.deploy.cmd /t /m:https://ec2-52-87-164-36.compute-1.amazonaws.com:8172/msdeploy.axd /u:Administrator /p:Forgivemeas1nner /a:basic '-AllowUntrusted=True'"
+        try {
+            dir('LocalGourmet/LocalGourmet.PL/obj/Debug/Package') {
+                bat "LocalGourmet.PL.deploy.cmd /t /m:https://ec2-52-87-164-36.compute-1.amazonaws.com:8172/msdeploy.axd /u:Administrator /p:{env.Deploy_Password} /a:basic '-AllowUntrusted=True'"
+            }
+        }
+        catch (exc) {
+            slackSend 'deploy failed!'
+            throw exc
         }
     }
 }
