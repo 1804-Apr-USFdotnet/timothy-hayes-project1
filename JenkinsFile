@@ -11,8 +11,8 @@ node('master') {
         }
         catch (exc) {
             slackSend 'build failed!'
+            throw exc
         }
-
     }
     stage('test') {
         bat "VSTest.Console LocalGourmet.PL.UnitTest\\bin\\Debug\\LocalGourmet.PL.UnitTest.dll"
