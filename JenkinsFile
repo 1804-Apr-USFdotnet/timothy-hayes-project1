@@ -1,6 +1,13 @@
 node('master') {
     stage('import') {
-        git 'https://github.com/1804-Apr-USFdotnet/timothy-hayes-project1.git'
+        try {
+            git 'https://github.com/1804-Apr-USFdotnet/timothy-hayes-project1.git'
+        }
+        catch (exc) {
+            slackSend 'build failed!'
+            throw exc
+        }
+
     }
     stage('build') {
         try {
