@@ -1,0 +1,25 @@
+node('master') {
+    stage('import') {
+        git 'https://github.com/1804-Apr-USFdotnet/timothy-hayes-project1.git'
+    }
+    stage('build') {
+        dir('LocalGourmet') {
+            bat 'nuget restore'
+            bat 'msbuild'
+        }
+    }
+    stage('test') {
+        bat "VSTest.Console LocalGourmet.PL.UnitTest\\bin\\Debug\\LocalGourmet.PL.UnitTest.dll"
+    }
+    stage('analyze') {
+
+    }
+    stage('package') {
+        bat 'msbuild LocalGourmet.PL /t:package'
+    }
+    stage('deploy') {
+        dir('LocalGourmet/LocalGourmet.PL/obj/Debug/Package') {
+            bat "LocalGourmet.PL.deploy.cmd /t /m:https://ec2-52-87-164-36.compute-1.amazonaws.com:8172/msdeploy.axd /u:Administrator /p:Forgivemeas1nner /a:basic '-AllowUntrusted=True'"
+        }
+    }
+}

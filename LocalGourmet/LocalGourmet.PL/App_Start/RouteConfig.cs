@@ -13,11 +13,11 @@ namespace LocalGourmet.PL
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            //routes.MapMvcAttributeRoutes();
+            routes.MapMvcAttributeRoutes();
 
             routes.MapRoute(
                 name: "Default",
-                url: "LocalGourmet.PL_deploy/{controller}/{action}/{id}",
+                url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Home", id = UrlParameter.Optional }
             );
         }
