@@ -16,7 +16,7 @@
     }
     stage('test') {
         try {
-            bat "VSTest.Console LocalGourmet.PL.UnitTest\\bin\\Debug\\LocalGourmet.PL.UnitTest.dll"
+            bat "VSTest.Console LocalGourmet\\LocalGourmet.PL.UnitTest\\bin\\Debug\\LocalGourmet.PL.UnitTest.dll"
         }
         catch (exc) {
             slackError('test')
