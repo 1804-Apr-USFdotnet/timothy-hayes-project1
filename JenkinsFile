@@ -6,11 +6,11 @@
         try {
             dir('LocalGourmet') {
                 bat 'nuget restore'
-                bat 'msbuild'
+                bat 'msbuild /p:MvcBuildViews=true'
             }
         }
         catch (exc) {
-            slackSend 'build failed!'
+            slackSend color: 'danger', message: 'build failed!'
             throw exc
         }
     }
@@ -28,7 +28,7 @@
 
         }
         catch (exc) {
-            slackSend 'analyze failed!'
+            slackSend color: 'danger', message: 'analyze failed!'
             throw exc
         }
     }
@@ -37,7 +37,7 @@
                 bat 'msbuild /t:package'
         }
         catch (exc) {
-            slackSend 'package failed!'
+            slackSend color: 'danger', message: 'package failed!'
             throw exc
         }
     }
@@ -48,7 +48,7 @@
             }
         }
         catch (exc) {
-            slackSend 'deploy failed!'
+            slackSend color: 'danger', message: 'deploy failed!'
             throw exc
         }
     }
