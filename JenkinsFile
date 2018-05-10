@@ -34,7 +34,9 @@
     }
     stage('package') {
         try {
+            dir('LocalGourmet/LocalGourmet.PL') {
                 bat 'msbuild /t:package'
+            }
         }
         catch (exc) {
             slackError('package')
