@@ -24,15 +24,11 @@
     <h1>Restaurants</h1>
     <hr />
     <div>
-        <span>@Html.ActionLink("Sort by Name2", "Index", "Restaurants", new { sort = "byName" }, new { @class = "btn btn-default btn-toolbar" })</span>
-        <span>@Html.ActionLink("Sort by Rating2", "Index", "Restaurants", new { sort = "byRating" }, new { @class = "btn btn-default btn-toolbar" })</span>
-        <span>@Html.ActionLink("Sort by Cuisine2", "Index", "Restaurants", new { sort = "byCuisine" }, new { @class = "btn btn-default btn-toolbar" })</span>
-        <span>@Html.ActionLink("Top Three2", "Index", "Restaurants", new { sort = "topThree" }, new { @class = "btn btn-default btn-toolbar" })</span>
         <a href=@($"/Restaurants/Create") class="btn btn-default btn-toolbar">Add new Restaurant</a>
-        <a href="/Restaurants/Index?sort=byName" class="btn btn-default btn-toolbar">Sort By Name</a>
-        <a href="/Restaurants/Index?sort=byRating" class="btn btn-default btn-toolbar">Sort By Avg. Rating</a>
-        <a href="/Restaurants/Index?sort=byCuisine" class="btn btn-default btn-toolbar">Sort By Cuisine</a>
-        <a href="/Restaurants/Index?sort=topThree" class="btn btn-default btn-toolbar">Top 3</a>
+        <span>@Html.ActionLink("Sort by Name", "Index", "Restaurants", new { sort = "byName" }, new { @class = "btn btn-default btn-toolbar" })</span>
+        <span>@Html.ActionLink("Sort by Rating", "Index", "Restaurants", new { sort = "byRating" }, new { @class = "btn btn-default btn-toolbar" })</span>
+        <span>@Html.ActionLink("Sort by Cuisine", "Index", "Restaurants", new { sort = "byCuisine" }, new { @class = "btn btn-default btn-toolbar" })</span>
+        <span>@Html.ActionLink("Top Three", "Index", "Restaurants", new { sort = "topThree" }, new { @class = "btn btn-default btn-toolbar" })</span>
         
         <form id="searchForm" onsubmit="SearchByName()" style="display:inline;">
             <input type="submit" value="Search by Name" class="btn btn-default btn-toolbar">
