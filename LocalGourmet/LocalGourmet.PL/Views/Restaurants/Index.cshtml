@@ -24,6 +24,7 @@
     <h1>Restaurants</h1>
     <hr />
     <div>
+        <span>@Html.ActionLink("Add new Restaurant2", "Create", "Restaurants", null, new { @class = "btn btn-default btn-toolbar" })</span>
         <a href=@($"/Restaurants/Create") class="btn btn-default btn-toolbar">Add new Restaurant</a>
         <span>@Html.ActionLink("Sort by Name", "Index", "Restaurants", new { sort = "byName" }, new { @class = "btn btn-default btn-toolbar" })</span>
         <span>@Html.ActionLink("Sort by Rating", "Index", "Restaurants", new { sort = "byRating" }, new { @class = "btn btn-default btn-toolbar" })</span>
