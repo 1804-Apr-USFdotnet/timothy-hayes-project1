@@ -26,7 +26,7 @@
     stage('analyze') {
         try {
             dir('LocalGourmet') {
-                bat 'SonarScanner.MSBuild begin /k:project1-tjhayes /v:0.1.0 /d:sonar.verbose-true'
+                bat 'SonarScanner.MSBuild begin /k:project1-tjhayes /v:0.1.0'
                 bat 'msbuild /t:rebuild'
                 bat 'SonarQube.Scanner.MSBuild end'
             }
