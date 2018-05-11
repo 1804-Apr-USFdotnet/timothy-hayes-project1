@@ -25,7 +25,9 @@
     }
     stage('analyze') {
         try {
-
+            bat 'SonarQube.Scanner.MSBuild begin /k:project1-tjhayes /v:0.1.0'
+            bat 'msbuild /t:rebuild'
+            bat 'SonarQube.Scanner.MSBuild end'
         }
         catch (exc) {
             slackError('analyze')
